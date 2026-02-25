@@ -1,0 +1,181 @@
+"use client";
+
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MessageSquare, X, Send, Bot, User } from "lucide-react";
+import { GlassCard } from "./GlassCard";
+interface Message {
+    id: string;
+    role: "assistant" | "user";
+    content: string;
+}
+
+export function ChatWidget() {
+    const [isOpen, setIsOpen] = useState(false);
+    const [input, setInput] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [messages, setMessages] = useState<Message[]>([
+        { id: "1", role: "assistant", content: "Hi! I'm GVB's AI assistant. How can I help you today?" }
+    ]);
+
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages, isLoading]);
+
+    const handleSend = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!input.trim() || isLoading) return;
+
+        const userMessage: Message = { id: Date.now().toString(), role: "user", content: input };
+        setMessages(prev => [...prev, userMessage]);
+        setInput("");
+        setIsLoading(true);
+
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: [...messages, userMessage] })
+            });
+
+            const data = await response.json();
+
+            if (data.text) {
+                setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: data.text }]);
+            } else {
+                setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: "I am having trouble connecting to my servers right now. Please try again later." }]);
+            }
+
+        } catch (error) {
+            console.error("Chat error:", error);
+            setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: "Sorry, I encountered an error. Please email us directly." }]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(10px)" }}
+                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        className="mb-4 w-[350px] sm:w-[400px]"
+                    >
+                        <GlassCard hoverEffect={false} className="flex flex-col h-[500px] overflow-hidden p-0 rounded-2xl bg-white/40 dark:bg-space-blue/40 backdrop-blur-3xl border-white/40 dark:border-white/20 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.3)]">
+                            {/* Header */}
+                            <div className="bg-gradient-to-r from-accent-start to-accent-end p-4 flex items-center justify-between shadow-md">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md">
+                                        <Bot className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-white font-semibold">GVB Assistant</h3>
+                                        <p className="text-white/70 text-xs flex items-center font-medium">
+                                            <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse" />
+                                            Online 24/7
+                                        </p>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => setIsOpen(false)}
+                                    className="text-white/80 hover:text-white transition-colors"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            {/* Messages Area */}
+                            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                                {messages.map((msg) => (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        key={msg.id}
+                                        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                                    >
+                                        <div className={`flex max-w-[80%] items-end space-x-2 ${msg.role === 'user' ? 'flex-row-reverse space-x-reverse' : 'flex-row'}`}>
+                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.role === 'user' ? 'bg-accent-start/20' : 'bg-black/5 dark:bg-white/10'}`}>
+                                                {msg.role === 'user' ? <User className="w-4 h-4 text-foreground/80" /> : <Bot className="w-4 h-4 text-accent-start" />}
+                                            </div>
+                                            <div className={`p-3 rounded-2xl text-sm ${msg.role === 'user'
+                                                ? 'bg-gradient-to-bl from-accent-start to-accent-end text-white rounded-br-none shadow-sm'
+                                                : 'bg-black/5 border border-black/5 dark:bg-white/5 dark:border-white/10 text-foreground rounded-bl-none shadow-sm font-medium'
+                                                }`}>
+                                                {msg.content}
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+
+                                {isLoading && (
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        className="flex justify-start"
+                                    >
+                                        <div className="flex items-end space-x-2">
+                                            <div className="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center">
+                                                <Bot className="w-4 h-4 text-accent-start" />
+                                            </div>
+                                            <div className="bg-black/5 border border-black/5 dark:bg-white/5 dark:border-white/10 p-4 rounded-2xl rounded-bl-none flex space-x-1 items-center">
+                                                <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0 }} className="w-1.5 h-1.5 bg-foreground/50 rounded-full" />
+                                                <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 bg-foreground/50 rounded-full" />
+                                                <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }} className="w-1.5 h-1.5 bg-foreground/50 rounded-full" />
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                                <div ref={messagesEndRef} />
+                            </div>
+
+                            {/* Input Area */}
+                            <div className="p-4 bg-background/50 backdrop-blur-md border-t border-black/5 dark:border-white/10">
+                                <form
+                                    onSubmit={handleSend}
+                                    className="relative flex items-center"
+                                >
+                                    <input
+                                        type="text"
+                                        value={input}
+                                        onChange={(e) => setInput(e.target.value)}
+                                        disabled={isLoading}
+                                        placeholder={isLoading ? "AI is typing..." : "Type your message..."}
+                                        className="w-full bg-black/5 border border-black/5 dark:bg-white/5 dark:border-white/10 rounded-full pl-4 pr-12 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-accent-start/50 text-foreground placeholder:text-foreground/40 transition-all disabled:opacity-50"
+                                    />
+                                    <button
+                                        type="submit"
+                                        disabled={!input.trim() || isLoading}
+                                        className="absolute right-2 p-2 rounded-full bg-accent-start text-white hover:bg-accent-end disabled:opacity-50 disabled:hover:bg-accent-start transition-colors"
+                                    >
+                                        <Send className="w-4 h-4 ml-0.5" />
+                                    </button>
+                                </form>
+                            </div>
+                        </GlassCard>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-14 h-14 rounded-full bg-black/10 dark:bg-space-blue/30 backdrop-blur-xl border border-black/10 dark:border-white/20 flex items-center justify-center shadow-[0_8px_32px_0_rgba(102,126,234,0.3)] hover:shadow-[0_8px_32px_0_rgba(102,126,234,0.5)] transition-shadow relative overflow-hidden group"
+            >
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-start/20 to-accent-end/20" />
+                <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:animate-shimmer" />
+                {isOpen ? <X className="w-6 h-6 text-foreground relative z-10" /> : <MessageSquare className="w-6 h-6 text-foreground relative z-10" />}
+            </motion.button>
+        </div>
+    );
+}

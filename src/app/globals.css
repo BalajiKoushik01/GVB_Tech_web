@@ -1,26 +1,113 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Primary */
+  --color-space-blue: #0A0E27;
+  --color-arctic-white: #FAFBFC;
+  --color-premium-gold: #FFD700;
+
+  /* Gradient Accents */
+  --color-accent-start: #667eea;
+  --color-accent-end: #764ba2;
+
+  /* Secondary */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-tech-blue: #3B82F6;
+
+  /* Fonts */
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* Animations */
+  --animate-shimmer: shimmer 1.5s infinite linear;
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(200%);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  --background: #F4F5F7;
+  /* Softer, slightly warmer light grey instead of stark white */
+  --foreground: #1A202C;
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  /* Softer, highly transparent white for glass */
+  --glass-border: rgba(0, 0, 0, 0.03);
+  /* Extremely subtle border */
+  --glare-color: rgba(255, 255, 255, 0.4);
+  /* Soft white internal glare */
+}
+
+.dark {
+  --background: #0A0E27;
+  --foreground: #FFFFFF;
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glare-color: rgba(255, 255, 255, 0.15);
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply antialiased transition-colors duration-300;
+    /* Soft semi-transparent dot cursor (hardware accelerated, zero latency) */
+    cursor: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="8" fill="%23888888" opacity="0.6"/></svg>') 12 12, auto;
+  }
+
+  /* Make hoverable elements use a slightly larger ring cursor */
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    cursor: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="18" fill="none" stroke="%23888888" stroke-width="1.5" opacity="0.8"/></svg>') 20 20, pointer !important;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 1px solid var(--glass-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1.5rem;
+    box-shadow:
+      0 12px 60px -15px rgba(0, 0, 0, 0.12),
+      inset 0 1px 1px rgba(255, 255, 255, 0.2),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-float {
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.03) 100%);
+    backdrop-filter: blur(50px) saturate(200%);
+    -webkit-backdrop-filter: blur(50px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.25);
+    transform: translateZ(0);
+    will-change: transform;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-start to-accent-end;
+  }
 }
