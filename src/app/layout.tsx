@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { ChatWidget } from "@/components/ui/ChatWidget";
 import { AnimatedMeshBackground } from "@/components/animations/AnimatedMeshBackground";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -56,6 +57,7 @@ export default function RootLayout({
           <ScrollToTop />
           <ChatWidget />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
