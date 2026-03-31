@@ -1,0 +1,21 @@
+﻿
+C:\Users\balaj\Desktop\GVB tech solut\gvb-tech-website\src\app\blog\page.tsx
+  66:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\balaj\Desktop\GVB tech solut\gvb-tech-website\src\app\page.tsx
+    3:17  warning  'useEffect' is defined but never used  @typescript-eslint/no-unused-vars
+    3:28  warning  'useState' is defined but never used   @typescript-eslint/no-unused-vars
+  163:37  warning  'idx' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Users\balaj\Desktop\GVB tech solut\gvb-tech-website\src\app\portfolio\page.tsx
+    6:8   warning  'Image' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  110:45  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\balaj\Desktop\GVB tech solut\gvb-tech-website\src\app\services\page.tsx
+  141:104  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\balaj\Desktop\GVB tech solut\gvb-tech-website\src\components\animations\Hero3DBackground.tsx
+  26:15  warning  'state' is defined but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 8 problems (1 error, 7 warnings)
+
