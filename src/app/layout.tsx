@@ -3,6 +3,7 @@ import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { LaunchBackground } from "@/components/animations/LaunchBackground";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { ChatWidget } from "@/components/ui/ChatWidget";
 import { CustomCursor } from "@/components/ui/CustomCursor";
@@ -44,6 +45,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-[100dvh] flex flex-col text-slate-800 bg-transparent selection:bg-gvb-blue/20 selection:text-gvb-deep overflow-x-hidden`}>
           <Header />
+          <LaunchBackground />
           <main className="flex-1 relative z-10">
             {children}
           </main>

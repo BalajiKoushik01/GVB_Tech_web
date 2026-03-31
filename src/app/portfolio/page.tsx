@@ -82,7 +82,7 @@ export default function PortfolioPage() {
                             onClick={() => setFilter(cat)}
                             className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 ${filter === cat
                                 ? "bg-black text-white shadow-2xl shadow-black/20"
-                                : "bg-white/40 text-black/60 hover:bg-white/60 hover:text-black border border-black/5"
+                                : "bg-white/10 text-black/60 hover:bg-white/30 hover:text-black border border-black/5"
                                 }`}
                         >
                             {cat}
@@ -103,7 +103,7 @@ export default function PortfolioPage() {
                                     exit={{ opacity: 0, scale: 0.9 }}
                                     transition={{ duration: 0.3, delay: (idx % 10) * 0.05 }}
                                 >
-                                    <GlassCard className="p-0 overflow-hidden group h-full flex flex-col cursor-pointer border-transparent hover:border-white/20">
+                                    <GlassCard className="p-0 overflow-hidden group h-full flex flex-col cursor-pointer border-white/5 hover:border-white/20 bg-white/5 backdrop-blur-3xl">
                                         <div className="relative h-64 overflow-hidden bg-gray-200 dark:bg-gray-800">
                                             {/* Using standard img tag with Unsplash for demo since next/image needs domain config usually */}
                                             {/* eslint-disable-next-line @next/next/no-img-element */}

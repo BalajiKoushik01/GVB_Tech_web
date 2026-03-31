@@ -49,7 +49,7 @@ export default function CareersPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1, duration: 0.6 }}
-                            className="glass-card p-8 rounded-[1.25rem] text-center group hover:bg-white/10 transition-colors duration-500"
+                            className="glass-card p-8 rounded-[1.25rem] text-center group hover:bg-white/10 transition-colors duration-500 bg-white/5 backdrop-blur-3xl border border-white/10"
                         >
                             <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-accent-start/20 to-accent-end/20 flex items-center justify-center mb-6 text-accent-start group-hover:scale-110 transition-transform duration-500">
                                 {b.icon}
@@ -80,7 +80,7 @@ export default function CareersPage() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="glass-card p-6 md:p-8 rounded-[1.25rem] flex flex-col md:flex-row md:items-center justify-between group hover:border-accent-start/30 transition-all duration-300"
+                                className="glass-card p-6 md:p-8 rounded-[1.25rem] flex flex-col md:flex-row md:items-center justify-between group hover:border-accent-start/30 transition-all duration-300 bg-white/5 backdrop-blur-3xl border border-white/10"
                             >
                                 <div>
                                     <h3 className="text-xl font-bold mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-accent-start group-hover:to-accent-end transition-all">{pos.title}</h3>

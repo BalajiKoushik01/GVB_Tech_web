@@ -4,12 +4,10 @@ import React from 'react';
 import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Target, Eye, Shield, Users, Trophy } from "lucide-react";
-import { LaunchBackground } from "@/components/animations/LaunchBackground";
 
 export default function AboutPage() {
     return (
         <div className="relative min-h-screen">
-            <LaunchBackground />
             
             <div className="pt-32 pb-16 relative z-10">
                 <section className="px-4 py-20 max-w-7xl mx-auto text-center relative z-10">
@@ -48,7 +46,7 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                            <GlassCard className="h-full p-8 md:p-12 !bg-white/60 group">
+                            <GlassCard className="h-full p-8 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10 group">
                                 <div className="w-16 h-16 rounded-2xl bg-gvb-blue/10 flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform">
                                     <Target className="w-8 h-8 text-gvb-blue" />
                                 </div>
@@ -67,7 +65,7 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                            <GlassCard className="h-full p-8 md:p-12 !bg-white/60 group">
+                            <GlassCard className="h-full p-8 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10 group">
                                 <div className="w-16 h-16 rounded-2xl bg-gvb-deep/10 flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform">
                                     <Eye className="w-8 h-8 text-gvb-deep" />
                                 </div>
@@ -124,7 +122,7 @@ function ValueCard({ icon: Icon, title, desc, delay }: { icon: React.ComponentTy
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay }}
         >
-            <GlassCard hoverEffect={true} className="text-center p-8 md:p-12 !bg-white/40 border-slate-100">
+            <GlassCard hoverEffect={true} className="text-center p-8 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10">
                 <div className="w-16 h-16 mx-auto rounded-full bg-gvb-blue/10 text-gvb-blue flex items-center justify-center mb-8">
                     <Icon className="w-8 h-8" />
                 </div>

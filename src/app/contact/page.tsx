@@ -58,7 +58,7 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="pt-24 pb-16 min-h-screen bg-background relative overflow-hidden">
+        <div className="pt-24 pb-16 min-h-screen bg-transparent relative overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-start/5 rounded-full blur-[150px] pointer-events-none" />
 
             <section className="px-4 py-16 text-center">
@@ -87,7 +87,7 @@ export default function ContactPage() {
                         transition={{ delay: 0.2 }}
                         className="lg:col-span-2 space-y-8"
                     >
-                        <GlassCard hoverEffect={false} className="p-6 md:p-8 h-full bg-gradient-to-br from-white/10 to-black/5 dark:from-white/5 dark:to-white/10 border-white/20">
+                        <GlassCard hoverEffect={false} className="p-6 md:p-8 h-full !bg-white/5 backdrop-blur-3xl border-white/10">
                             <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8">Contact Information</h3>
 
                             <div className="space-y-6">
@@ -106,7 +106,7 @@ export default function ContactPage() {
                         transition={{ delay: 0.3 }}
                         className="lg:col-span-3"
                     >
-                        <GlassCard hoverEffect={false} className="p-6 md:p-10 border-white/20">
+                        <GlassCard hoverEffect={false} className="p-6 md:p-10 !bg-white/5 backdrop-blur-3xl border-white/10">
                             <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8">Send us a message</h3>
 
                             {successMessage ? (
@@ -117,8 +117,9 @@ export default function ContactPage() {
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium text-foreground/80">Full Name *</label>
+                                            <label htmlFor="name" className="text-sm font-medium text-foreground/80">Full Name *</label>
                                             <input
+                                                id="name"
                                                 {...register("name")}
                                                 className={`w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border ${errors.name ? 'border-red-500' : 'border-white/10 dark:border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all`}
                                                 placeholder="Enter full name"
@@ -126,8 +127,9 @@ export default function ContactPage() {
                                             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium text-foreground/80">Email Address *</label>
+                                            <label htmlFor="email" className="text-sm font-medium text-foreground/80">Email Address *</label>
                                             <input
+                                                id="email"
                                                 {...register("email")}
                                                 type="email"
                                                 className={`w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border ${errors.email ? 'border-red-500' : 'border-white/10 dark:border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all`}
@@ -139,16 +141,18 @@ export default function ContactPage() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium text-foreground/80">Phone Number</label>
+                                            <label htmlFor="phone" className="text-sm font-medium text-foreground/80">Phone Number</label>
                                             <input
+                                                id="phone"
                                                 {...register("phone")}
                                                 className="w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border border-white/10 dark:border-white/10 shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all"
                                                 placeholder="Enter phone number"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium text-foreground/80">Interested Service *</label>
+                                            <label htmlFor="service" className="text-sm font-medium text-foreground/80">Interested Service *</label>
                                             <select
+                                                id="service"
                                                 {...register("service")}
                                                 className={`w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border ${errors.service ? 'border-red-500' : 'border-white/10 dark:border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all appearance-none`}
                                             >
@@ -164,8 +168,9 @@ export default function ContactPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-foreground/80">Your Message *</label>
+                                        <label htmlFor="message" className="text-sm font-medium text-foreground/80">Your Message *</label>
                                         <textarea
+                                            id="message"
                                             {...register("message")}
                                             rows={5}
                                             className={`w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border ${errors.message ? 'border-red-500' : 'border-white/10 dark:border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all resize-none`}

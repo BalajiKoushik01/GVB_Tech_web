@@ -58,7 +58,7 @@ export default function BlogPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.15, duration: 0.6 }}
-                            className="glass-card rounded-[1.25rem] overflow-hidden group hover:border-accent-start/30 transition-all duration-300 flex flex-col"
+                            className="glass-card rounded-[1.25rem] overflow-hidden group hover:border-accent-start/30 transition-all duration-300 flex flex-col bg-white/5 backdrop-blur-3xl border border-white/10"
                         >
                             <div className="h-48 w-full overflow-hidden relative">
                                 {/* Fallback color if image doesn't load immediately */}
@@ -69,7 +69,7 @@ export default function BlogPage() {
                                     alt={post.title}
                                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                                 />
-                                <div className="absolute top-4 left-4 glass-card px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md">
+                                <div className="absolute top-4 left-4 glass-card px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-3xl bg-white/10 border border-white/20">
                                     {post.category}
                                 </div>
                             </div>

@@ -19,7 +19,7 @@ export const RocketMotion = memo(() => {
     const flameOpacity = useTransform(smoothProgress, [0, 0.05, 1], [0, 1, 1]);
 
     return (
-        <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none z-[1] flex items-center justify-center overflow-hidden">
             <motion.div
                 style={{ y: yTransform }}
                 className="relative flex flex-col items-center"

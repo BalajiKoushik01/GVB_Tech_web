@@ -4,7 +4,6 @@ import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { LaunchBackground } from "@/components/animations/LaunchBackground";
 import { RocketMotion } from "@/components/animations/RocketMotion";
 import { TrendingUp, Code2, Brain, ArrowRight } from "lucide-react";
 import { MagneticWrapper } from "@/components/animations/MagneticWrapper";
@@ -42,9 +41,8 @@ export default function Home() {
   const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.98]);
 
   return (
-    <div className="flex flex-col w-full relative bg-white selection:bg-black selection:text-white">
-      {/* Background System (Fixed Depth) */}
-      <LaunchBackground />
+    <div className="flex flex-col w-full relative bg-transparent selection:bg-black selection:text-white">
+      {/* Background System (Fixed Depth - Rocket Only) */}
       <RocketMotion />
 
       {/* Hero Section (Definitive Layering V11.2) */}
@@ -125,7 +123,7 @@ export default function Home() {
       </section>
 
       {/* Content Area: Naturally flows AFTER the Hero (z-10) */}
-      <div className="relative z-10 bg-white border-t border-black/5">
+      <div className="relative z-10 bg-transparent border-t border-black/5">
         <MarketDashboard />
 
         {/* Services Section */}

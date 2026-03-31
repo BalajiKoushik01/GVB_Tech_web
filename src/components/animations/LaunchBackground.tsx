@@ -48,19 +48,19 @@ export const LaunchBackground = () => {
         restDelta: 0.001
     });
 
-    // Multi-Stop Orbital Gradient Morphing (V14.2)
+    // Multi-Stop Orbital Gradient Morphing (V15.1 - High Fidelity)
     const bgColor = useTransform(
         smoothProgress,
         [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1],
         [
-            "#E0F2FE", // Sky Blue (Launch)
-            "#FDE047", // Solar Yellow (Ascent)
-            "#F97316", // Flame Orange (Thrust)
-            "#EF4444", // Ignition Red (Max Q)
-            "#4F46E5", // Deep Space Indigo (Orbit)
-            "#312E81", // Midnight Blue (Transition)
-            "#1E1B4B", // Absolute Dark (Outer)
-            "#171717"  // Carbon Black (Deep Space)
+            "#F8FAFC", // Soft Launch Pad (Slate 50)
+            "#E0F2FE", // Cloud Breach (Sky 100)
+            "#7DD3FC", // Troposphere (Sky 300)
+            "#60A5FA", // Stratosphere (Blue 400)
+            "#2563EB", // Ionosphere (Blue 600)
+            "#1E3A8A", // Mesosphere (Blue 900)
+            "#1E1B4B", // Exosphere (Indigo 950)
+            "#09090B"  // Deep Space (Absolute Dark)
         ]
     );
 

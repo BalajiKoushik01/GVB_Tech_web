@@ -5,7 +5,6 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import { LaunchBackground } from "@/components/animations/LaunchBackground";
 
 const allServices = [
     {
@@ -61,7 +60,6 @@ const allServices = [
 export default function ServicesPage() {
     return (
         <div className="relative min-h-screen">
-            <LaunchBackground />
             
             <div className="pt-32 pb-16 relative z-10">
                 {/* Page Hero */}
@@ -100,7 +98,7 @@ export default function ServicesPage() {
                             >
                                 {/* Visual Side */}
                                 <div className="flex-1 w-full relative group">
-                                    <GlassCard hoverEffect={true} className="aspect-square lg:aspect-[4/3] overflow-hidden relative !bg-white/60 p-0 border-none shadow-2xl rounded-3xl">
+                                    <GlassCard hoverEffect={true} className="aspect-square lg:aspect-[4/3] overflow-hidden relative !bg-white/5 p-0 border-none shadow-2xl rounded-3xl">
                                         <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-20 rounded-[inherit] z-10 group-hover:opacity-10 transition-opacity`} />
                                         <img 
                                             src={service.image} 
@@ -140,7 +138,7 @@ export default function ServicesPage() {
 
                 {/* CTA */}
                 <section className="py-24 px-4">
-                    <div className="max-w-4xl mx-auto text-center liquid-glass p-8 md:p-16 !bg-white/90 shadow-2xl relative overflow-hidden rounded-[3rem]">
+                    <div className="max-w-4xl mx-auto text-center liquid-glass p-8 md:p-16 !bg-white/5 shadow-2xl relative overflow-hidden rounded-[3rem]">
                         <h2 className="text-4xl md:text-6xl font-black mb-6 text-black tracking-tighter uppercase">Need a Custom Infrastructure?</h2>
                         <p className="text-xl md:text-2xl text-slate-600 mb-10 font-bold opacity-80">Reach out and let&apos;s engineer a tailored approach for your unique operational scale.</p>
                         <Link href="/contact" className="w-full flex justify-center">

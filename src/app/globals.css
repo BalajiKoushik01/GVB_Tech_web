@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #FFFFFF;
+  --background: transparent;
   --foreground: #000000; /* Absolute Black for Readability */
   
   --gvb-blue: #00A3FF;

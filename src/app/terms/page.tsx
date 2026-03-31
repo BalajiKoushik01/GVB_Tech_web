@@ -27,7 +27,7 @@ export default function TermsPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.2 }}
-                    className="glass-card p-8 md:p-12 rounded-[1.25rem] prose prose-invert max-w-none prose-p:text-foreground/80 prose-headings:text-foreground"
+                    className="glass-card p-8 md:p-12 rounded-[1.25rem] prose prose-invert max-w-none prose-p:text-foreground/80 prose-headings:text-foreground bg-white/5 backdrop-blur-3xl border border-white/10"
                 >
                     <h2>1. Acceptance of Terms</h2>
                     <p>
