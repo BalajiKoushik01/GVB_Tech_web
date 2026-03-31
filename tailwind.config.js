@@ -26,8 +26,8 @@ module.exports = {
       },
       keyframes: {
         float: {
-          '0%, 100%': { transform: translateY('0px') },
-          '50%': { transform: translateY('-20px') },
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
         },
         'rocket-shake': {
           '0%, 100%': { transform: 'translate(0, 0)' },
