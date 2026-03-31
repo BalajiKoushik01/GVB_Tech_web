@@ -174,7 +174,7 @@ export default function ContactPage() {
                                         {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
                                     </div>
 
-                                    <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isSubmitting}>
+                                    <Button type="submit" size="lg" className="h-16 px-12 bg-black text-white hover:bg-slate-900 border-none font-black uppercase tracking-widest shadow-2xl" disabled={isSubmitting}>
                                         {isSubmitting ? "Sending..." : "Send Message"}
                                     </Button>
                                 </form>

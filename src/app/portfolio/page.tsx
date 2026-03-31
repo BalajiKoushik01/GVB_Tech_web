@@ -80,9 +80,9 @@ export default function PortfolioPage() {
                         <button
                             key={cat}
                             onClick={() => setFilter(cat)}
-                            className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 ${filter === cat
-                                ? "bg-accent-start text-white shadow-lg shadow-accent-start/30"
-                                : "bg-gray-100 dark:bg-white/5 text-foreground/70 hover:bg-gray-200 dark:hover:bg-white/10"
+                            className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 ${filter === cat
+                                ? "bg-black text-white shadow-2xl shadow-black/20"
+                                : "bg-white/40 text-black/60 hover:bg-white/60 hover:text-black border border-black/5"
                                 }`}
                         >
                             {cat}

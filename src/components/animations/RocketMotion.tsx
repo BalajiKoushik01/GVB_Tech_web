@@ -13,8 +13,8 @@ export const RocketMotion = memo(() => {
         restDelta: 0.001
     });
 
-    // High-Efficiency 2D Vertical Movement
-    const yTransform = useTransform(smoothProgress, [0, 1], ["20vh", "-30vh"]);
+    // High-Efficiency 2D Vertical Movement (Extended Range V13.0)
+    const yTransform = useTransform(smoothProgress, [0, 1], ["40vh", "-60vh"]);
     const flameScale = useTransform(smoothProgress, [0, 0.1, 1], [0, 1, 1.8]);
     const flameOpacity = useTransform(smoothProgress, [0, 0.05, 1], [0, 1, 1]);
 
