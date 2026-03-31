@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { TrendingUp, TrendingDown, Activity } from "lucide-react";
+import { Activity, TrendingUp, TrendingDown } from "lucide-react";
 
 interface TickerData {
     symbol: string;
@@ -26,59 +25,48 @@ const initialTickers: TickerData[] = [
 export function MarketDashboard() {
     const [tickers, setTickers] = useState<TickerData[]>(initialTickers);
 
+    // Dynamic price updates without React re-renders for the animation part
     useEffect(() => {
         const interval = setInterval(() => {
             setTickers(prev => prev.map(ticker => {
-                const volatility = ticker.price * 0.002;
+                const volatility = ticker.price * 0.001;
                 const move = (Math.random() - 0.5) * volatility;
-                const newPrice = ticker.price + move;
-                const newChange = ticker.change + (move / ticker.price * 100);
-
                 return {
                     ...ticker,
-                    price: newPrice,
-                    change: newChange,
-                    isUp: newChange >= 0
+                    price: ticker.price + move,
+                    isUp: Math.random() > 0.4
                 };
             }));
-        }, 2500);
-
+        }, 5000); // Slow down updates for performance
         return () => clearInterval(interval);
     }, []);
 
-    return (
-        <div className="w-full bg-slate-50 border-b border-slate-200 overflow-hidden relative flex items-center h-14 cursor-default">
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
+    const tickerItems = [...tickers, ...tickers, ...tickers, ...tickers];
 
-            <div className="absolute left-6 z-20 hidden md:flex items-center text-slate-500 text-[10px] tracking-widest font-bold uppercase bg-white/90 backdrop-blur-sm py-1.5 px-4 rounded-full border border-slate-200/50 shadow-sm">
+    return (
+        <div className="w-full bg-slate-50/10 border-b border-black/5 overflow-hidden relative flex items-center h-14 cursor-default backdrop-blur-xl">
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+            <div className="absolute left-6 z-20 flex items-center text-black text-[10px] tracking-widest font-bold uppercase py-1.5 px-4 rounded-full border border-black/10 shadow-sm bg-white/90">
                 <Activity className="w-4 h-4 mr-2 text-gvb-blue animate-pulse" />
                 Live Market Pulse
             </div>
 
-            <motion.div
-                className="flex whitespace-nowrap pl-[180px] md:pl-[240px]"
-                animate={{ x: [0, -2500] }}
-                transition={{
-                    x: {
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        duration: 40,
-                        ease: "linear",
-                    },
-                }}
-            >
-                {[...tickers, ...tickers, ...tickers, ...tickers].map((ticker, idx) => (
-                    <div key={`${ticker.symbol}-${idx}`} className="flex items-center space-x-6 px-12 border-r border-slate-100 group">
-                        <span className="text-slate-700 font-bold text-xs tracking-widest uppercase">{ticker.symbol}</span>
-                        <span className="text-slate-800 font-mono text-sm tracking-tighter font-semibold">₹{ticker.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <div className="flex animate-marquee whitespace-nowrap will-change-transform h-full items-center">
+                {tickerItems.map((ticker, idx) => (
+                    <div key={`${ticker.symbol}-${idx}`} className="flex items-center space-x-6 px-12 border-r border-black/5">
+                        <span className="text-black font-extrabold text-xs tracking-widest uppercase">{ticker.symbol}</span>
+                        <span className="text-black font-mono text-sm tracking-tighter font-semibold">
+                            ₹{ticker.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </span>
                         <div className={`flex items-center text-[10px] font-bold px-2.5 py-1 rounded-full ${ticker.isUp ? 'bg-green-500/10 text-green-600' : 'bg-red-500/10 text-red-600'}`}>
                             {ticker.isUp ? <TrendingUp className="w-3 h-3 mr-1" /> : <TrendingDown className="w-3 h-3 mr-1" />}
-                            {Math.abs(ticker.change).toFixed(2)}%
+                            {ticker.isUp ? "+" : "-"}{(Math.random() * 2).toFixed(2)}%
                         </div>
                     </div>
                 ))}
-            </motion.div>
+            </div>
         </div>
     );
 }
