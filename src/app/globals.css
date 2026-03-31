@@ -1,45 +1,54 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@layer base {
+  :root {
+    --background: #FFFFFF;
+    --foreground: #0F172A;
+    
+    --gvb-blue: #00A3FF;
+    --gvb-deep: #0066FF;
+    --gvb-cyan: #00D1FF;
+    
+    /* Launch Atmospheric Palette */
+    --sky-blue: #BAE6FD;
+    --launch-yellow: #FDE047;
+    --launch-orange: #F97316;
+    --launch-red: #EF4444;
 
-  /* GVB Tech Brand Palette (Light Optimized) */
-  --color-gvb-blue: #00A3FF;
-  --color-gvb-deep: #0066FF;
-  --color-gvb-cyan: #00D1FF;
-  
-  /* Launch Atmospheric Palette */
-  --color-sky-blue: #BAE6FD;
-  --color-launch-yellow: #FDE047;
-  --color-launch-orange: #F97316;
-  --color-launch-red: #EF4444;
-
-  /* Fonts */
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-
-  /* Animations */
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-rocket-shake: rocket-shake 0.1s ease-in-out infinite;
-  --animate-flame-pulse: flame-pulse 0.5s ease-in-out infinite;
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(0, 163, 255, 0.2);
+    --glass-highlight: rgba(255, 255, 255, 0.8);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
   }
 
-  @keyframes rocket-shake {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(1px, 1px); }
-    50% { transform: translate(-1px, 0px); }
-    75% { transform: translate(0px, -1px); }
+  body {
+    background-color: transparent;
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    color-scheme: light !important;
   }
+}
 
-  @keyframes flame-pulse {
-    0%, 100% { opacity: 0.8; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.1); }
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes rocket-shake {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(1px, 1px); }
+  50% { transform: translate(-1px, 0px); }
+  75% { transform: translate(0px, -1px); }
+}
+
+@keyframes flame-pulse {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
 }
 
 :root {

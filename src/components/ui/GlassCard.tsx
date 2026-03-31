@@ -1,12 +1,10 @@
 "use client";
 
 import React from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
-    className?: string;
+interface GlassCardProps extends React.ComponentPropsWithoutRef<typeof motion.div> {
     hoverEffect?: boolean;
 }
 
@@ -24,6 +22,11 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
             y.set(clientY - top);
         }
 
+        const background = useTransform(
+            [mouseX, mouseY],
+            ([xVal, yVal]: any[]) => `radial-gradient(600px circle at ${xVal}px ${yVal}px, rgba(0, 163, 255, 0.15), transparent 40%)`
+        );
+
         return (
             <motion.div
                 ref={ref}
@@ -40,14 +43,12 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
                 {hoverEffect && (
                     <motion.div
                         className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{
-                            background: `radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(0, 163, 255, 0.15), transparent 40%)`
-                        }}
+                        style={{ background }}
                     />
                 )}
 
                 <div className="relative z-10 w-full h-full p-6 md:p-8 rounded-[inherit]">
-                    {children}
+                    {children as React.ReactNode}
                 </div>
                 
                 {/* Liquid Highlight */}
