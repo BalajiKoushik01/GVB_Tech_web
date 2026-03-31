@@ -8,8 +8,9 @@ export const RocketMotion = memo(() => {
 
     // Smooth physics for rocket reactions
     const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 70,
-        damping: 30
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
     });
 
     // Vertical Movement: Higher scroll = Higher position (simulating ascent)
