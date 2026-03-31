@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -31,7 +31,7 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
                 whileHover={hoverEffect ? { y: -8, scale: 1.01 } : {}}
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 className={cn(
-                    "liquid-glass p-1 relative overflow-hidden group h-full w-full",
+                    "liquid-glass p-1 relative overflow-hidden group h-full w-full border-slate-200/60 transition-colors duration-500",
                     className
                 )}
                 {...props}
@@ -41,7 +41,7 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
                     <motion.div
                         className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                         style={{
-                            background: `radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(0, 163, 255, 0.1), transparent 40%)`
+                            background: `radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(0, 163, 255, 0.15), transparent 40%)`
                         }}
                     />
                 )}
@@ -51,7 +51,7 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
                 </div>
                 
                 {/* Liquid Highlight */}
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-30" />
+                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gvb-blue/20 to-transparent opacity-40" />
             </motion.div>
         );
     }

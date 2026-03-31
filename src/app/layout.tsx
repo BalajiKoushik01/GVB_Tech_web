@@ -43,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-[100dvh] flex flex-col bg-white text-slate-800`}>
+      <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-[100dvh] flex flex-col text-slate-800 selection:bg-gvb-blue/20 selection:text-gvb-deep`}>
           <AnimatedMeshBackground />
           <Header />
           <main className="flex-1">

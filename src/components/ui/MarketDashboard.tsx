@@ -51,7 +51,7 @@ export function MarketDashboard() {
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
 
-            <div className="absolute left-6 z-20 hidden md:flex items-center text-slate-500 text-[10px] tracking-widest font-bold uppercase bg-slate-50 py-1 pr-6 shadow-[10px_0_20px_white]">
+            <div className="absolute left-6 z-20 hidden md:flex items-center text-slate-500 text-[10px] tracking-widest font-bold uppercase bg-white/90 backdrop-blur-sm py-1.5 px-4 rounded-full border border-slate-200/50 shadow-sm">
                 <Activity className="w-4 h-4 mr-2 text-gvb-blue animate-pulse" />
                 Live Market Pulse
             </div>

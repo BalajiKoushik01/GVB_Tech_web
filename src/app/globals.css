@@ -55,7 +55,7 @@
 
 @layer base {
   body {
-    background-color: var(--background);
+    background-color: transparent;
     color: var(--foreground);
     @apply antialiased transition-all duration-700 ease-out font-sans;
     overflow-x: hidden;

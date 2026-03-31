@@ -10,7 +10,7 @@ interface LogoProps {
 
 export const Logo: React.FC<LogoProps> = ({ className, showText = true }) => {
     return (
-        <div className={cn("flex items-center gap-3 group px-4", className)}>
+        <div className={cn("flex items-center gap-3 group", className)}>
             <div className="relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transform group-hover:scale-110 transition-all duration-500 ease-out">
                 {/* SVG Shield Profile Based on GVB Brand Identity */}
                 <svg
@@ -68,10 +68,10 @@ export const Logo: React.FC<LogoProps> = ({ className, showText = true }) => {
             
             {showText && (
                 <div className="flex flex-col">
-                    <span className="text-xl md:text-2xl font-extrabold tracking-tighter text-slate-800 dark:text-white leading-none">
+                    <span className="text-xl md:text-2xl font-extrabold tracking-tighter text-slate-800 leading-none">
                         GVB <span className="text-gvb-blue">TECH</span>
                     </span>
-                    <span className="text-[0.6rem] uppercase font-bold tracking-[0.3em] text-slate-400 dark:text-slate-500">
+                    <span className="text-[0.6rem] uppercase font-bold tracking-[0.3em] text-slate-400">
                         SOLUTIONS
                     </span>
                 </div>
