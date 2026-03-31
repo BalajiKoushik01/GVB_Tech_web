@@ -102,16 +102,16 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full px-4"
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full px-4 mb-20 md:mb-32"
           >
             <MagneticWrapper strength={0.4} radius={100}>
               <Link href="/contact" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full h-16 px-12 shadow-xl bg-gvb-blue hover:bg-gvb-deep">Get Started</Button>
+                <Button size="lg" className="w-full h-16 px-12 shadow-xl bg-gvb-blue hover:bg-gvb-deep">Initiate Launch</Button>
               </Link>
             </MagneticWrapper>
             <MagneticWrapper strength={0.4} radius={100}>
               <Link href="/services" className="w-full sm:w-auto">
-                <Button size="lg" variant="glass" className="w-full h-16 px-12 liquid-glass border-slate-200 text-slate-800">Learn More</Button>
+                <Button size="lg" variant="glass" className="w-full h-16 px-12 liquid-glass border-slate-300 text-slate-900 font-bold">Solutions Hub</Button>
               </Link>
             </MagneticWrapper>
           </motion.div>

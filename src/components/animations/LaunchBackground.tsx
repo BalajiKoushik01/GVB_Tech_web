@@ -7,11 +7,11 @@ const AtmosphereParticles = () => {
     const [particles, setParticles] = React.useState<Array<{ x: string, y: string, opacity: number, duration: number }>>([]);
 
     React.useEffect(() => {
-        const p = [...Array(30)].map(() => ({
+        const p = [...Array(12)].map(() => ({
             x: Math.random() * 100 + "%",
             y: Math.random() * 100 + "%",
-            opacity: Math.random(),
-            duration: Math.random() * 3 + 2
+            opacity: Math.random() * 0.5 + 0.3,
+            duration: Math.random() * 5 + 3
         }));
         setParticles(p);
     }, []);
