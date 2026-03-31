@@ -39,27 +39,29 @@ const services = [
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.98]);
 
   return (
-    <div className="flex flex-col w-full relative bg-white selection:bg-black selection:text-white pt-[115px]">
-      {/* Background System */}
+    <div className="flex flex-col w-full relative bg-white selection:bg-black selection:text-white">
+      {/* Background System (Fixed Depth) */}
       <LaunchBackground />
       <RocketMotion />
 
-      {/* Hero Section (Definitive Spacing Overhaul V9.0) */}
-      <section className="relative h-[90vh] min-h-[850px] flex flex-col items-center justify-start overflow-hidden z-20 pt-16 md:pt-24 px-4 overflow-y-visible">
+      {/* Hero Section (Definitive Layering V11.2) */}
+      <section className="relative min-h-screen flex flex-col items-center justify-start overflow-visible z-30 pt-[160px] px-4">
         <motion.div
-          style={{ opacity: heroOpacity, scale: heroScale }}
-          className="relative text-center max-w-7xl mx-auto flex flex-col items-center"
+          style={{ scale: heroScale }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="relative text-center max-w-7xl mx-auto flex flex-col items-center z-40"
         >
-          {/* Badge: Corrected Vertical Placement */}
+          {/* Badge: Locked between Nav and H1 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="inline-flex py-2 px-6 rounded-full liquid-glass mb-14 border-black/5 bg-white/20 whitespace-nowrap"
+            className="inline-flex py-2 px-6 rounded-full liquid-glass mb-14 border-black/10 bg-white/40 whitespace-nowrap"
           >
             <span className="text-[11px] font-black tracking-[0.25em] text-black uppercase">Launch Protocol Initiated</span>
           </motion.div>
@@ -88,7 +90,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-8 justify-center items-center w-full px-4 mb-32 z-30"
+            className="flex flex-col sm:flex-row gap-8 justify-center items-center w-full px-4 mb-32"
           >
             <MagneticWrapper strength={0.4} radius={100}>
               <Link href="/contact" className="w-full sm:w-auto">
@@ -97,7 +99,7 @@ export default function Home() {
             </MagneticWrapper>
             <MagneticWrapper strength={0.4} radius={100}>
               <Link href="/services" className="w-full sm:w-auto">
-                <Button size="lg" variant="glass" className="w-full h-16 px-12 liquid-glass border-black/10 text-black font-black uppercase text-sm tracking-widest bg-white/10 hover:bg-white/20">Solutions Hub</Button>
+                <Button size="lg" variant="glass" className="w-full h-16 px-12 liquid-glass border-black/20 text-black font-black uppercase text-sm tracking-widest bg-white/20">Solutions Hub</Button>
               </Link>
             </MagneticWrapper>
           </motion.div>
@@ -107,7 +109,7 @@ export default function Home() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none"
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 pointer-events-none"
         >
           <div className="w-[30px] h-[52px] rounded-full border-2 border-black/60 flex justify-center p-2 mb-3">
             <motion.div
@@ -120,8 +122,8 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Content Area Z-Index and Separation (V9.0) */}
-      <div className="relative z-30 bg-white">
+      {/* Content Area: Naturally flows AFTER the Hero (z-10) */}
+      <div className="relative z-10 bg-white border-t border-black/5">
         <MarketDashboard />
 
         {/* Services Section */}
