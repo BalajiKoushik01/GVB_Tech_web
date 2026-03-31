@@ -1,11 +1,16 @@
 import type { NextConfig } from "next";
 
-// @ts-ignore - 'workflow' beta types may not be fully compatible with Next 16
-import { withWorkflow } from "workflow/next";
-
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
+  },
   async headers() {
     return [
       {
@@ -24,4 +29,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withWorkflow(nextConfig);
+export default nextConfig;

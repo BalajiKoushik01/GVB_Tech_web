@@ -58,7 +58,7 @@ export default function Home() {
   const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.98]);
 
   return (
-    <div className="flex flex-col w-full relative">
+    <div className="flex flex-col w-full relative bg-transparent selection:bg-gvb-blue/30">
       {/* Immersive Background System */}
       <LaunchBackground />
       <RocketMotion />
@@ -134,15 +134,15 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <div className="relative z-10">
+      <div className="relative z-10 bg-transparent">
         <MarketDashboard />
 
         {/* Services Section */}
-        <section className="py-24 md:py-40 px-4">
+        <section className="py-24 md:py-40 px-4 relative bg-transparent">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20 md:mb-32">
-              <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tighter text-slate-800">Our Ecosystem</h2>
-              <p className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto font-medium tracking-tight">
+              <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tighter text-slate-900 drop-shadow-sm">Our Ecosystem</h2>
+              <p className="text-xl md:text-2xl text-slate-700 max-w-3xl mx-auto font-medium tracking-tight leading-relaxed">
                 Premium engineering solutions designed with liquid precision and architectural integrity.
               </p>
             </div>
