@@ -13,21 +13,21 @@ export const RocketMotion = memo(() => {
         restDelta: 0.001
     });
 
-    // High-Efficiency 2D Vertical Movement (Extended Range V13.0)
-    const yTransform = useTransform(smoothProgress, [0, 1], ["40vh", "-60vh"]);
+    // High-Efficiency Viewport Glide (Infinite Visibility V14.2)
+    const yTransform = useTransform(smoothProgress, [0, 1], ["20vh", "-20vh"]);
     const flameScale = useTransform(smoothProgress, [0, 0.1, 1], [0, 1, 1.8]);
     const flameOpacity = useTransform(smoothProgress, [0, 0.05, 1], [0, 1, 1]);
 
     return (
-        <div className="fixed inset-0 pointer-events-none z-10 flex items-center justify-center overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center overflow-hidden">
             <motion.div
                 style={{ y: yTransform }}
                 className="relative flex flex-col items-center"
             >
                 {/* 2D High-Performance SVG Rocket (Recovery V9.0) */}
                 <svg 
-                    width="120" 
-                    height="180" 
+                    width="160" 
+                    height="240" 
                     viewBox="0 0 100 150" 
                     className="drop-shadow-[0_20px_50px_rgba(0,163,255,0.2)]"
                 >

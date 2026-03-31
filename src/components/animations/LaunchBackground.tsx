@@ -48,11 +48,20 @@ export const LaunchBackground = () => {
         restDelta: 0.001
     });
 
-    // Color Interpolation: Sky Blue (#E0F2FE) -> Yellow (#FDE047) -> Orange (#F97316) -> Red (#EF4444)
+    // Multi-Stop Orbital Gradient Morphing (V14.2)
     const bgColor = useTransform(
         smoothProgress,
-        [0, 0.3, 0.6, 1],
-        ["#E0F2FE", "#FDE047", "#F97316", "#EF4444"]
+        [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1],
+        [
+            "#E0F2FE", // Sky Blue (Launch)
+            "#FDE047", // Solar Yellow (Ascent)
+            "#F97316", // Flame Orange (Thrust)
+            "#EF4444", // Ignition Red (Max Q)
+            "#4F46E5", // Deep Space Indigo (Orbit)
+            "#312E81", // Midnight Blue (Transition)
+            "#1E1B4B", // Absolute Dark (Outer)
+            "#171717"  // Carbon Black (Deep Space)
+        ]
     );
 
     // Rocket Exhaust Glow

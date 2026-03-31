@@ -109,8 +109,9 @@ export default function Home() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 pointer-events-none"
+          className="absolute bottom-12 left-0 w-full flex flex-col items-center z-30 pointer-events-none"
         >
+          <div className="flex flex-col items-center">
           <div className="w-[30px] h-[52px] rounded-full border-2 border-black/60 flex justify-center p-2 mb-3">
             <motion.div
               animate={{ y: [0, 16, 0] }}
@@ -119,6 +120,7 @@ export default function Home() {
             />
           </div>
           <span className="text-[10px] text-black font-black uppercase tracking-[0.4em] opacity-60">Scroll to Explore</span>
+          </div>
         </motion.div>
       </section>
 
