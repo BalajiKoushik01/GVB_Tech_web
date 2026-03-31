@@ -20,10 +20,11 @@ export const RocketMotion = memo(() => {
     const flameOpacity = useTransform(smoothProgress, [0, 0.05, 1], [0, 0.7, 1]);
     
     // Dynamic Vibration Physics (Shake)
-    const shakeX = useTransform(smoothProgress, (p) => {
+    const shakeX = useTransform(smoothProgress, (p: number) => {
         if (p < 0.05) return 0;
-        const intensity = p < 0.5 ? p * 2 : (p - 0.5) * 5 + 1;
-        return Math.sin(Date.now() / 10 + p * 1000) * intensity;
+        const intensity = p < 0.5 ? p : (p - 0.5) * 2 + 0.5;
+        // Use a fixed multiplier for consistent shake without Date.now() jitter in SSR
+        return Math.sin(p * 500) * intensity * 2;
     });
 
     return (

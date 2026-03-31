@@ -6,7 +6,6 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { ChatWidget } from "@/components/ui/ChatWidget";
 import { CustomCursor } from "@/components/ui/CustomCursor";
-import { AnimatedMeshBackground } from "@/components/animations/AnimatedMeshBackground";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -43,10 +42,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-[100dvh] flex flex-col text-slate-800 selection:bg-gvb-blue/20 selection:text-gvb-deep`}>
-          <AnimatedMeshBackground />
+      <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-[100dvh] flex flex-col text-slate-800 bg-transparent selection:bg-gvb-blue/20 selection:text-gvb-deep overflow-x-hidden`}>
           <Header />
-          <main className="flex-1">
+          <main className="flex-1 relative z-10">
             {children}
           </main>
           <Footer />

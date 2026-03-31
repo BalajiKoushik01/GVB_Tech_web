@@ -170,7 +170,7 @@ export default function Home() {
         {/* About Section */}
         <section className="py-24 px-4 overflow-hidden">
           <div className="max-w-7xl mx-auto">
-            <GlassCard hoverEffect={false} className="grid lg:grid-cols-2 gap-16 items-center p-8 md:p-16 !bg-white/80">
+            <GlassCard hoverEffect={false} className="grid lg:grid-cols-2 gap-16 items-center p-8 md:p-16 !bg-white/10 backdrop-blur-2xl border-white/20">
               <div>
                 <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tighter text-slate-800 leading-[1.1]">The Convergence of Tech & Strategy</h2>
                 <p className="text-xl text-slate-600 mb-8 font-medium leading-relaxed">
@@ -200,7 +200,7 @@ export default function Home() {
 
         {/* CTA Section */}
         <section className="py-40 px-4 flex items-center justify-center">
-          <GlassCard hoverEffect={false} className="max-w-5xl w-full text-center py-24 px-8 relative overflow-hidden !bg-white/90 shadow-2xl">
+          <GlassCard hoverEffect={false} className="max-w-5xl w-full text-center py-24 px-8 relative overflow-hidden !bg-white/10 backdrop-blur-3xl border-white/30 shadow-2xl">
             <div className="relative z-10">
               <h2 className="text-5xl md:text-7xl font-bold mb-8 tracking-tighter text-slate-800">Ready to <span className="text-gradient">Launch?</span></h2>
               <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto font-medium tracking-tight">
