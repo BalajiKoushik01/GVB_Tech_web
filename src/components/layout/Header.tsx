@@ -40,7 +40,7 @@ export function Header() {
                 <div className="flex items-center justify-between transition-all duration-500">
                     <Link href="/" onClick={(e) => { if (pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center gap-2 group">
                         <Logo showText={false} className={`transition-all duration-500 transform group-hover:scale-105 ${isScrolled ? 'w-10 h-10' : 'w-12 h-12'}`} />
-                        <span className={`font-bold tracking-tighter transition-all duration-500 text-slate-800 ${isScrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl whitespace-nowrap'}`}>
+                        <span className={`font-black tracking-tighter transition-all duration-500 text-black ${isScrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl whitespace-nowrap'}`}>
                             GVB <span className="text-gvb-blue">Tech</span>
                         </span>
                     </Link>
@@ -55,9 +55,9 @@ export function Header() {
                                         <Link
                                             href={link.href}
                                             onClick={(e) => { if (link.href === '/' && pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }}
-                                            className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-full flex items-center justify-center ${isActive
-                                                    ? "bg-gradient-to-r from-accent-start to-accent-end text-white shadow-[0_0_15px_rgba(6,182,212,0.5)]"
-                                                    : "text-slate-600 hover:text-gvb-blue hover:bg-slate-50"
+                                            className={`relative px-4 py-2 text-sm font-bold transition-all duration-300 rounded-full flex items-center justify-center ${isActive
+                                                    ? "bg-black text-white shadow-xl"
+                                                    : "text-black hover:text-gvb-blue hover:bg-slate-50"
                                                 }`}
                                         >
                                             {link.name}
