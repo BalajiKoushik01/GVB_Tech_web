@@ -32,7 +32,7 @@ export function Header() {
     return (
         <header
             className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled
-                ? "bg-white/70 backdrop-blur-2xl border-b border-slate-200 shadow-lg py-2"
+                ? "bg-black/40 backdrop-blur-2xl border-b border-white/10 shadow-2xl py-2"
                 : "bg-transparent py-4"
                 }`}
         >
@@ -44,7 +44,7 @@ export function Header() {
 
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center space-x-2">
-                        <ul className="flex items-center space-x-2 bg-white/40 backdrop-blur-md border border-slate-200 rounded-full px-2 py-1.5 shadow-sm">
+                        <ul className="flex items-center space-x-2 bg-black/20 backdrop-blur-md border border-white/10 rounded-full px-2 py-1.5 shadow-sm">
                             {navLinks.map((link) => {
                                 const isActive = pathname === link.href;
                                 return (
@@ -53,8 +53,8 @@ export function Header() {
                                             href={link.href}
                                             onClick={(e) => { if (link.href === '/' && pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }}
                                             className={`relative px-4 py-2 text-sm font-bold transition-all duration-300 rounded-full flex items-center justify-center ${isActive
-                                                    ? "bg-black text-white shadow-xl"
-                                                    : "text-black hover:text-gvb-blue hover:bg-slate-50"
+                                                    ? "bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                                                    : "text-slate-300 hover:text-white hover:bg-white/10"
                                                 }`}
                                         >
                                             {link.name}
@@ -73,7 +73,7 @@ export function Header() {
                     <div className="flex items-center space-x-4 md:hidden">
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="p-2 text-slate-800"
+                            className="p-2 text-white"
                             aria-label="Toggle menu"
                         >
                             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -90,7 +90,7 @@ export function Header() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-20 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 md:hidden"
+                        className="absolute top-20 left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 md:hidden"
                     >
                         <div className="px-4 pt-2 pb-6 space-y-2 shadow-2xl">
                             {navLinks.map((link) => (
@@ -104,7 +104,7 @@ export function Header() {
                                         }
                                         setIsMobileMenuOpen(false);
                                     }}
-                                    className="block px-3 py-3 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                                    className="block px-3 py-3 rounded-xl text-base font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
                                 >
                                     {link.name}
                                 </Link>

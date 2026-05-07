@@ -28,7 +28,7 @@ export function LiveStats() {
                                     {stat.value}{stat.suffix}
                                 </h3>
                             </div>
-                            <p className="text-slate-600 dark:text-slate-400 font-medium text-xs lg:text-sm tracking-tight">{stat.label}</p>
+                            <p className="text-slate-300 font-medium text-xs lg:text-sm tracking-tight">{stat.label}</p>
                         </GlassCard>
                     ))}
                 </div>
