@@ -87,34 +87,52 @@ export function Header() {
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-20 left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 md:hidden"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl md:hidden flex flex-col justify-center items-center px-6"
                     >
-                        <div className="px-4 pt-2 pb-6 space-y-2 shadow-2xl">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={(e) => {
-                                        if (link.href === '/' && pathname === '/') {
-                                            e.preventDefault();
-                                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                                        }
-                                        setIsMobileMenuOpen(false);
-                                    }}
-                                    className="block px-3 py-3 rounded-xl text-base font-semibold text-white hover:bg-white/10 transition-colors"
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-                            <div className="pt-4 px-3">
+                        <button 
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="absolute top-8 right-8 p-3 text-white bg-white/5 rounded-full border border-white/10"
+                        >
+                            <X className="w-8 h-8" />
+                        </button>
+
+                        <div className="flex flex-col space-y-8 text-center w-full">
+                            {navLinks.map((link, idx) => {
+                                const isActive = pathname === link.href;
+                                return (
+                                    <motion.div
+                                        key={link.name}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: idx * 0.1 }}
+                                    >
+                                        <Link
+                                            href={link.href}
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className={`text-5xl font-black uppercase tracking-tighter transition-all ${
+                                                isActive ? "text-gvb-cyan" : "text-white/60 hover:text-white"
+                                            }`}
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    </motion.div>
+                                );
+                            })}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.5 }}
+                                className="pt-12"
+                            >
                                 <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <Button className="w-full">Get Started</Button>
+                                    <Button size="lg" className="w-full h-20 text-xl font-black uppercase tracking-widest bg-white text-black rounded-2xl">
+                                        Get Started
+                                    </Button>
                                 </Link>
-                            </div>
+                            </motion.div>
                         </div>
                     </motion.div>
                 )}

@@ -53,16 +53,16 @@ export function MarketDashboard() {
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#020617] to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#020617] to-transparent z-10 pointer-events-none" />
 
-            <div className="absolute left-6 z-20 flex items-center text-white text-[10px] tracking-widest font-bold uppercase py-1.5 px-4 rounded-full border border-white/10 shadow-sm bg-black/60 backdrop-blur-md">
-                <Activity className="w-4 h-4 mr-2 text-gvb-cyan animate-pulse" />
-                Live Market Pulse
+            <div className="absolute left-4 z-20 hidden sm:flex items-center text-white text-[9px] tracking-widest font-black uppercase py-1.5 px-3 rounded-full border border-white/10 shadow-sm bg-black/80 backdrop-blur-md">
+                <Activity className="w-3 h-3 mr-2 text-gvb-cyan animate-pulse" />
+                Live Pulse
             </div>
 
             <div className="flex animate-marquee whitespace-nowrap will-change-transform h-full items-center">
                 {tickerItems.map((ticker, idx) => (
-                    <div key={`${ticker.symbol}-${idx}`} className="flex items-center space-x-6 px-12 border-r border-white/10">
-                        <span className="text-white font-extrabold text-xs tracking-widest uppercase">{ticker.symbol}</span>
-                        <span className="text-white font-mono text-sm tracking-tighter font-black">
+                    <div key={`${ticker.symbol}-${idx}`} className="flex items-center space-x-4 md:space-x-6 px-8 md:px-12 border-r border-white/10">
+                        <span className="text-white font-black text-[10px] md:text-xs tracking-widest uppercase">{ticker.symbol}</span>
+                        <span className="text-white font-mono text-xs md:text-sm tracking-tighter font-black">
                             {ticker.symbol.includes('/') ? '' : '₹'}{ticker.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </span>
                         <div className={`flex items-center text-[10px] font-bold px-2.5 py-1 rounded-full ${ticker.isUp ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>

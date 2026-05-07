@@ -67,7 +67,7 @@ export default function Home() {
           </motion.div>
 
           <MaskReveal>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-6 text-white leading-[0.85] tracking-tighter uppercase">
+            <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-6 text-white leading-[0.9] lg:leading-[0.85] tracking-tighter uppercase px-2">
               Beyond <br />
               <span className="text-gradient">Intelligence</span>
             </h1>
@@ -131,21 +131,21 @@ export default function Home() {
           <DataStreamLine />
           
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-24">
+            <div className="text-center mb-16 md:mb-24">
               <MaskReveal>
-                <h2 className="text-5xl md:text-[7rem] font-black mb-8 tracking-tighter text-white uppercase">Our Ecosystem</h2>
+                <h2 className="text-4xl md:text-[7rem] font-black mb-6 md:mb-8 tracking-tighter text-white uppercase px-2">Our Ecosystem</h2>
               </MaskReveal>
               <MaskReveal delay={0.2}>
-                <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto font-bold tracking-tight leading-relaxed">
+                <p className="text-lg md:text-2xl text-white max-w-3xl mx-auto font-bold tracking-tight leading-relaxed px-6">
                   Premium engineering solutions designed with liquid precision and architectural integrity.
                 </p>
               </MaskReveal>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
               {services.map((service) => (
                 <GlassCard key={service.title} data-cursor="magnetic" className="group overflow-hidden border-white/10 hover:border-white/20 transition-all !bg-black/40 backdrop-blur-xl duration-500 rounded-[2.5rem] flex flex-col items-center text-center">
-                  <div className="relative h-64 w-full">
+                  <div className="relative h-48 md:h-64 w-full">
                      <Image 
                         src={service.image} 
                         alt={service.title} 
@@ -154,16 +154,16 @@ export default function Home() {
                      />
                      <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent" />
                   </div>
-                  <div className="p-12 flex flex-col items-center">
-                      <div className={`w-16 h-16 mb-10 rounded-full bg-gradient-to-br ${service.color} flex items-center justify-center transform group-hover:scale-110 transition-all duration-500 shadow-[0_0_40px_rgba(0,163,255,0.2)]`}>
-                        <service.icon className="w-7 h-7 text-white" />
+                  <div className="p-8 md:p-12 flex flex-col items-center">
+                      <div className={`w-14 h-14 md:w-16 md:h-16 mb-8 md:mb-10 rounded-full bg-gradient-to-br ${service.color} flex items-center justify-center transform group-hover:scale-110 transition-all duration-500 shadow-[0_0_40px_rgba(0,163,255,0.2)]`}>
+                        <service.icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
                       </div>
-                      <h3 className="text-3xl font-black mb-6 text-white uppercase tracking-tighter">{service.title}</h3>
-                      <p className="text-white text-lg font-bold leading-relaxed mb-10">
+                      <h3 className="text-2xl md:text-3xl font-black mb-4 md:mb-6 text-white uppercase tracking-tighter">{service.title}</h3>
+                      <p className="text-white text-base md:text-lg font-bold leading-relaxed mb-8 md:mb-10">
                         {service.description}
                       </p>
-                      <Link href="/services" className="inline-flex items-center text-white font-black group-hover:text-gvb-cyan transition-all text-xs uppercase tracking-[0.25em] border-b-2 border-white/30 hover:border-gvb-cyan pb-1">
-                        Explore Strategy <ArrowRight className="ml-2 w-5 h-5" />
+                      <Link href="/services" className="inline-flex items-center text-white font-black group-hover:text-gvb-cyan transition-all text-[10px] md:text-xs uppercase tracking-[0.25em] border-b-2 border-white/30 hover:border-gvb-cyan pb-1">
+                        Explore Strategy <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
                       </Link>
                   </div>
                 </GlassCard>
