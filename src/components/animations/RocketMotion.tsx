@@ -45,19 +45,28 @@ export const RocketMotion = memo(() => {
                     <path d="M80,110 L95,135 L80,135 Z" fill="#00A3FF" />
                 </svg>
 
-                {/* Engine Flame (Lightweight Circle Logic) */}
+                {/* Engine Flame (Lightweight Circle Logic - No Blur) */}
                 <motion.div
                     style={{ scaleY: flameScale, opacity: flameOpacity }}
-                    className="mt-[-2px] origin-top"
+                    className="mt-[-2px] origin-top flex flex-col items-center"
                 >
-                    <div className="w-10 h-32 bg-gradient-to-b from-launch-yellow via-launch-orange to-transparent blur-[16px] rounded-full" />
-                    <div className="w-6 h-20 bg-white absolute top-0 left-1/2 -translate-x-1/2 blur-[8px] opacity-70" />
+                    <div 
+                        className="w-14 h-36 rounded-full" 
+                        style={{ background: "radial-gradient(ellipse at top, rgba(253, 224, 71, 0.9) 0%, rgba(249, 115, 22, 0.7) 40%, transparent 70%)" }}
+                    />
+                    <div 
+                        className="w-6 h-24 absolute top-0 left-1/2 -translate-x-1/2 opacity-90"
+                        style={{ background: "radial-gradient(ellipse at top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 80%)" }}
+                    />
                 </motion.div>
                 
-                {/* Thruster Glow Background Overlay */}
+                {/* Thruster Glow Background Overlay (No Blur) */}
                 <motion.div
-                    style={{ opacity: flameOpacity }}
-                    className="absolute bottom-[-50px] w-[150px] h-[150px] bg-launch-orange/10 blur-[80px] rounded-full z-[-1]"
+                    style={{ 
+                        opacity: flameOpacity,
+                        background: "radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, transparent 60%)" 
+                    }}
+                    className="absolute bottom-[-60px] w-[200px] h-[200px] rounded-full z-[-1]"
                 />
             </motion.div>
         </div>

@@ -23,6 +23,7 @@ module.exports = {
         'float': 'float 6s ease-in-out infinite',
         'rocket-shake': 'rocket-shake 0.1s ease-in-out infinite',
         'flame-pulse': 'flame-pulse 0.5s ease-in-out infinite',
+        'shimmer': 'shimmer 3s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -38,6 +39,10 @@ module.exports = {
         'flame-pulse': {
           '0%, 100%': { opacity: '0.8', transform: 'scale(1)' },
           '50%': { opacity: '1', transform: 'scale(1.1)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '200% center' },
+          '100%': { backgroundPosition: '-200% center' },
         },
       },
     },

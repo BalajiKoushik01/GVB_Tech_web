@@ -38,11 +38,8 @@ export function Header() {
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between transition-all duration-500">
-                    <Link href="/" onClick={(e) => { if (pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center gap-2 group">
-                        <Logo showText={false} className={`transition-all duration-500 transform group-hover:scale-105 ${isScrolled ? 'w-10 h-10' : 'w-12 h-12'}`} />
-                        <span className={`font-black tracking-tighter transition-all duration-500 text-black ${isScrolled ? 'text-lg md:text-xl' : 'text-xl md:text-2xl whitespace-nowrap'}`}>
-                            GVB <span className="text-gvb-blue">Tech</span>
-                        </span>
+                    <Link href="/" onClick={(e) => { if (pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center group">
+                        <Logo className={`transition-all duration-500 origin-left ${isScrolled ? 'scale-90' : 'scale-100'}`} />
                     </Link>
 
                     {/* Desktop Nav */}

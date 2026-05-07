@@ -10,6 +10,8 @@ import { MagneticWrapper } from "@/components/animations/MagneticWrapper";
 import Link from "next/link";
 import { MarketDashboard } from "@/components/ui/MarketDashboard";
 import { LiveStats } from "@/components/ui/LiveStats";
+import { MaskReveal } from "@/components/animations/MaskReveal";
+import { DataStreamLine } from "@/components/animations/DataStreamLine";
 import Image from "next/image";
 
 const services = [
@@ -64,40 +66,39 @@ export default function Home() {
             <span className="text-[11px] font-black tracking-[0.25em] text-black uppercase">Launch Protocol Initiated</span>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, type: "spring" }}
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-10 text-black leading-[0.85] tracking-tighter"
-          >
-            Empowering <br />
-            <span className="text-gradient">Possibilities</span>
-          </motion.h1>
+          <MaskReveal>
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-6 text-black leading-[0.85] tracking-tighter">
+              Empowering <br />
+              <span className="text-gradient">Possibilities</span>
+            </h1>
+          </MaskReveal>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="text-lg md:text-2xl text-black mb-16 max-w-3xl mx-auto font-bold tracking-tight px-4 leading-relaxed opacity-80"
-          >
-            GVB Tech Solutions delivers world-class infrastructure and 
-            algorithmic excellence for the next generation of industry leaders.
-          </motion.p>
+          <MaskReveal delay={0.2}>
+            <p className="text-lg md:text-2xl text-black mb-16 max-w-3xl mx-auto font-bold tracking-tight px-4 leading-relaxed opacity-80">
+              GVB Tech Solutions delivers world-class infrastructure and 
+              algorithmic excellence for the next generation of industry leaders.
+            </p>
+          </MaskReveal>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
             className="flex flex-col sm:flex-row gap-8 justify-center items-center w-full px-4 mb-32"
           >
             <MagneticWrapper strength={0.4} radius={100}>
               <Link href="/contact" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full h-16 px-12 shadow-2xl bg-black text-white hover:bg-slate-900 border-none font-black uppercase tracking-widest text-sm">Initiate Launch</Button>
+                <Button size="lg" className="w-full h-16 px-12 shadow-2xl bg-black text-white hover:bg-slate-900 border-none font-black uppercase tracking-widest text-sm relative overflow-hidden group">
+                  <span className="relative z-10">Initiate Launch</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-gvb-blue to-gvb-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </Button>
               </Link>
             </MagneticWrapper>
             <MagneticWrapper strength={0.4} radius={100}>
               <Link href="/services" className="w-full sm:w-auto">
-                <Button size="lg" variant="glass" className="w-full h-16 px-12 liquid-glass border-black/20 text-black font-black uppercase text-sm tracking-widest bg-white/20">Solutions Hub</Button>
+                <Button size="lg" variant="glass" className="w-full h-16 px-12 liquid-glass border-black/20 text-black font-black uppercase text-sm tracking-widest bg-white/20 hover:bg-white/40">
+                  Solutions Hub
+                </Button>
               </Link>
             </MagneticWrapper>
           </motion.div>
@@ -126,14 +127,20 @@ export default function Home() {
       <div className="relative z-10 bg-transparent border-t border-black/5">
         <MarketDashboard />
 
-        {/* Services Section */}
-        <section className="py-32 md:py-48 px-4 relative">
-          <div className="max-w-7xl mx-auto">
+        {/* Services Section with SVG Data Stream */}
+        <section className="py-32 md:py-48 px-4 relative overflow-hidden">
+          <DataStreamLine />
+          
+          <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-24">
-              <h2 className="text-5xl md:text-[7rem] font-black mb-8 tracking-tighter text-black uppercase">Our Ecosystem</h2>
-              <p className="text-xl md:text-2xl text-black max-w-3xl mx-auto font-bold tracking-tight leading-relaxed opacity-80">
-                Premium engineering solutions designed with liquid precision and architectural integrity.
-              </p>
+              <MaskReveal>
+                <h2 className="text-5xl md:text-[7rem] font-black mb-8 tracking-tighter text-black uppercase">Our Ecosystem</h2>
+              </MaskReveal>
+              <MaskReveal delay={0.2}>
+                <p className="text-xl md:text-2xl text-black max-w-3xl mx-auto font-bold tracking-tight leading-relaxed opacity-80">
+                  Premium engineering solutions designed with liquid precision and architectural integrity.
+                </p>
+              </MaskReveal>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">

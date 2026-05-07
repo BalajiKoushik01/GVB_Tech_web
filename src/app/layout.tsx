@@ -36,6 +36,8 @@ export const metadata: Metadata = {
   robots: "index, follow",
 };
 
+import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,6 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-[100dvh] flex flex-col text-slate-800 bg-transparent selection:bg-gvb-blue/20 selection:text-gvb-deep overflow-x-hidden`}>
+        <SmoothScrollProvider>
           <Header />
           <LaunchBackground />
           <main className="flex-1 relative z-10">
@@ -53,8 +56,9 @@ export default function RootLayout({
           <ScrollToTop />
           <ChatWidget />
           <CustomCursor />
-        <Analytics />
-        <SpeedInsights />
+          <Analytics />
+          <SpeedInsights />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

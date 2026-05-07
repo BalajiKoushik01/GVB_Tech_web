@@ -15,9 +15,8 @@ export function Footer() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
                     {/* Brand Col */}
                     <div className="sm:col-span-2 lg:col-span-2">
-                        <Link href="/" onClick={(e) => { if (pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center gap-2 group mb-6">
-                            <Logo showText={false} className="w-10 h-10 transition-transform transform group-hover:scale-110" />
-                            <span className="text-2xl font-black tracking-tighter text-black uppercase">GVB <span className="text-gvb-blue">Tech</span></span>
+                        <Link href="/" onClick={(e) => { if (pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center group mb-6">
+                            <Logo className="scale-110 md:scale-125 origin-left mb-2 transition-transform duration-500" />
                         </Link>
                         <p className="text-base text-black mb-6 font-bold max-w-sm opacity-90">
                             Engineering tomorrow&apos;s solutions with proprietary trading, robust software, and strategic growth infrastructure.
