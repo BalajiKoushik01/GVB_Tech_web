@@ -66,21 +66,21 @@ export default function PortfolioPage() {
     );
 
     return (
-        <div className="pt-24 pb-16 min-h-[100dvh]">
+        <div className="pt-20 md:pt-24 pb-16 min-h-[100dvh]">
             {/* Header */}
-            <section className="px-4 py-16 text-center">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-white uppercase tracking-tighter">Our <span className="text-gradient">Work</span></h1>
-                <p className="text-base md:text-lg text-white/70 max-w-2xl mx-auto mb-10 md:mb-12 font-bold">
+            <section className="px-6 py-12 md:py-16 text-center">
+                <h1 className="text-4xl md:text-7xl font-black mb-4 md:mb-6 text-white uppercase tracking-tighter leading-none">Our <span className="text-gradient">Work</span></h1>
+                <p className="text-base md:text-xl text-white/70 max-w-2xl mx-auto mb-10 md:mb-12 font-bold leading-relaxed px-2">
                     Explore a selection of our finest projects across trading systems, enterprise software, and strategic consulting.
                 </p>
 
                 {/* Filters */}
-                <div className="flex flex-wrap justify-center gap-2 mb-16">
+                <div className="flex flex-wrap justify-center gap-1.5 md:gap-2 mb-10 md:mb-16 px-4">
                     {categories.map((cat) => (
                         <button
                             key={cat}
                             onClick={() => setFilter(cat)}
-                            className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 relative flex items-center ${filter === cat
+                            className={`px-3 md:px-6 py-2 rounded-full text-[10px] md:text-sm font-black uppercase tracking-widest transition-all duration-300 relative flex items-center ${filter === cat
                                 ? "bg-white text-black shadow-[0_0_30px_rgba(255,255,255,0.3)]"
                                 : "bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/5"
                                 }`}

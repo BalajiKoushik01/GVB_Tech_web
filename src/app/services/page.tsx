@@ -61,14 +61,14 @@ export default function ServicesPage() {
     return (
         <div className="relative min-h-screen">
             
-            <div className="pt-32 pb-16 relative z-10">
+            <div className="pt-20 md:pt-32 pb-16 relative z-10">
                 {/* Page Hero */}
-                <section className="px-4 py-20 text-center relative overflow-hidden">
+                <section className="px-6 py-12 md:py-20 text-center relative overflow-hidden">
                     <div className="max-w-4xl mx-auto relative z-10">
                         <motion.h1
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 text-white tracking-tighter uppercase"
+                            className="text-4xl md:text-7xl lg:text-8xl font-black mb-6 text-white tracking-tighter uppercase leading-[0.9]"
                         >
                             Solutions for the <br />
                             <span className="text-gradient">Next Generation</span>
@@ -77,7 +77,7 @@ export default function ServicesPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-xl md:text-2xl text-white/70 font-bold tracking-tight"
+                            className="text-lg md:text-2xl text-white/70 font-bold tracking-tight leading-relaxed px-4"
                         >
                             Explore our comprehensive suite of high-performance engineering systems.
                         </motion.p>
@@ -94,7 +94,7 @@ export default function ServicesPage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-100px" }}
                                 transition={{ duration: 0.8 }}
-                                 className={`flex flex-col ${idx % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-16`}
+                                 className={`flex flex-col ${idx % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-10 md:gap-16`}
                             >
                                 {/* Visual Side */}
                                 <div className="flex-1 w-full relative group">

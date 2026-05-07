@@ -57,19 +57,27 @@
 @layer utilities {
   .liquid-glass {
     background: var(--glass-bg);
-    backdrop-filter: blur(40px) saturate(210%);
-    -webkit-backdrop-filter: blur(40px) saturate(210%);
+    backdrop-filter: blur(20px) saturate(210%);
+    -webkit-backdrop-filter: blur(20px) saturate(210%);
     border: 1px solid var(--glass-border);
     border-top: 1px solid var(--glass-highlight);
     border-left: 1px solid var(--glass-highlight);
     box-shadow: var(--glass-shadow);
-    border-radius: 24px;
+    border-radius: 20px;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform, backdrop-filter;
   }
 
+  @media (min-width: 768px) {
+    .liquid-glass {
+      backdrop-filter: blur(40px) saturate(210%);
+      -webkit-backdrop-filter: blur(40px) saturate(210%);
+      border-radius: 24px;
+    }
+  }
+
   .liquid-glass:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--gvb-blue);
     transform: translateY(-4px) scale(1.02);
     box-shadow: 0 20px 80px 0 rgba(0, 163, 255, 0.2);
@@ -84,6 +92,12 @@
   }
 
   .animate-marquee {
-    animation: marquee 40s linear infinite;
+    animation: marquee 30s linear infinite;
+  }
+
+  @media (max-width: 640px) {
+    .animate-marquee {
+      animation: marquee 20s linear infinite;
+    }
   }
 }

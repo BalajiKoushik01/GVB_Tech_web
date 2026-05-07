@@ -58,14 +58,14 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="pt-24 pb-16 min-h-screen bg-transparent relative overflow-hidden">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-start/5 rounded-full blur-[150px] pointer-events-none" />
+        <div className="pt-20 md:pt-24 pb-16 min-h-screen bg-transparent relative overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gvb-blue/5 rounded-full blur-[150px] pointer-events-none" />
 
-            <section className="px-4 py-16 text-center">
+            <section className="px-6 py-12 md:py-16 text-center">
                 <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-4xl sm:text-5xl md:text-7xl lg:text-[6rem] font-bold mb-4 md:mb-6 tracking-tighter text-white uppercase"
+                    className="text-4xl sm:text-5xl md:text-7xl lg:text-[6rem] font-black mb-4 md:mb-6 tracking-tighter text-white uppercase leading-none"
                 >
                     Get in <span className="text-gradient">Touch</span>
                 </motion.h1>
@@ -73,7 +73,7 @@ export default function ContactPage() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-12 md:mb-16 font-bold"
+                    className="text-base md:text-xl text-white/70 max-w-2xl mx-auto mb-10 md:mb-16 font-bold"
                 >
                     Ready to start your next big project? Contact our team of experts for a comprehensive consultation.
                 </motion.p>
@@ -168,12 +168,12 @@ export default function ContactPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label htmlFor="message" className="text-sm font-medium text-foreground/80">Your Message *</label>
+                                        <label htmlFor="message" className="text-xs md:text-sm font-black text-white/40 uppercase tracking-widest">Your Message *</label>
                                         <textarea
                                             id="message"
                                             {...register("message")}
                                             rows={5}
-                                            className={`w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border ${errors.message ? 'border-red-500' : 'border-white/10 dark:border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all resize-none`}
+                                            className={`w-full bg-white/5 backdrop-blur-md border ${errors.message ? 'border-red-500' : 'border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:ring-2 focus:ring-gvb-cyan focus:bg-white/10 transition-all resize-none`}
                                             placeholder="Tell us about your project..."
                                         />
                                         {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
@@ -195,12 +195,12 @@ export default function ContactPage() {
 function InfoRow({ icon: Icon, title, detail }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>, title: string, detail: string }) {
     return (
         <div className="flex items-start space-x-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-start/20 to-accent-end/20 text-accent-start flex items-center justify-center flex-shrink-0 shadow-inner">
+            <div className="w-10 h-10 rounded-full bg-gvb-cyan/10 text-gvb-cyan flex items-center justify-center flex-shrink-0 border border-gvb-cyan/20">
                 <Icon className="w-5 h-5" />
             </div>
             <div>
-                <h4 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] mb-1">{title}</h4>
-                <p className="text-white font-bold text-lg">{detail}</p>
+                <h4 className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">{title}</h4>
+                <p className="text-white font-bold text-base md:text-lg break-words">{detail}</p>
             </div>
         </div>
     );

@@ -47,8 +47,8 @@ export default function Home() {
       {/* Background System (Fixed Depth - Rocket Only) */}
       <RocketMotion />
 
-      {/* Hero Section (Definitive Layering V11.2) */}
-      <section className="relative min-h-screen flex flex-col items-center justify-start overflow-visible z-30 pt-[160px] px-4">
+      {/* Hero Section (Definitive Layering V11.5) */}
+      <section className="relative min-h-[90vh] flex flex-col items-center justify-start overflow-visible z-30 pt-24 sm:pt-32 md:pt-[160px] px-6">
         <motion.div
           style={{ scale: heroScale }}
           initial={{ opacity: 0 }}
@@ -61,9 +61,9 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="inline-flex py-2 px-6 rounded-full bg-white/5 backdrop-blur-xl mb-14 border border-gvb-cyan/30 shadow-[0_0_20px_rgba(34,211,238,0.2)] whitespace-nowrap"
+            className="inline-flex py-1.5 px-4 md:py-2 md:px-6 rounded-full bg-white/5 backdrop-blur-xl mb-8 md:mb-14 border border-gvb-cyan/30 shadow-[0_0_20px_rgba(34,211,238,0.2)] whitespace-nowrap"
           >
-            <span className="text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Advanced Infrastructure Protocol</span>
+            <span className="text-[9px] md:text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Advanced Infrastructure Protocol</span>
           </motion.div>
 
           <MaskReveal>
@@ -74,7 +74,7 @@ export default function Home() {
           </MaskReveal>
 
           <MaskReveal delay={0.2}>
-            <p className="text-lg md:text-2xl text-white mb-16 max-w-3xl mx-auto font-bold tracking-tight px-4 leading-relaxed">
+            <p className="text-base md:text-2xl text-white/90 mb-10 md:mb-16 max-w-2xl mx-auto font-bold tracking-tight px-2 leading-relaxed">
               GVB Tech Solutions delivers world-class infrastructure and 
               algorithmic excellence for the next generation of industry leaders.
             </p>
@@ -84,7 +84,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-col sm:flex-row gap-8 justify-center items-center w-full px-4 mb-32"
+            className="flex flex-col sm:flex-row gap-4 md:gap-8 justify-center items-center w-full max-w-md mx-auto mb-20 md:mb-32"
           >
             <MagneticWrapper strength={0.4} radius={100}>
               <Link href="/contact" className="w-full sm:w-auto" data-cursor="magnetic">
@@ -175,11 +175,11 @@ export default function Home() {
         <LiveStats />
         
         {/* Final CTA */}
-        <section className="py-40 px-4 flex justify-center">
-          <GlassCard hoverEffect={false} className="max-w-6xl w-full text-center py-32 px-8 relative overflow-hidden !bg-black/40 backdrop-blur-3xl border-white/10 rounded-[3rem]">
+        <section className="py-20 md:py-40 px-6 flex justify-center">
+          <GlassCard hoverEffect={false} className="max-w-6xl w-full text-center py-16 md:py-32 px-6 md:px-12 relative overflow-hidden !bg-black/40 backdrop-blur-3xl border-white/10 rounded-[2.5rem] md:rounded-[3rem]">
             <div className="relative z-10">
-              <h2 className="text-5xl md:text-8xl font-black mb-10 tracking-tighter text-white uppercase">Ready to <span className="text-gradient">Launch?</span></h2>
-              <p className="text-xl md:text-2xl text-slate-300 mb-14 max-w-3xl mx-auto font-bold tracking-tight opacity-90">
+              <h2 className="text-4xl md:text-8xl font-black mb-6 md:mb-10 tracking-tighter text-white uppercase leading-none">Ready to <span className="text-gradient">Launch?</span></h2>
+              <p className="text-base md:text-2xl text-slate-300 mb-10 md:mb-14 max-w-2xl mx-auto font-bold tracking-tight opacity-90">
                 Integrate our world-class architecture to accelerate your digital and operational capabilities.
               </p>
               <div className="flex justify-center">

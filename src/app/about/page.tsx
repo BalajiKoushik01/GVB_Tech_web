@@ -9,21 +9,21 @@ export default function AboutPage() {
     return (
         <div className="relative min-h-screen">
             
-            <div className="pt-32 pb-16 relative z-10">
-                <section className="px-4 py-20 max-w-7xl mx-auto text-center relative z-10">
+            <div className="pt-20 md:pt-32 pb-16 relative z-10">
+                <section className="px-6 py-12 md:py-20 max-w-7xl mx-auto text-center relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="inline-flex items-center space-x-3 px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-8"
+                        className="inline-flex items-center space-x-3 px-5 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-6 md:mb-8"
                     >
                         <span className="w-1.5 h-1.5 bg-gvb-cyan rounded-full animate-pulse" />
-                        <span className="text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Corporate Evolution</span>
+                        <span className="text-[9px] md:text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Corporate Evolution</span>
                     </motion.div>
                     
                     <motion.h1
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-white tracking-tighter"
+                        className="text-4xl md:text-7xl lg:text-8xl font-black mb-6 text-white tracking-tighter uppercase leading-none"
                     >
                         Our <span className="text-gradient">Story</span>
                     </motion.h1>
@@ -31,7 +31,7 @@ export default function AboutPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto font-bold tracking-tight leading-relaxed"
+                        className="text-base md:text-2xl text-white/70 max-w-3xl mx-auto font-bold tracking-tight leading-relaxed px-2"
                     >
                         GVB Tech Solutions was born from the vision of bridging elite proprietary trading intelligence
                         with world-class enterprise software development. We engineer the future.
@@ -47,12 +47,12 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                            <GlassCard className="h-full p-8 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10 group">
-                                <div className="w-16 h-16 rounded-2xl bg-gvb-blue/10 flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform">
-                                    <Target className="w-8 h-8 text-gvb-blue" />
+                            <GlassCard className="h-full p-6 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10 group">
+                                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gvb-blue/10 flex items-center justify-center mb-6 md:mb-8 transform group-hover:scale-110 transition-transform">
+                                    <Target className="w-7 h-7 md:w-8 md:h-8 text-gvb-blue" />
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white tracking-tight uppercase">Our Mission</h2>
-                                <p className="text-lg md:text-xl text-white/70 font-bold leading-relaxed">
+                                <h2 className="text-2xl md:text-4xl font-black mb-4 md:mb-6 text-white tracking-tight uppercase">Our Mission</h2>
+                                <p className="text-base md:text-xl text-white/70 font-bold leading-relaxed">
                                     To empower global businesses by delivering transformative digital solutions, merging strategic business consulting with cutting-edge technology to unlock unprecedented growth and efficiency.
                                 </p>
                             </GlassCard>
