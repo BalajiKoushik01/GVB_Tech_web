@@ -44,6 +44,39 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full relative bg-transparent selection:bg-white selection:text-black">
+      {/* Mobile Signature: Scroll Progress Ring */}
+      <motion.div
+        className="fixed bottom-6 right-6 w-14 h-14 z-[100] md:hidden pointer-events-none"
+        style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [0, 1]) }}
+      >
+        <svg className="w-full h-full transform -rotate-90">
+          <circle
+            cx="28"
+            cy="28"
+            r="24"
+            stroke="rgba(255,255,255,0.1)"
+            strokeWidth="4"
+            fill="none"
+          />
+          <motion.circle
+            cx="28"
+            cy="28"
+            r="24"
+            stroke="url(#gradient)"
+            strokeWidth="4"
+            fill="none"
+            strokeDasharray="100 100"
+            style={{ pathLength: scrollYProgress }}
+          />
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#22D3EE" />
+              <stop offset="100%" stopColor="#6366F1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </motion.div>
+
       {/* Background System (Fixed Depth - Rocket Only) */}
       <RocketMotion />
 
@@ -67,14 +100,14 @@ export default function Home() {
           </motion.div>
 
           <MaskReveal>
-            <h1 className="text-4xl sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-6 text-white leading-[0.9] lg:leading-[0.85] tracking-tighter uppercase px-2">
+            <h1 className="text-[1.75rem] sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-4 text-white leading-[1] lg:leading-[0.85] tracking-tighter uppercase px-1">
               Beyond <br />
               <span className="text-gradient">Intelligence</span>
             </h1>
           </MaskReveal>
 
           <MaskReveal delay={0.2}>
-            <p className="text-base md:text-2xl text-white/90 mb-10 md:mb-16 max-w-2xl mx-auto font-bold tracking-tight px-2 leading-relaxed">
+            <p className="text-xs md:text-2xl text-white/80 mb-6 md:mb-16 max-w-xl mx-auto font-bold tracking-tight px-4 leading-relaxed">
               GVB Tech Solutions delivers world-class infrastructure and 
               algorithmic excellence for the next generation of industry leaders.
             </p>
@@ -131,21 +164,21 @@ export default function Home() {
           <DataStreamLine />
           
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-16 md:mb-24">
+            <div className="text-center mb-10 md:mb-24">
               <MaskReveal>
-                <h2 className="text-4xl md:text-[7rem] font-black mb-6 md:mb-8 tracking-tighter text-white uppercase px-2">Our Ecosystem</h2>
+                <h2 className="text-3xl md:text-[7rem] font-black mb-4 md:mb-8 tracking-tighter text-white uppercase px-2">Our Ecosystem</h2>
               </MaskReveal>
               <MaskReveal delay={0.2}>
-                <p className="text-lg md:text-2xl text-white max-w-3xl mx-auto font-bold tracking-tight leading-relaxed px-6">
+                <p className="text-base md:text-2xl text-white max-w-3xl mx-auto font-bold tracking-tight leading-relaxed px-4">
                   Premium engineering solutions designed with liquid precision and architectural integrity.
                 </p>
               </MaskReveal>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-12">
               {services.map((service) => (
-                <GlassCard key={service.title} data-cursor="magnetic" className="group overflow-hidden border-white/10 hover:border-white/20 transition-all !bg-black/40 backdrop-blur-xl duration-500 rounded-[2.5rem] flex flex-col items-center text-center">
-                  <div className="relative h-48 md:h-64 w-full">
+                <GlassCard key={service.title} data-cursor="magnetic" className="group overflow-hidden border-white/10 hover:border-white/20 transition-all !bg-black/40 backdrop-blur-xl duration-500 rounded-[1.5rem] md:rounded-[2.5rem] flex flex-col items-center text-center">
+                  <div className="relative h-40 md:h-64 w-full">
                      <Image 
                         src={service.image} 
                         alt={service.title} 
@@ -154,15 +187,15 @@ export default function Home() {
                      />
                      <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent" />
                   </div>
-                  <div className="p-8 md:p-12 flex flex-col items-center">
-                      <div className={`w-14 h-14 md:w-16 md:h-16 mb-8 md:mb-10 rounded-full bg-gradient-to-br ${service.color} flex items-center justify-center transform group-hover:scale-110 transition-all duration-500 shadow-[0_0_40px_rgba(0,163,255,0.2)]`}>
-                        <service.icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                  <div className="p-6 md:p-12 flex flex-col items-center">
+                      <div className={`w-12 h-12 md:w-16 md:h-16 mb-6 md:mb-10 rounded-full bg-gradient-to-br ${service.color} flex items-center justify-center transform group-hover:scale-110 transition-all duration-500 shadow-[0_0_40px_rgba(0,163,255,0.2)]`}>
+                        <service.icon className="w-5 h-5 md:w-7 md:h-7 text-white" />
                       </div>
-                      <h3 className="text-2xl md:text-3xl font-black mb-4 md:mb-6 text-white uppercase tracking-tighter">{service.title}</h3>
-                      <p className="text-white text-base md:text-lg font-bold leading-relaxed mb-8 md:mb-10">
+                      <h3 className="text-xl md:text-3xl font-black mb-3 md:mb-6 text-white uppercase tracking-tighter">{service.title}</h3>
+                      <p className="text-white text-sm md:text-lg font-bold leading-relaxed mb-6 md:mb-10 line-clamp-3">
                         {service.description}
                       </p>
-                      <Link href="/services" className="inline-flex items-center text-white font-black group-hover:text-gvb-cyan transition-all text-[10px] md:text-xs uppercase tracking-[0.25em] border-b-2 border-white/30 hover:border-gvb-cyan pb-1">
+                      <Link href="/services" className="inline-flex items-center text-white font-black group-hover:text-gvb-cyan transition-all text-[9px] md:text-xs uppercase tracking-[0.25em] border-b-2 border-white/30 hover:border-gvb-cyan pb-1">
                         Explore Strategy <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
                       </Link>
                   </div>

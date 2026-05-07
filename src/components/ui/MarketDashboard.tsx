@@ -60,13 +60,13 @@ export function MarketDashboard() {
 
             <div className="flex animate-marquee whitespace-nowrap will-change-transform h-full items-center">
                 {tickerItems.map((ticker, idx) => (
-                    <div key={`${ticker.symbol}-${idx}`} className="flex items-center space-x-4 md:space-x-6 px-8 md:px-12 border-r border-white/10">
-                        <span className="text-white font-black text-[10px] md:text-xs tracking-widest uppercase">{ticker.symbol}</span>
-                        <span className="text-white font-mono text-xs md:text-sm tracking-tighter font-black">
+                    <div key={`${ticker.symbol}-${idx}`} className="flex items-center space-x-3 md:space-x-6 px-4 md:px-12 border-r border-white/10">
+                        <span className="text-white font-black text-[9px] md:text-xs tracking-widest uppercase">{ticker.symbol}</span>
+                        <span className="text-white font-mono text-[10px] md:text-sm tracking-tighter font-black">
                             {ticker.symbol.includes('/') ? '' : '₹'}{ticker.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </span>
-                        <div className={`flex items-center text-[10px] font-bold px-2.5 py-1 rounded-full ${ticker.isUp ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
-                            {ticker.isUp ? <TrendingUp className="w-3 h-3 mr-1" /> : <TrendingDown className="w-3 h-3 mr-1" />}
+                        <div className={`flex items-center text-[8px] md:text-[10px] font-bold px-2 py-0.5 md:px-2.5 md:py-1 rounded-full ${ticker.isUp ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
+                            {ticker.isUp ? <TrendingUp className="w-2.5 h-2.5 md:w-3 md:h-3 mr-1" /> : <TrendingDown className="w-2.5 h-2.5 md:w-3 md:h-3 mr-1" />}
                             {ticker.isUp ? "+" : "-"}{ticker.randomChange}%
                         </div>
                     </div>

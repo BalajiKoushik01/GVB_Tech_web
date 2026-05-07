@@ -83,36 +83,40 @@ export function Header() {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl md:hidden flex flex-col justify-center items-center px-6"
+                        initial={{ x: "100%" }}
+                        animate={{ x: 0 }}
+                        exit={{ x: "100%" }}
+                        transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                        className="fixed inset-0 z-[60] bg-[#020617] md:hidden flex flex-col justify-center items-center px-6 overflow-hidden"
                     >
+                        {/* Signature Background: Technical Grid */}
+                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-transparent to-[#020617] pointer-events-none" />
+
                         <button 
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="absolute top-8 right-8 p-3 text-white bg-white/5 rounded-full border border-white/10"
+                            className="absolute top-6 right-6 p-3 text-white bg-white/5 rounded-full border border-white/10 z-10"
                         >
-                            <X className="w-8 h-8" />
+                            <X className="w-6 h-6" />
                         </button>
 
-                        <div className="flex flex-col space-y-8 text-center w-full">
+                        <div className="flex flex-col space-y-6 text-center w-full relative z-10">
                             {navLinks.map((link, idx) => {
                                 const isActive = pathname === link.href;
                                 return (
                                     <motion.div
                                         key={link.name}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: idx * 0.1 }}
+                                        initial={{ opacity: 0, x: 50 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: idx * 0.05 + 0.2 }}
                                     >
                                         <Link
                                             href={link.href}
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className={`text-5xl font-black uppercase tracking-tighter transition-all ${
+                                            className={`text-4xl font-black uppercase tracking-tighter transition-all block ${
                                                 isActive ? "text-gvb-cyan" : "text-white/60 hover:text-white"
                                             }`}
                                         >
@@ -122,13 +126,13 @@ export function Header() {
                                 );
                             })}
                             <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.5 }}
-                                className="pt-12"
+                                className="pt-8"
                             >
                                 <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <Button size="lg" className="w-full h-20 text-xl font-black uppercase tracking-widest bg-white text-black rounded-2xl">
+                                    <Button size="lg" className="w-full h-16 text-lg font-black uppercase tracking-widest bg-white text-black rounded-xl">
                                         Get Started
                                     </Button>
                                 </Link>
