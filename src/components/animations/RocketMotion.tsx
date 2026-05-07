@@ -26,10 +26,8 @@ export const RocketMotion = memo(() => {
             >
                 {/* 2D High-Performance SVG Rocket (Recovery V9.0) */}
                 <svg 
-                    width="160" 
-                    height="240" 
                     viewBox="0 0 100 150" 
-                    className="drop-shadow-[0_20px_50px_rgba(0,163,255,0.2)]"
+                    className="w-24 h-36 md:w-40 md:h-60 drop-shadow-[0_20px_50px_rgba(0,163,255,0.2)]"
                 >
                     {/* Rocket Body (Single Path for Efficiency) */}
                     <path 
@@ -58,7 +56,7 @@ export const RocketMotion = memo(() => {
                             opacity: [0.7, 0.9, 0.7]
                         }}
                         transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-16 h-40 rounded-full" 
+                        className="w-10 h-24 md:w-16 md:h-40 rounded-full" 
                         style={{ background: "radial-gradient(ellipse at top, rgba(249, 115, 22, 0.8) 0%, rgba(249, 115, 22, 0.4) 40%, transparent 80%)" }}
                     />
                     {/* Inner Core */}
@@ -68,7 +66,7 @@ export const RocketMotion = memo(() => {
                             opacity: [0.8, 1, 0.8]
                         }}
                         transition={{ duration: 0.4, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-8 h-28 absolute top-0 left-1/2 -translate-x-1/2"
+                        className="w-4 h-16 md:w-8 md:h-28 absolute top-0 left-1/2 -translate-x-1/2"
                         style={{ background: "radial-gradient(ellipse at top, rgba(253, 224, 71, 0.9) 0%, rgba(249, 115, 22, 0) 70%)" }}
                     />
                     {/* Heat Pulse (Flicker Core) */}

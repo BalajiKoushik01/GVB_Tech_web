@@ -150,7 +150,7 @@ export default function Home() {
                         src={service.image} 
                         alt={service.title} 
                         fill 
-                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 opacity-40 group-hover:opacity-100"
+                        className="object-cover md:grayscale group-hover:grayscale-0 transition-all duration-700 opacity-60 group-hover:opacity-100"
                      />
                      <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent" />
                   </div>

@@ -103,7 +103,7 @@ export default function ServicesPage() {
                                         <img 
                                             src={service.image} 
                                             alt={service.title}
-                                            className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+                                            className="w-full h-full object-cover md:grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                                         />
                                     </GlassCard>
                                 </div>

@@ -106,12 +106,11 @@ export default function PortfolioPage() {
                                 >
                                     <GlassCard className="p-0 overflow-hidden group h-full flex flex-col cursor-pointer border-white/5 hover:border-white/20 bg-white/5 backdrop-blur-3xl">
                                         <div className="relative h-64 overflow-hidden bg-gray-200 dark:bg-gray-800">
-                                            {/* Using standard img tag with Unsplash for demo since next/image needs domain config usually */}
-                                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                                            <img
-                                                src={project.image}
-                                                alt={project.title}
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            <Image 
+                                                src={project.image} 
+                                                alt={project.title} 
+                                                fill 
+                                                className="object-cover md:grayscale group-hover:grayscale-0 transition-all duration-700 opacity-80 group-hover:opacity-100 group-hover:scale-105"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
 

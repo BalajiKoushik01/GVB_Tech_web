@@ -25,8 +25,19 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
         const rotateX = useTransform(mouseY, [0, 1], [10, -10]);
         const rotateY = useTransform(mouseX, [0, 1], [-10, 10]);
 
+        const [isMobile, setIsMobile] = React.useState(false);
+
+        React.useEffect(() => {
+            const checkMobile = () => {
+                setIsMobile(window.innerWidth < 768);
+            };
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
+            return () => window.removeEventListener('resize', checkMobile);
+        }, []);
+
         function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-            if (!containerRef.current || !hoverEffect) return;
+            if (!containerRef.current || !hoverEffect || isMobile) return;
             const rect = containerRef.current.getBoundingClientRect();
             // Calculate relative position 0 to 1
             const width = rect.width;
@@ -39,7 +50,7 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
         }
 
         function handleMouseLeave() {
-            if (!hoverEffect) return;
+            if (!hoverEffect || isMobile) return;
             // Snap back to center
             x.set(0.5);
             y.set(0.5);
@@ -57,8 +68,8 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 style={{
-                    rotateX: hoverEffect ? rotateX : 0,
-                    rotateY: hoverEffect ? rotateY : 0,
+                    rotateX: (hoverEffect && !isMobile) ? rotateX : 0,
+                    rotateY: (hoverEffect && !isMobile) ? rotateY : 0,
                     transformStyle: "preserve-3d",
                 }}
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}

@@ -19,6 +19,9 @@ export function MagneticWrapper({ children, strength = 0.5, radius = 80 }: Magne
     const y = useSpring(0, springConfig);
 
     useEffect(() => {
+        const checkMobile = () => window.innerWidth < 768;
+        if (checkMobile()) return;
+
         const handleMouseMove = (e: MouseEvent) => {
             if (!ref.current) return;
 
