@@ -69,8 +69,8 @@ export default function PortfolioPage() {
         <div className="pt-24 pb-16 min-h-[100dvh]">
             {/* Header */}
             <section className="px-4 py-16 text-center">
-                <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6">Our <span className="text-gradient">Work</span></h1>
-                <p className="text-base md:text-lg text-foreground/70 max-w-2xl mx-auto mb-10 md:mb-12">
+                <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-white uppercase tracking-tighter">Our <span className="text-gradient">Work</span></h1>
+                <p className="text-base md:text-lg text-white/70 max-w-2xl mx-auto mb-10 md:mb-12 font-bold">
                     Explore a selection of our finest projects across trading systems, enterprise software, and strategic consulting.
                 </p>
 
@@ -81,8 +81,8 @@ export default function PortfolioPage() {
                             key={cat}
                             onClick={() => setFilter(cat)}
                             className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 ${filter === cat
-                                ? "bg-black text-white shadow-2xl shadow-black/20"
-                                : "bg-white/10 text-black/60 hover:bg-white/30 hover:text-black border border-black/5"
+                                ? "bg-white text-black shadow-2xl shadow-white/20"
+                                : "bg-white/10 text-white/60 hover:bg-white/30 hover:text-white border border-white/5"
                                 }`}
                         >
                             {cat}
@@ -125,11 +125,11 @@ export default function PortfolioPage() {
                                                     {project.category}
                                                 </span>
                                             </div>
-                                            <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3 group-hover:text-accent-start transition-colors">{project.title}</h3>
-                                            <p className="text-foreground/70 text-xs md:text-sm mb-4 md:mb-6 flex-1">{project.desc}</p>
+                                            <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3 text-white group-hover:text-gvb-cyan transition-colors">{project.title}</h3>
+                                            <p className="text-white/60 text-xs md:text-sm mb-4 md:mb-6 flex-1 font-medium">{project.desc}</p>
                                             <div className="flex flex-wrap gap-2 mt-auto">
                                                 {project.tech.map((t) => (
-                                                    <span key={t} className="text-xs font-medium text-foreground/50">
+                                                    <span key={t} className="text-xs font-medium text-white/40">
                                                         #{t}
                                                     </span>
                                                 ))}

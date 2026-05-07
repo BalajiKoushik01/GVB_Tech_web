@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export const maxDuration = 30;
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
     try {

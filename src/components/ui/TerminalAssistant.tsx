@@ -43,6 +43,14 @@ export const TerminalAssistant = () => {
         }
     }, [lines]);
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (isOpen && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [isOpen]);
+
     const handleCommand = (e: React.FormEvent) => {
         e.preventDefault();
         if (!input.trim()) return;
@@ -95,7 +103,8 @@ export const TerminalAssistant = () => {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="fixed bottom-40 right-6 md:right-8 z-[100] w-[320px] md:w-[450px] h-[350px] bg-black/90 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono"
+                        onClick={() => inputRef.current?.focus()}
+                        className="fixed bottom-40 right-6 md:right-8 z-[100] w-[320px] md:w-[450px] h-[350px] bg-black/90 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono cursor-text"
                     >
                         {/* Header */}
                         <div className="h-10 bg-white/5 border-b border-white/10 flex items-center justify-between px-4 select-none">
@@ -103,7 +112,7 @@ export const TerminalAssistant = () => {
                                 <Cpu className="w-4 h-4 text-gvb-cyan" />
                                 <span className="text-[10px] uppercase font-black tracking-widest text-white/50">GVB_OS Kernel 1.0</span>
                             </div>
-                            <button onClick={() => setIsOpen(false)} className="text-white/40 hover:text-white transition-colors">
+                            <button onClick={(e) => { e.stopPropagation(); setIsOpen(false); }} className="text-white/40 hover:text-white transition-colors">
                                 <X className="w-4 h-4" />
                             </button>
                         </div>
@@ -125,6 +134,7 @@ export const TerminalAssistant = () => {
                         <form onSubmit={handleCommand} className="p-3 bg-white/5 border-t border-white/5 flex items-center gap-2">
                             <ChevronRight className="w-4 h-4 text-gvb-cyan" />
                             <input
+                                ref={inputRef}
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}

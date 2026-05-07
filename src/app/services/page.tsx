@@ -68,7 +68,7 @@ export default function ServicesPage() {
                         <motion.h1
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 text-slate-800 tracking-tighter uppercase"
+                            className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 text-white tracking-tighter uppercase"
                         >
                             Solutions for the <br />
                             <span className="text-gradient">Next Generation</span>
@@ -77,7 +77,7 @@ export default function ServicesPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-xl md:text-2xl text-slate-600 font-bold tracking-tight"
+                            className="text-xl md:text-2xl text-white/70 font-bold tracking-tight"
                         >
                             Explore our comprehensive suite of high-performance engineering systems.
                         </motion.p>
@@ -113,13 +113,13 @@ export default function ServicesPage() {
                                     <div className="inline-flex items-center space-x-3 px-6 py-2 rounded-full liquid-glass border-slate-200 text-gvb-blue font-black text-[10px] uppercase tracking-[0.25em] mb-8">
                                         <span>Service Sector</span>
                                     </div>
-                                    <h2 className="text-4xl md:text-6xl font-black mb-6 text-black tracking-tighter uppercase">{service.title}</h2>
-                                    <p className="text-xl text-slate-600 mb-8 leading-relaxed font-bold opacity-80">
+                                    <h2 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tighter uppercase">{service.title}</h2>
+                                    <p className="text-xl text-white/70 mb-8 leading-relaxed font-bold opacity-80">
                                         {service.description}
                                     </p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
                                         {service.features.map((feat, i) => (
-                                            <div key={i} className="flex items-center text-slate-700">
+                                            <div key={i} className="flex items-center text-white/90">
                                                 <CheckCircle2 className={`w-5 h-5 mr-3 flex-shrink-0 text-gvb-blue`} />
                                                 <span className="font-bold text-sm tracking-tight">{feat}</span>
                                             </div>
@@ -139,8 +139,8 @@ export default function ServicesPage() {
                 {/* CTA */}
                 <section className="py-24 px-4">
                     <div className="max-w-4xl mx-auto text-center liquid-glass p-8 md:p-16 !bg-white/5 shadow-2xl relative overflow-hidden rounded-[3rem]">
-                        <h2 className="text-4xl md:text-6xl font-black mb-6 text-black tracking-tighter uppercase">Need a Custom Infrastructure?</h2>
-                        <p className="text-xl md:text-2xl text-slate-600 mb-10 font-bold opacity-80">Reach out and let&apos;s engineer a tailored approach for your unique operational scale.</p>
+                        <h2 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tighter uppercase">Need a Custom Infrastructure?</h2>
+                        <p className="text-xl md:text-2xl text-white/70 mb-10 font-bold opacity-80">Reach out and let&apos;s engineer a tailored approach for your unique operational scale.</p>
                         <Link href="/contact" className="w-full flex justify-center">
                             <Button size="lg" className="h-20 px-16 text-xl shadow-3xl bg-black text-white hover:bg-slate-900 border-none uppercase font-black tracking-widest rounded-2xl">
                                 Schedule Consultation

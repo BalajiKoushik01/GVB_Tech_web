@@ -22,7 +22,7 @@ export default function AboutPage() {
                     <motion.h1
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-slate-800 tracking-tighter"
+                        className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-white tracking-tighter"
                     >
                         Our <span className="text-gradient">Story</span>
                     </motion.h1>
@@ -30,7 +30,7 @@ export default function AboutPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto font-medium tracking-tight leading-relaxed"
+                        className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto font-bold tracking-tight leading-relaxed"
                     >
                         GVB Tech Solutions was born from the vision of bridging elite proprietary trading intelligence
                         with world-class enterprise software development. We engineer the future.
@@ -50,11 +50,9 @@ export default function AboutPage() {
                                 <div className="w-16 h-16 rounded-2xl bg-gvb-blue/10 flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform">
                                     <Target className="w-8 h-8 text-gvb-blue" />
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-800 tracking-tight">Our Mission</h2>
-                                <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed">
-                                    To empower global businesses by delivering transformative digital solutions,
-                                    merging strategic business consulting with cutting-edge technology to unlock
-                                    unprecedented growth and efficiency.
+                                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white tracking-tight uppercase">Our Mission</h2>
+                                <p className="text-lg md:text-xl text-white/70 font-bold leading-relaxed">
+                                    To empower global businesses by delivering transformative digital solutions, merging strategic business consulting with cutting-edge technology to unlock unprecedented growth and efficiency.
                                 </p>
                             </GlassCard>
                         </motion.div>
@@ -69,11 +67,9 @@ export default function AboutPage() {
                                 <div className="w-16 h-16 rounded-2xl bg-gvb-deep/10 flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform">
                                     <Eye className="w-8 h-8 text-gvb-deep" />
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-800 tracking-tight">Our Vision</h2>
-                                <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed">
-                                    To be the foremost global partner in technological innovation, known for
-                                    crafting elegant, high-performance systems that redefine industry standards
-                                    and propel humanity forward.
+                                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white tracking-tight uppercase">Our Vision</h2>
+                                <p className="text-lg md:text-xl text-white/70 font-bold leading-relaxed">
+                                    To be the foremost global partner in technological innovation, known for crafting elegant, high-performance systems that redefine industry standards and propel humanity forward.
                                 </p>
                             </GlassCard>
                         </motion.div>
@@ -84,8 +80,8 @@ export default function AboutPage() {
                 <section className="py-24 px-4 relative z-10 mt-16">
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-20">
-                            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-slate-800 tracking-tighter">Core Values</h2>
-                            <p className="text-xl md:text-2xl text-slate-600 font-medium tracking-tight">Principles that guide every strategic decision.</p>
+                            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white tracking-tighter uppercase">Core Values</h2>
+                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">Principles that guide every strategic decision.</p>
                         </div>
                         <div className="grid md:grid-cols-3 gap-8">
                             <ValueCard
@@ -126,8 +122,8 @@ function ValueCard({ icon: Icon, title, desc, delay }: { icon: React.ComponentTy
                 <div className="w-16 h-16 mx-auto rounded-full bg-gvb-blue/10 text-gvb-blue flex items-center justify-center mb-8">
                     <Icon className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-slate-800">{title}</h3>
-                <p className="text-lg text-slate-600 font-medium">{desc}</p>
+                <h3 className="text-2xl font-bold mb-4 text-white uppercase tracking-tight">{title}</h3>
+                <p className="text-lg text-white/70 font-bold">{desc}</p>
             </GlassCard>
         </motion.div>
     );

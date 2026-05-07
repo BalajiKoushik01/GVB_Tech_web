@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-[100dvh] flex flex-col text-slate-800 bg-[#020617] selection:bg-white selection:text-black overflow-x-hidden`}>
+      <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-[100dvh] flex flex-col text-white bg-[#020617] selection:bg-white selection:text-black overflow-x-hidden`}>
         <SmoothScrollProvider>
           <NebulaBackground />
           <Header />
