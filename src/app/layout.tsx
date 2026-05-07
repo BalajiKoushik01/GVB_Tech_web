@@ -38,6 +38,8 @@ export const metadata: Metadata = {
 
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { NebulaBackground } from "@/components/animations/NebulaBackground";
+import { PageTransition } from "@/components/animations/PageTransition";
+import { TerminalAssistant } from "@/components/ui/TerminalAssistant";
 
 export default function RootLayout({
   children,
@@ -52,11 +54,14 @@ export default function RootLayout({
           <Header />
           <LaunchBackground />
           <main className="flex-1 relative z-10">
-            {children}
+            <PageTransition>
+              {children}
+            </PageTransition>
           </main>
           <Footer />
           <ScrollToTop />
           <ChatWidget />
+          <TerminalAssistant />
           <CustomCursor />
           <Analytics />
           <SpeedInsights />
