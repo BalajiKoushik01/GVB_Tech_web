@@ -27,7 +27,7 @@ export const DataStreamLine = () => {
                 <path
                     d="M 50 0 C 80 200, 20 400, 50 600 C 80 800, 20 1000, 50 1000"
                     fill="transparent"
-                    stroke="rgba(0,163,255,0.1)"
+                    stroke="rgba(34,211,238,0.1)"
                     strokeWidth="1"
                     vectorEffect="non-scaling-stroke"
                 />
@@ -39,13 +39,13 @@ export const DataStreamLine = () => {
                     strokeWidth="2"
                     style={{ pathLength }}
                     vectorEffect="non-scaling-stroke"
-                    className="drop-shadow-[0_0_15px_rgba(0,163,255,0.8)]"
+                    className="drop-shadow-[0_0_15px_rgba(34,211,238,0.8)]"
                 />
                 <defs>
                     <linearGradient id="glow-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#00A3FF" stopOpacity="0" />
-                        <stop offset="50%" stopColor="#00A3FF" stopOpacity="1" />
-                        <stop offset="100%" stopColor="#00D1FF" stopOpacity="0" />
+                        <stop offset="0%" stopColor="#2563EB" stopOpacity="0" />
+                        <stop offset="50%" stopColor="#6366F1" stopOpacity="1" />
+                        <stop offset="100%" stopColor="#22D3EE" stopOpacity="0" />
                     </linearGradient>
                 </defs>
             </svg>

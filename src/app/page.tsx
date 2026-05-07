@@ -61,15 +61,15 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="inline-flex py-2 px-6 rounded-full liquid-glass mb-14 border-white/10 bg-black/40 backdrop-blur-md whitespace-nowrap"
+            className="inline-flex py-2 px-6 rounded-full bg-white/5 backdrop-blur-xl mb-14 border border-gvb-cyan/30 shadow-[0_0_20px_rgba(34,211,238,0.2)] whitespace-nowrap"
           >
-            <span className="text-[11px] font-black tracking-[0.25em] text-white uppercase">Launch Protocol Initiated</span>
+            <span className="text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Advanced Infrastructure Protocol</span>
           </motion.div>
 
           <MaskReveal>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-6 text-white leading-[0.85] tracking-tighter">
-              Empowering <br />
-              <span className="text-gradient">Possibilities</span>
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-6 text-white leading-[0.85] tracking-tighter uppercase">
+              Beyond <br />
+              <span className="text-gradient">Intelligence</span>
             </h1>
           </MaskReveal>
 

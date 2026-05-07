@@ -40,6 +40,7 @@ import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { NebulaBackground } from "@/components/animations/NebulaBackground";
 import { PageTransition } from "@/components/animations/PageTransition";
 import { TerminalAssistant } from "@/components/ui/TerminalAssistant";
+import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
 
 export default function RootLayout({
   children,
@@ -49,6 +50,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased min-h-[100dvh] flex flex-col text-white bg-[#020617] selection:bg-white selection:text-black overflow-x-hidden`}>
+        {/* Progress Bar */}
+        <ScrollProgressBar />
         <SmoothScrollProvider>
           <NebulaBackground />
           <Header />

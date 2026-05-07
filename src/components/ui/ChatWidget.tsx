@@ -70,9 +70,9 @@ export function ChatWidget() {
                         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                         className="mb-4 w-[350px] sm:w-[400px]"
                     >
-                        <div className="flex flex-col h-[500px] overflow-hidden p-0 rounded-2xl bg-white/75 dark:bg-space-blue/75 backdrop-blur-2xl saturate-[1.8] transform translate-z-0 border border-black/10 dark:border-white/20 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]">
+                        <div className="flex flex-col h-[500px] overflow-hidden p-0 rounded-2xl bg-[#020617]/95 backdrop-blur-3xl saturate-[1.8] transform translate-z-0 border border-white/20 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)]">
                             {/* Header */}
-                            <div className="bg-gradient-to-r from-accent-start to-accent-end p-4 flex items-center justify-between shadow-md">
+                            <div className="bg-gradient-to-r from-gvb-deep to-gvb-blue p-4 flex items-center justify-between shadow-md">
                                 <div className="flex items-center space-x-3">
                                     <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md">
                                         <Bot className="w-6 h-6 text-white" />
@@ -107,8 +107,8 @@ export function ChatWidget() {
                                                 {msg.role === 'user' ? <User className="w-4 h-4 text-foreground/80" /> : <Bot className="w-4 h-4 text-accent-start" />}
                                             </div>
                                             <div className={`p-3 rounded-2xl text-sm ${msg.role === 'user'
-                                                ? 'bg-gradient-to-bl from-accent-start to-accent-end text-white rounded-br-none shadow-sm'
-                                                : 'bg-white/80 dark:bg-black/40 backdrop-blur-md border border-black/10 dark:border-white/10 text-foreground rounded-bl-none shadow-sm font-medium'
+                                                ? 'bg-gradient-to-bl from-gvb-blue to-gvb-cyan text-white rounded-br-none shadow-sm font-bold'
+                                                : 'bg-white/10 backdrop-blur-md border border-white/10 text-white rounded-bl-none shadow-sm font-medium'
                                                 }`}>
                                                 {msg.content}
                                             </div>
@@ -149,7 +149,7 @@ export function ChatWidget() {
                                         onChange={(e) => setInput(e.target.value)}
                                         disabled={isLoading}
                                         placeholder={isLoading ? "AI is typing..." : "Type your message..."}
-                                        className="w-full bg-black/10 border border-black/10 dark:bg-white/10 dark:border-white/20 rounded-full pl-4 pr-12 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-accent-start/50 text-foreground placeholder:text-foreground/40 transition-all disabled:opacity-50"
+                                        className="w-full bg-white/5 border border-white/10 rounded-full pl-4 pr-12 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-gvb-cyan/50 text-white placeholder:text-white/40 transition-all disabled:opacity-50"
                                     />
                                     <button
                                         type="submit"

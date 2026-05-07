@@ -8,9 +8,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'gvb-blue': '#00A3FF',
-        'gvb-deep': '#0066FF',
-        'gvb-cyan': '#00D1FF',
+        'gvb-blue': '#0EA5E9',
+        'gvb-deep': '#2563EB',
+        'gvb-cyan': '#22D3EE',
+        'gvb-accent': '#6366F1',
         'launch-yellow': '#FDE047',
         'launch-orange': '#F97316',
         'launch-red': '#EF4444',

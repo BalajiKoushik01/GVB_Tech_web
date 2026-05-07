@@ -80,11 +80,12 @@ export default function PortfolioPage() {
                         <button
                             key={cat}
                             onClick={() => setFilter(cat)}
-                            className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 ${filter === cat
-                                ? "bg-white text-black shadow-2xl shadow-white/20"
-                                : "bg-white/10 text-white/60 hover:bg-white/30 hover:text-white border border-white/5"
+                            className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 relative flex items-center ${filter === cat
+                                ? "bg-white text-black shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+                                : "bg-white/5 text-white/40 hover:bg-white/10 hover:text-white border border-white/5"
                                 }`}
                         >
+                            {filter === cat && <span className="w-1.5 h-1.5 bg-gvb-cyan rounded-full animate-pulse mr-2" />}
                             {cat}
                         </button>
                     ))}
@@ -121,7 +122,7 @@ export default function PortfolioPage() {
 
                                         <div className="p-6 flex-1 flex flex-col">
                                             <div className="flex gap-2 mb-3 md:mb-4">
-                                                <span className="text-[10px] md:text-xs font-semibold px-2 md:px-3 py-1 bg-accent-start/20 text-accent-start rounded-full">
+                                                <span className="text-[10px] md:text-xs font-black px-2 md:px-3 py-1 bg-gvb-cyan/10 text-gvb-cyan rounded-full uppercase tracking-widest">
                                                     {project.category}
                                                 </span>
                                             </div>

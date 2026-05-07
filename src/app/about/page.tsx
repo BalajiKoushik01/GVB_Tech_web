@@ -14,9 +14,10 @@ export default function AboutPage() {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="inline-block py-2 px-6 rounded-full liquid-glass mb-8 border-gvb-blue/20"
+                        className="inline-flex items-center space-x-3 px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-8"
                     >
-                        <span className="text-sm font-bold tracking-widest text-gvb-blue uppercase font-mono">Our Evolution</span>
+                        <span className="w-1.5 h-1.5 bg-gvb-cyan rounded-full animate-pulse" />
+                        <span className="text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Corporate Evolution</span>
                     </motion.div>
                     
                     <motion.h1
@@ -64,8 +65,8 @@ export default function AboutPage() {
                             transition={{ duration: 0.8 }}
                         >
                             <GlassCard className="h-full p-8 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10 group">
-                                <div className="w-16 h-16 rounded-2xl bg-gvb-deep/10 flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform">
-                                    <Eye className="w-8 h-8 text-gvb-deep" />
+                                <div className="w-16 h-16 rounded-2xl bg-gvb-accent/10 flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform">
+                                    <Eye className="w-8 h-8 text-gvb-accent" />
                                 </div>
                                 <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white tracking-tight uppercase">Our Vision</h2>
                                 <p className="text-lg md:text-xl text-white/70 font-bold leading-relaxed">
@@ -119,7 +120,7 @@ function ValueCard({ icon: Icon, title, desc, delay }: { icon: React.ComponentTy
             transition={{ duration: 0.5, delay }}
         >
             <GlassCard hoverEffect={true} className="text-center p-8 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10">
-                <div className="w-16 h-16 mx-auto rounded-full bg-gvb-blue/10 text-gvb-blue flex items-center justify-center mb-8">
+                <div className="w-16 h-16 mx-auto rounded-full bg-gvb-accent/10 text-gvb-accent flex items-center justify-center mb-8">
                     <Icon className="w-8 h-8" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-white uppercase tracking-tight">{title}</h3>

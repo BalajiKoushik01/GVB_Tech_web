@@ -13,7 +13,7 @@ const allServices = [
         description: "Advanced algorithmic strategies and robust risk management systems engineered for global markets.",
         image: "https://images.unsplash.com/photo-1611974717525-58a441e5fc0a?auto=format&fit=crop&q=80&w=1200",
         features: ["High-Frequency Trading setup", "Alpha Generation", "Risk modeling", "Market making strategies"],
-        color: "from-blue-500 to-cyan-500"
+        color: "from-gvb-deep to-gvb-blue"
     },
     {
         id: "software",
@@ -21,7 +21,7 @@ const allServices = [
         description: "End-to-end custom application development for enterprise web and mobile ecosystems.",
         image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
         features: ["Full-stack capabilities", "Enterprise Architecture", "Cloud-native solutions", "Performance optimization"],
-        color: "from-sky-500 to-blue-500"
+        color: "from-gvb-blue to-gvb-cyan"
     },
     {
         id: "strategy",
@@ -53,7 +53,7 @@ const allServices = [
         description: "Complex computational models and AI/ML solutions tailored to specific industry needs.",
         image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
         features: ["Machine Learning Models", "Predictive Analytics", "Natural Language Processing", "Computer Vision"],
-        color: "from-indigo-500 to-blue-500"
+        color: "from-gvb-accent to-gvb-deep"
     }
 ];
 
@@ -110,8 +110,9 @@ export default function ServicesPage() {
 
                                 {/* Text Side */}
                                 <div className="flex-1">
-                                    <div className="inline-flex items-center space-x-3 px-6 py-2 rounded-full liquid-glass border-slate-200 text-gvb-blue font-black text-[10px] uppercase tracking-[0.25em] mb-8">
-                                        <span>Service Sector</span>
+                                    <div className="inline-flex items-center space-x-3 px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-gvb-cyan font-black text-[10px] uppercase tracking-[0.25em] mb-8">
+                                        <span className="w-1 h-1 bg-gvb-cyan rounded-full animate-pulse mr-1" />
+                                        <span>Sector Protocol</span>
                                     </div>
                                     <h2 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tighter uppercase">{service.title}</h2>
                                     <p className="text-xl text-white/70 mb-8 leading-relaxed font-bold opacity-80">
@@ -126,7 +127,7 @@ export default function ServicesPage() {
                                         ))}
                                     </div>
                                     <Link href="/contact">
-                                        <Button size="lg" className="h-16 px-12 shadow-2xl bg-black text-white hover:bg-slate-900 border-none font-black uppercase tracking-widest text-sm">
+                                        <Button size="lg" variant="primary" className="h-16 px-12 font-black uppercase tracking-widest text-sm rounded-2xl">
                                             Integrate Solution
                                         </Button>
                                     </Link>
@@ -142,7 +143,7 @@ export default function ServicesPage() {
                         <h2 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tighter uppercase">Need a Custom Infrastructure?</h2>
                         <p className="text-xl md:text-2xl text-white/70 mb-10 font-bold opacity-80">Reach out and let&apos;s engineer a tailored approach for your unique operational scale.</p>
                         <Link href="/contact" className="w-full flex justify-center">
-                            <Button size="lg" className="h-20 px-16 text-xl shadow-3xl bg-black text-white hover:bg-slate-900 border-none uppercase font-black tracking-widest rounded-2xl">
+                            <Button size="lg" className="h-20 px-16 text-xl bg-white text-black hover:bg-white/90 border-none uppercase font-black tracking-widest rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.2)]">
                                 Schedule Consultation
                             </Button>
                         </Link>

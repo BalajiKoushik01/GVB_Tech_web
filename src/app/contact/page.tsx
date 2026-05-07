@@ -65,7 +65,7 @@ export default function ContactPage() {
                 <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-4xl sm:text-5xl md:text-7xl lg:text-[6rem] font-bold mb-4 md:mb-6 tracking-tighter"
+                    className="text-4xl sm:text-5xl md:text-7xl lg:text-[6rem] font-bold mb-4 md:mb-6 tracking-tighter text-white uppercase"
                 >
                     Get in <span className="text-gradient">Touch</span>
                 </motion.h1>
@@ -73,7 +73,7 @@ export default function ContactPage() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto mb-12 md:mb-16"
+                    className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-12 md:mb-16 font-bold"
                 >
                     Ready to start your next big project? Contact our team of experts for a comprehensive consultation.
                 </motion.p>
@@ -179,7 +179,7 @@ export default function ContactPage() {
                                         {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
                                     </div>
 
-                                    <Button type="submit" size="lg" className="h-16 px-12 bg-black text-white hover:bg-slate-900 border-none font-black uppercase tracking-widest shadow-2xl" disabled={isSubmitting}>
+                                    <Button type="submit" size="lg" className="h-16 px-12 bg-white text-black hover:bg-white/90 border-none font-black uppercase tracking-widest shadow-2xl" disabled={isSubmitting}>
                                         {isSubmitting ? "Sending..." : "Send Message"}
                                     </Button>
                                 </form>
@@ -199,8 +199,8 @@ function InfoRow({ icon: Icon, title, detail }: { icon: React.ComponentType<Reac
                 <Icon className="w-5 h-5" />
             </div>
             <div>
-                <h4 className="text-sm font-semibold text-foreground/60 uppercase tracking-wider mb-1">{title}</h4>
-                <p className="text-foreground font-medium text-lg">{detail}</p>
+                <h4 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] mb-1">{title}</h4>
+                <p className="text-white font-bold text-lg">{detail}</p>
             </div>
         </div>
     );

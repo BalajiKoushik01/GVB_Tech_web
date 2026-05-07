@@ -30,23 +30,29 @@ export function Footer() {
 
                     {/* Links 1 */}
                     <div className="flex flex-col items-center md:items-start">
-                        <h3 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8">Services</h3>
+                        <h3 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8 flex items-center">
+                            <span className="w-1 h-1 bg-gvb-cyan rounded-full mr-3 shadow-[0_0_8px_rgba(0,209,255,0.8)]" />
+                            Services
+                        </h3>
                         <ul className="space-y-4">
-                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Proprietary Trading</Link></li>
-                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Software Development</Link></li>
-                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Strategy Consultation</Link></li>
-                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Algorithm Development</Link></li>
+                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Proprietary Trading</Link></li>
+                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Software Development</Link></li>
+                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Strategy Consultation</Link></li>
+                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Algorithm Development</Link></li>
                         </ul>
                     </div>
 
                     {/* Links 2 */}
                     <div className="flex flex-col items-center md:items-start">
-                        <h3 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8">Company</h3>
+                        <h3 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8 flex items-center">
+                            <span className="w-1 h-1 bg-gvb-cyan rounded-full mr-3 shadow-[0_0_8px_rgba(0,209,255,0.8)]" />
+                            Company
+                        </h3>
                         <ul className="space-y-4">
-                            <li><Link href="/about" className="text-sm font-bold text-white hover:text-white/80 transition-colors">About Us</Link></li>
-                            <li><Link href="/portfolio" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Portfolio</Link></li>
-                            <li><Link href="/blog" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Insights</Link></li>
-                            <li><Link href="/careers" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Careers</Link></li>
+                            <li><Link href="/about" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">About Us</Link></li>
+                            <li><Link href="/portfolio" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Portfolio</Link></li>
+                            <li><Link href="/contact" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Contact Us</Link></li>
+                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Capabilities</Link></li>
                         </ul>
                     </div>
 

@@ -62,8 +62,8 @@ export function MarketDashboard() {
                 {tickerItems.map((ticker, idx) => (
                     <div key={`${ticker.symbol}-${idx}`} className="flex items-center space-x-6 px-12 border-r border-white/10">
                         <span className="text-white font-extrabold text-xs tracking-widest uppercase">{ticker.symbol}</span>
-                        <span className="text-slate-300 font-mono text-sm tracking-tighter font-semibold">
-                            ₹{ticker.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        <span className="text-white font-mono text-sm tracking-tighter font-black">
+                            {ticker.symbol.includes('/') ? '' : '₹'}{ticker.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </span>
                         <div className={`flex items-center text-[10px] font-bold px-2.5 py-1 rounded-full ${ticker.isUp ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
                             {ticker.isUp ? <TrendingUp className="w-3 h-3 mr-1" /> : <TrendingDown className="w-3 h-3 mr-1" />}

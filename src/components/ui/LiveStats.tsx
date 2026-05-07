@@ -5,10 +5,10 @@ import { Code2, Target, Users, Zap } from "lucide-react";
 import { GlassCard } from "./GlassCard";
 
 const stats = [
-    { label: "Lines of Code", value: "500,000", suffix: "+", icon: Code2 },
-    { label: "Successful Projects", value: "10", suffix: "+", icon: Target },
-    { label: "Global Clients", value: "2", suffix: "+", icon: Users },
-    { label: "System Uptime", value: "99.9", suffix: "%", icon: Zap }
+    { label: "Proprietary Trade Volume", value: "$500M", suffix: "+", icon: Zap },
+    { label: "Successful Deployments", value: "150", suffix: "+", icon: Target },
+    { label: "Enterprise Partners", value: "25", suffix: "+", icon: Users },
+    { label: "System Latency", value: "0.002", suffix: "ms", icon: Code2 }
 ];
 
 export function LiveStats() {
@@ -28,7 +28,7 @@ export function LiveStats() {
                                     {stat.value}{stat.suffix}
                                 </h3>
                             </div>
-                            <p className="text-white font-medium text-xs lg:text-sm tracking-tight">{stat.label}</p>
+                            <p className="text-white/60 font-black text-[10px] lg:text-[11px] tracking-[0.2em] uppercase">{stat.label}</p>
                         </GlassCard>
                     ))}
                 </div>
