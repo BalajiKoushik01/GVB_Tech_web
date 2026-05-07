@@ -41,6 +41,7 @@ import { NebulaBackground } from "@/components/animations/NebulaBackground";
 import { PageTransition } from "@/components/animations/PageTransition";
 import { TerminalAssistant } from "@/components/ui/TerminalAssistant";
 import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
+import { MarketDashboard } from "@/components/ui/MarketDashboard";
 
 export default function RootLayout({
   children,
@@ -55,6 +56,9 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <NebulaBackground />
           <Header />
+          <div className="pt-[72px] md:pt-[80px]">
+            <MarketDashboard />
+          </div>
           <main className="flex-1 relative z-10">
             <PageTransition>
               {children}

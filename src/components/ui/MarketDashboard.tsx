@@ -49,7 +49,7 @@ export function MarketDashboard() {
     const tickerItems = [...tickers, ...tickers, ...tickers, ...tickers];
 
     return (
-        <div className="w-full bg-slate-950/20 border-b border-white/5 overflow-hidden relative flex items-center h-14 cursor-default backdrop-blur-xl">
+        <div className="w-full bg-black/60 border-b border-white/10 overflow-hidden relative flex items-center h-10 md:h-14 cursor-default backdrop-blur-3xl z-[45]">
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#020617] to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#020617] to-transparent z-10 pointer-events-none" />
 

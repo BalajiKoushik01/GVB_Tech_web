@@ -157,7 +157,6 @@ export default function Home() {
 
       {/* Content Area: Naturally flows AFTER the Hero (z-10) */}
       <div className="relative z-10 bg-transparent border-t border-white/5">
-        <MarketDashboard />
 
         {/* Services Section with SVG Data Stream */}
         <section className="py-32 md:py-48 px-4 relative overflow-hidden">
