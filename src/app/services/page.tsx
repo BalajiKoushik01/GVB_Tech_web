@@ -11,7 +11,7 @@ const allServices = [
         id: "trading",
         title: "Proprietary Trading",
         description: "Advanced algorithmic strategies and robust risk management systems engineered for global markets.",
-        image: "https://images.unsplash.com/photo-1611974717525-58a441e5fc0a?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/services/trading.png",
         features: ["High-Frequency Trading setup", "Alpha Generation", "Risk modeling", "Market making strategies"],
         color: "from-gvb-deep to-gvb-blue"
     },
@@ -19,7 +19,7 @@ const allServices = [
         id: "software",
         title: "Software Development",
         description: "End-to-end custom application development for enterprise web and mobile ecosystems.",
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/services/software.png",
         features: ["Full-stack capabilities", "Enterprise Architecture", "Cloud-native solutions", "Performance optimization"],
         color: "from-gvb-blue to-gvb-cyan"
     },
@@ -27,7 +27,7 @@ const allServices = [
         id: "strategy",
         title: "Strategy Consultation",
         description: "Data-driven business strategies aiming at sustainable competitive advantage and digital scale.",
-        image: "https://images.unsplash.com/photo-1454165833767-131435bb4496?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/services/strategy.png",
         features: ["Digital Transformation", "Market Entry strategy", "Operational efficiency", "Technology roadmap"],
         color: "from-amber-500 to-orange-500"
     },
@@ -35,7 +35,7 @@ const allServices = [
         id: "marketing",
         title: "Marketing Solutions",
         description: "Comprehensive marketing services to grow your brand's digital presence and conversion rates.",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/services/marketing.png",
         features: ["SEO & Content Strategy", "Performance Marketing", "Brand Identity", "Conversion Rate Optimization"],
         color: "from-rose-500 to-red-500"
     },
@@ -43,7 +43,7 @@ const allServices = [
         id: "edtech",
         title: "EdTech Systems",
         description: "Interactive and scalable platforms for the next generation of global learners.",
-        image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/services/edtech.png",
         features: ["LMS Development", "Interactive Content", "Student Analytics", "Gamification engines"],
         color: "from-emerald-500 to-teal-500"
     },
@@ -51,7 +51,7 @@ const allServices = [
         id: "algorithms",
         title: "Intelligence Systems",
         description: "Complex computational models and AI/ML solutions tailored to specific industry needs.",
-        image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/services/algorithms.png",
         features: ["Machine Learning Models", "Predictive Analytics", "Natural Language Processing", "Computer Vision"],
         color: "from-gvb-accent to-gvb-deep"
     }

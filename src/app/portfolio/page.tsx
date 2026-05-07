@@ -13,7 +13,7 @@ const projects = [
         title: "AlphaGen Trading Engine",
         category: "Trading",
         tech: ["Python", "C++", "AWS"],
-        image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/portfolio/alphagen.png",
         desc: "A high-frequency proprietary trading engine capable of processing millions of quotes per second.",
     },
     {
@@ -21,7 +21,7 @@ const projects = [
         title: "FinTech Enterprise Portal",
         category: "Software",
         tech: ["Next.js", "Node.js", "PostgreSQL"],
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/portfolio/portal.png",
         desc: "Core banking and dashboard portal built for a Tier-1 financial institution.",
     },
     {
@@ -29,7 +29,7 @@ const projects = [
         title: "Market Expansion Strategy",
         category: "Strategy",
         tech: ["Data Analytics", "Tableau", "Consulting"],
-        image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/portfolio/expansion.png",
         desc: "A comprehensive digital transformation roadmap for an APAC logistics firm.",
     },
     {
@@ -37,7 +37,7 @@ const projects = [
         title: "Campus Connect EdTech",
         category: "Software",
         tech: ["React", "Express", "MongoDB"],
-        image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/portfolio/campus.png",
         desc: "University management system scaling to over 100k daily active students.",
     },
     {
@@ -45,7 +45,7 @@ const projects = [
         title: "Blockchain Sentiment Bot",
         category: "Trading",
         tech: ["Python", "NLP", "TensorFlow"],
-        image: "https://images.unsplash.com/photo-1621504450181-5d156fc2135d?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/portfolio/sentiment.png",
         desc: "Real-time Twitter & news sentiment analysis bot connected directly to trading terminals.",
     },
     {
@@ -53,7 +53,7 @@ const projects = [
         title: "Global SaaS Launch",
         category: "Marketing",
         tech: ["SEO", "AdWords", "Content"],
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
+        image: "/assets/portfolio/saas.png",
         desc: "Helped a B2B startup achieve 300% YoY growth through aggressive performance marketing.",
     },
 ];
