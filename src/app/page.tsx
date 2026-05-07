@@ -19,21 +19,21 @@ const services = [
     title: "Proprietary Trading",
     icon: TrendingUp,
     description: "High-frequency trading algorithms and quantitative strategies engineered for global market success.",
-    color: "from-blue-600 to-cyan-500",
+    color: "from-gvb-deep to-gvb-blue",
     image: "https://images.unsplash.com/photo-1611974717525-58a441e5fc0a?auto=format&fit=crop&q=80&w=800"
   },
   {
     title: "Software Development",
     icon: Code2,
     description: "Custom enterprise software, mobile ecosystems, and high-performance web applications.",
-    color: "from-sky-500 to-blue-500",
+    color: "from-gvb-blue to-gvb-cyan",
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800"
   },
   {
     title: "AI Development",
     icon: Brain,
     description: "Custom Neural Networks, Predictive Analytics, and Automated Intelligence systems.",
-    color: "from-blue-800 to-blue-500",
+    color: "from-gvb-deep to-gvb-cyan",
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800"
   }
 ];

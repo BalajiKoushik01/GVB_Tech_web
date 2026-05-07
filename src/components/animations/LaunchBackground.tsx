@@ -51,17 +51,17 @@ export const LaunchBackground = () => {
         restDelta: 0.001
     });
 
-    // Multi-Stop Orbital Gradient Morphing
+    // Multi-Stop Orbital Gradient Morphing (Context-Aware GVB Tech Branding)
     const bgColor = useTransform(
         smoothProgress,
         [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1],
         [
             "#F8FAFC", // Soft Launch Pad (Slate 50)
             "#E0F2FE", // Cloud Breach (Sky 100)
-            "#7DD3FC", // Troposphere (Sky 300)
-            "#60A5FA", // Stratosphere (Blue 400)
-            "#2563EB", // Ionosphere (Blue 600)
-            "#1E3A8A", // Mesosphere (Blue 900)
+            "#00D1FF", // Troposphere (gvb-cyan)
+            "#00A3FF", // Stratosphere (gvb-blue)
+            "#0066FF", // Ionosphere (gvb-deep)
+            "#0044AA", // Mesosphere (Darker GVB Deep)
             "#1E1B4B", // Exosphere (Indigo 950)
             "#09090B"  // Deep Space (Absolute Dark)
         ]

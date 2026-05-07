@@ -50,11 +50,21 @@ export const RocketMotion = memo(() => {
                     style={{ scaleY: flameScale, opacity: flameOpacity }}
                     className="mt-[-2px] origin-top flex flex-col items-center"
                 >
-                    <div 
+                    <motion.div 
+                        animate={{ 
+                            scale: [1, 1.05, 0.98, 1.08, 1],
+                            opacity: [0.9, 1, 0.85, 1, 0.9]
+                        }}
+                        transition={{ duration: 0.2, repeat: Infinity, ease: "easeInOut" }}
                         className="w-14 h-36 rounded-full" 
                         style={{ background: "radial-gradient(ellipse at top, rgba(253, 224, 71, 0.9) 0%, rgba(249, 115, 22, 0.7) 40%, transparent 70%)" }}
                     />
-                    <div 
+                    <motion.div 
+                        animate={{ 
+                            scaleY: [1, 1.1, 0.9, 1.15, 1],
+                            opacity: [0.9, 1, 0.8, 1, 0.9]
+                        }}
+                        transition={{ duration: 0.15, repeat: Infinity, ease: "easeInOut" }}
                         className="w-6 h-24 absolute top-0 left-1/2 -translate-x-1/2 opacity-90"
                         style={{ background: "radial-gradient(ellipse at top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 80%)" }}
                     />
