@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 const categories = ["All", "Trading", "Software", "Strategy", "Marketing"];
 
