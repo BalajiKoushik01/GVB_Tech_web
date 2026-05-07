@@ -2,15 +2,15 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, X, Minimize2, Maximize2, Cpu } from "lucide-react";
+import { Terminal, X, Cpu, ChevronRight } from "lucide-react";
 
 export const TerminalAssistant = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [lines, setLines] = useState<string[]>([]);
-    const [currentText, setCurrentText] = useState("");
+    const [input, setInput] = useState("");
     const terminalRef = useRef<HTMLDivElement>(null);
 
-    const fullText = [
+    const bootSequence = [
         "INITIALIZING GVB_CORE v1.0.4...",
         "AUTHENTICATING QUANTUM CHANNEL...",
         "SCANNING GLOBAL LIQUIDITY POOLS [OK]",
@@ -19,20 +19,20 @@ export const TerminalAssistant = () => {
         "GVB TECH SOLUTIONS: READY TO SCALE",
         "------------------------------------",
         "SYSTEM STATUS: ALL ENGINES GO",
-        "> WATING FOR OPERATOR COMMAND..."
+        "TYPE 'HELP' FOR COMMAND LIST"
     ];
 
     useEffect(() => {
         if (isOpen && lines.length === 0) {
             let lineIndex = 0;
             const interval = setInterval(() => {
-                if (lineIndex < fullText.length) {
-                    setLines(prev => [...prev, fullText[lineIndex]]);
+                if (lineIndex < bootSequence.length) {
+                    setLines(prev => [...prev, bootSequence[lineIndex]]);
                     lineIndex++;
                 } else {
                     clearInterval(interval);
                 }
-            }, 400);
+            }, 300);
             return () => clearInterval(interval);
         }
     }, [isOpen, lines.length]);
@@ -42,6 +42,37 @@ export const TerminalAssistant = () => {
             terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
         }
     }, [lines]);
+
+    const handleCommand = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!input.trim()) return;
+
+        const cmd = input.toUpperCase().trim();
+        setLines(prev => [...prev, `> ${input}`]);
+        setInput("");
+
+        setTimeout(() => {
+            switch (cmd) {
+                case "HELP":
+                    setLines(prev => [...prev, "AVAILABLE COMMANDS:", " - STATUS: SYSTEM HEALTH", " - INFRA: GVB_OS / COREOS INFO", " - SERVICES: CORE OFFERINGS", " - CLEAR: PURGE CONSOLE"]);
+                    break;
+                case "STATUS":
+                    setLines(prev => [...prev, "CPU: 128-CORE QUANTUM", "MEMORY: 2TB HBM3", "LATENCY: 0.002ms", "SECURITY: ENCRYPTED_AES_512"]);
+                    break;
+                case "INFRA":
+                    setLines(prev => [...prev, "GVB_OS (BUILT ON COREOS):", "COREOS IS A CONTAINER-OPTIMIZED OS.", "WE USE IT FOR HIGH-SECURITY,", "SCALABLE TRADING CLUSTERS.", "TOTAL UPTIME: 99.999%"]);
+                    break;
+                case "SERVICES":
+                    setLines(prev => [...prev, "1. PROPRIETARY TRADING", "2. ENTERPRISE SOFTWARE", "3. AI/ALGO DEVELOPMENT"]);
+                    break;
+                case "CLEAR":
+                    setLines([]);
+                    break;
+                default:
+                    setLines(prev => [...prev, `COMMAND NOT RECOGNIZED: ${cmd}`, "TYPE 'HELP' FOR ASSISTANCE."]);
+            }
+        }, 200);
+    };
 
     return (
         <>
@@ -64,7 +95,7 @@ export const TerminalAssistant = () => {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="fixed bottom-40 right-6 md:right-8 z-[100] w-[320px] md:w-[400px] h-[300px] bg-black/90 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono"
+                        className="fixed bottom-40 right-6 md:right-8 z-[100] w-[320px] md:w-[450px] h-[350px] bg-black/90 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono"
                     >
                         {/* Header */}
                         <div className="h-10 bg-white/5 border-b border-white/10 flex items-center justify-between px-4 select-none">
@@ -80,23 +111,31 @@ export const TerminalAssistant = () => {
                         {/* Content */}
                         <div 
                             ref={terminalRef}
-                            className="flex-1 p-4 overflow-y-auto text-xs leading-relaxed space-y-1 scrollbar-hide"
+                            className="flex-1 p-4 overflow-y-auto text-xs leading-relaxed space-y-1 scrollbar-hide scroll-smooth"
                         >
                             {lines.map((line, i) => (
-                                <div key={i} className={`${line.includes('[OK]') ? 'text-gvb-cyan' : 'text-white/80'}`}>
-                                    <span className="text-gvb-cyan/40 mr-2">$</span>
+                                <div key={i} className={`${line.includes('[OK]') || line.startsWith(' -') || line.startsWith('1.') ? 'text-gvb-cyan' : line.startsWith('>') ? 'text-white font-bold' : 'text-white/80'}`}>
+                                    {line.startsWith('>') ? '' : <span className="text-gvb-cyan/40 mr-2">$</span>}
                                     {line}
                                 </div>
                             ))}
-                            <motion.div
-                                animate={{ opacity: [0, 1, 0] }}
-                                transition={{ duration: 0.8, repeat: Infinity }}
-                                className="inline-block w-2 h-4 bg-gvb-cyan ml-1 align-middle"
-                            />
                         </div>
+
+                        {/* Input Area */}
+                        <form onSubmit={handleCommand} className="p-3 bg-white/5 border-t border-white/5 flex items-center gap-2">
+                            <ChevronRight className="w-4 h-4 text-gvb-cyan" />
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                placeholder="ENTER COMMAND..."
+                                className="flex-1 bg-transparent border-none outline-none text-xs text-gvb-cyan font-bold placeholder:text-white/20 uppercase"
+                                autoFocus
+                            />
+                        </form>
                         
-                        <div className="p-4 bg-white/5 border-t border-white/5 text-[9px] uppercase font-bold tracking-widest text-center text-white/20">
-                            Proprietary Intelligence System
+                        <div className="p-2 bg-black/40 text-[8px] uppercase font-bold tracking-widest text-center text-white/10">
+                            Secure Core Shell Access
                         </div>
                     </motion.div>
                 )}
@@ -104,3 +143,4 @@ export const TerminalAssistant = () => {
         </>
     );
 };
+

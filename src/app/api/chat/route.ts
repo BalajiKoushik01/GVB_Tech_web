@@ -8,7 +8,20 @@ export async function POST(req: Request) {
 
         // Ensure API key is present
         if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
-            return new Response(JSON.stringify({ text: "API Key missing. Please add GOOGLE_GENERATIVE_AI_API_KEY to your environment variables." }), { status: 200 });
+            const lastMessage = messages[messages.length - 1].content.toLowerCase();
+            let demoResponse = "I am currently in Demo Mode. To enable full AI intelligence, please configure the GOOGLE_GENERATIVE_AI_API_KEY.";
+            
+            if (lastMessage.includes("service") || lastMessage.includes("do you do")) {
+                demoResponse = "GVB Tech Solutions specializes in proprietary trading systems, enterprise software development, and algorithmic strategy consultation. How can we help your business scale?";
+            } else if (lastMessage.includes("contact") || lastMessage.includes("email")) {
+                demoResponse = "You can reach our team at info@gvbtech.in or call us at +91 9381958045. We'd love to discuss your project!";
+            } else if (lastMessage.includes("trading")) {
+                demoResponse = "Our proprietary trading algorithms are engineered for high-frequency execution and quantitative excellence across global markets.";
+            }
+
+            return new Response(JSON.stringify({ text: demoResponse }), { 
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
         const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
