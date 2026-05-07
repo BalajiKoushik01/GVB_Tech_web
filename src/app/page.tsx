@@ -20,7 +20,7 @@ const services = [
     icon: TrendingUp,
     description: "High-frequency trading algorithms and quantitative strategies engineered for global market success.",
     color: "from-gvb-deep to-gvb-blue",
-    image: "https://images.unsplash.com/photo-1611974717525-58a441e5fc0a?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800"
   },
   {
     title: "Software Development",

@@ -10,7 +10,7 @@ export function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="w-full bg-white border-t border-black/5 overflow-hidden relative z-50">
+        <footer className="w-full bg-[#020617] border-t border-white/5 overflow-hidden relative z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
                     {/* Brand Col */}
@@ -18,64 +18,64 @@ export function Footer() {
                         <Link href="/" onClick={(e) => { if (pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center group mb-6">
                             <Logo className="scale-110 md:scale-125 origin-left mb-2 transition-transform duration-500" />
                         </Link>
-                        <p className="text-base text-black mb-6 font-bold max-w-sm opacity-90">
+                        <p className="text-base text-slate-300 mb-6 font-bold max-w-sm opacity-90">
                             Engineering tomorrow&apos;s solutions with proprietary trading, robust software, and strategic growth infrastructure.
                         </p>
                         <div className="flex space-x-5">
-                            <a href="https://github.com/BalajiKoushik01" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-black text-white hover:bg-slate-900 transition-all shadow-lg"><Github className="w-5 h-5" /></a>
-                            <a href="https://www.linkedin.com/in/balaji-koushik-05222a316" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-black text-white hover:bg-slate-900 transition-all shadow-lg"><Linkedin className="w-5 h-5" /></a>
-                            <a href="https://www.instagram.com/balajikoushik01?igsh=NGNpem1tOG11ZHVp" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-black text-white hover:bg-slate-900 transition-all shadow-lg"><Instagram className="w-5 h-5" /></a>
+                            <a href="https://github.com/BalajiKoushik01" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Github className="w-5 h-5" /></a>
+                            <a href="https://www.linkedin.com/in/balaji-koushik-05222a316" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Linkedin className="w-5 h-5" /></a>
+                            <a href="https://www.instagram.com/balajikoushik01?igsh=NGNpem1tOG11ZHVp" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Instagram className="w-5 h-5" /></a>
                         </div>
                     </div>
 
                     {/* Links 1 */}
                     <div>
-                        <h3 className="text-sm font-bold text-slate-800 uppercase tracking-[0.2em] mb-6">Services</h3>
+                        <h3 className="text-sm font-bold text-slate-200 uppercase tracking-[0.2em] mb-6">Services</h3>
                         <ul className="space-y-4">
-                            <li><Link href="/services" className="text-sm font-semibold text-slate-500 hover:text-gvb-blue transition-colors">Proprietary Trading</Link></li>
-                            <li><Link href="/services" className="text-sm font-semibold text-slate-500 hover:text-gvb-blue transition-colors">Software Development</Link></li>
-                            <li><Link href="/services" className="text-sm font-semibold text-slate-500 hover:text-gvb-blue transition-colors">Strategy Consultation</Link></li>
-                            <li><Link href="/services" className="text-sm font-semibold text-slate-500 hover:text-gvb-blue transition-colors">Algorithm Development</Link></li>
+                            <li><Link href="/services" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Proprietary Trading</Link></li>
+                            <li><Link href="/services" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Software Development</Link></li>
+                            <li><Link href="/services" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Strategy Consultation</Link></li>
+                            <li><Link href="/services" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Algorithm Development</Link></li>
                         </ul>
                     </div>
 
                     {/* Links 2 */}
                     <div>
-                        <h3 className="text-sm font-bold text-slate-800 uppercase tracking-[0.2em] mb-6">Company</h3>
+                        <h3 className="text-sm font-bold text-slate-200 uppercase tracking-[0.2em] mb-6">Company</h3>
                         <ul className="space-y-4">
-                            <li><Link href="/about" className="text-sm font-semibold text-slate-500 hover:text-gvb-blue transition-colors">About Us</Link></li>
-                            <li><Link href="/portfolio" className="text-sm font-semibold text-slate-500 hover:text-gvb-blue transition-colors">Portfolio</Link></li>
-                            <li><Link href="/blog" className="text-sm font-semibold text-slate-500 hover:text-gvb-blue transition-colors">Insights</Link></li>
-                            <li><Link href="/careers" className="text-sm font-semibold text-slate-500 hover:text-gvb-blue transition-colors">Careers</Link></li>
+                            <li><Link href="/about" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">About Us</Link></li>
+                            <li><Link href="/portfolio" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Portfolio</Link></li>
+                            <li><Link href="/blog" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Insights</Link></li>
+                            <li><Link href="/careers" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Careers</Link></li>
                         </ul>
                     </div>
 
                     {/* Contact Details */}
                     <div>
-                        <h3 className="text-sm font-bold text-slate-800 uppercase tracking-[0.2em] mb-6">Contact</h3>
+                        <h3 className="text-sm font-bold text-slate-200 uppercase tracking-[0.2em] mb-6">Contact</h3>
                         <ul className="space-y-4">
-                            <li className="flex items-center space-x-3 text-sm font-semibold text-slate-600">
-                                <Mail className="w-4 h-4 text-gvb-blue" />
+                            <li className="flex items-center space-x-3 text-sm font-semibold text-slate-300">
+                                <Mail className="w-4 h-4 text-gvb-cyan" />
                                 <span>info@gvbtech.in</span>
                             </li>
-                            <li className="flex items-center space-x-3 text-sm font-semibold text-slate-600">
-                                <Phone className="w-4 h-4 text-gvb-blue" />
+                            <li className="flex items-center space-x-3 text-sm font-semibold text-slate-300">
+                                <Phone className="w-4 h-4 text-gvb-cyan" />
                                 <span>+91 9381958045</span>
                             </li>
-                            <li className="text-sm font-semibold text-slate-500 pl-7 leading-relaxed">
+                            <li className="text-sm font-semibold text-slate-400 pl-7 leading-relaxed">
                                 Sullurpeta, Andhra Pradesh<br />524121, IN
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div className="mt-16 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-sm font-medium text-slate-400">
+                <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p className="text-sm font-medium text-slate-500">
                         &copy; {currentYear} GVB Tech Solutions. All rights reserved.
                     </p>
                     <div className="flex flex-wrap gap-8 justify-center md:justify-end">
-                        <Link href="/privacy" className="text-sm font-bold text-slate-400 hover:text-slate-800 transition-colors uppercase tracking-widest text-[10px]">Privacy Policy</Link>
-                        <Link href="/terms" className="text-sm font-bold text-slate-400 hover:text-slate-800 transition-colors uppercase tracking-widest text-[10px]">Terms of Service</Link>
+                        <Link href="/privacy" className="text-sm font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest text-[10px]">Privacy Policy</Link>
+                        <Link href="/terms" className="text-sm font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest text-[10px]">Terms of Service</Link>
                     </div>
                 </div>
             </div>

@@ -50,24 +50,36 @@ export const RocketMotion = memo(() => {
                     style={{ scaleY: flameScale, opacity: flameOpacity }}
                     className="mt-[-2px] origin-top flex flex-col items-center"
                 >
+                    {/* Outer Plume */}
                     <motion.div 
                         animate={{ 
-                            scaleY: [1, 1.04, 1],
-                            scaleX: [1, 1.02, 1],
-                            opacity: [0.85, 1, 0.85]
+                            scaleY: [1, 1.05, 1],
+                            scaleX: [1, 1.03, 1],
+                            opacity: [0.7, 0.9, 0.7]
                         }}
                         transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-14 h-36 rounded-full" 
-                        style={{ background: "radial-gradient(ellipse at top, rgba(253, 224, 71, 0.9) 0%, rgba(249, 115, 22, 0.7) 40%, transparent 70%)" }}
+                        className="w-16 h-40 rounded-full" 
+                        style={{ background: "radial-gradient(ellipse at top, rgba(249, 115, 22, 0.8) 0%, rgba(249, 115, 22, 0.4) 40%, transparent 80%)" }}
                     />
+                    {/* Inner Core */}
                     <motion.div 
                         animate={{ 
-                            scaleY: [1, 1.08, 1],
+                            scaleY: [1, 1.1, 1],
                             opacity: [0.8, 1, 0.8]
                         }}
-                        transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-6 h-24 absolute top-0 left-1/2 -translate-x-1/2 opacity-90"
-                        style={{ background: "radial-gradient(ellipse at top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 80%)" }}
+                        transition={{ duration: 0.4, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-8 h-28 absolute top-0 left-1/2 -translate-x-1/2"
+                        style={{ background: "radial-gradient(ellipse at top, rgba(253, 224, 71, 0.9) 0%, rgba(249, 115, 22, 0) 70%)" }}
+                    />
+                    {/* Heat Pulse (Flicker Core) */}
+                    <motion.div 
+                        animate={{ 
+                            scaleY: [1, 1.2, 1],
+                            opacity: [0.6, 1, 0.6]
+                        }}
+                        transition={{ duration: 0.1, repeat: Infinity, ease: "linear" }}
+                        className="w-3 h-16 absolute top-0 left-1/2 -translate-x-1/2 rounded-full"
+                        style={{ background: "radial-gradient(ellipse at top, rgba(255, 255, 255, 1) 0%, transparent 90%)" }}
                     />
                 </motion.div>
                 
