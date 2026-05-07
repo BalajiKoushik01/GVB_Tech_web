@@ -55,7 +55,6 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <NebulaBackground />
           <Header />
-          <LaunchBackground />
           <main className="flex-1 relative z-10">
             <PageTransition>
               {children}
