@@ -22,9 +22,9 @@ export function Footer() {
                             Engineering tomorrow&apos;s solutions with proprietary trading, robust software, and strategic growth infrastructure.
                         </p>
                         <div className="flex space-x-5">
-                            <a href="https://github.com/BalajiKoushik01" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Github className="w-5 h-5" /></a>
-                            <a href="https://www.linkedin.com/in/balaji-koushik-05222a316" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Linkedin className="w-5 h-5" /></a>
-                            <a href="https://www.instagram.com/balajikoushik01?igsh=NGNpem1tOG11ZHVp" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Instagram className="w-5 h-5" /></a>
+                            <a href="https://github.com/BalajiKoushik01" target="_blank" rel="noopener noreferrer" data-cursor="magnetic" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Github className="w-5 h-5" /></a>
+                            <a href="https://www.linkedin.com/in/balaji-koushik-05222a316" target="_blank" rel="noopener noreferrer" data-cursor="magnetic" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Linkedin className="w-5 h-5" /></a>
+                            <a href="https://www.instagram.com/balajikoushik01?igsh=NGNpem1tOG11ZHVp" target="_blank" rel="noopener noreferrer" data-cursor="magnetic" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Instagram className="w-5 h-5" /></a>
                         </div>
                     </div>
 

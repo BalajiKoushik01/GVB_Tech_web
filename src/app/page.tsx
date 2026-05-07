@@ -87,7 +87,7 @@ export default function Home() {
             className="flex flex-col sm:flex-row gap-8 justify-center items-center w-full px-4 mb-32"
           >
             <MagneticWrapper strength={0.4} radius={100}>
-              <Link href="/contact" className="w-full sm:w-auto">
+              <Link href="/contact" className="w-full sm:w-auto" data-cursor="magnetic">
                 <Button size="lg" className="w-full h-16 px-12 shadow-[0_0_50px_rgba(255,255,255,0.2)] bg-white/90 text-black hover:bg-white border-none font-black uppercase tracking-widest text-sm relative overflow-hidden group rounded-full">
                   <span className="relative z-10">Initiate Launch</span>
                 </Button>
@@ -144,7 +144,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {services.map((service) => (
-                <GlassCard key={service.title} className="group overflow-hidden border-white/10 hover:border-white/20 transition-all !bg-black/40 backdrop-blur-xl duration-500 rounded-[2.5rem] flex flex-col items-center text-center">
+                <GlassCard key={service.title} data-cursor="magnetic" className="group overflow-hidden border-white/10 hover:border-white/20 transition-all !bg-black/40 backdrop-blur-xl duration-500 rounded-[2.5rem] flex flex-col items-center text-center">
                   <div className="relative h-64 w-full">
                      <Image 
                         src={service.image} 

@@ -1,113 +1,91 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 
-export function CustomCursor() {
-    const cursorRef = useRef<HTMLDivElement>(null);
-    const dotRef = useRef<HTMLDivElement>(null);
-
-    // Track state in refs to avoid React re-renders which cause layout thrashing/lag
-    const mouse = useRef({ x: -100, y: -100 });
-    const cursor = useRef({ x: -100, y: -100 });
-    const isHovering = useRef(false);
-    const isVisible = useRef(false);
+export const CustomCursor = () => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [isPointer, setIsPointer] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    
+    const cursorX = useMotionValue(-100);
+    const cursorY = useMotionValue(-100);
+    
+    const springConfig = { damping: 25, stiffness: 250 };
+    const cursorXSpring = useSpring(cursorX, springConfig);
+    const cursorYSpring = useSpring(cursorY, springConfig);
 
     useEffect(() => {
-        if (typeof window === "undefined" || window.matchMedia("(pointer: coarse)").matches) {
-            return;
-        }
-
-        const onMouseMove = (e: MouseEvent) => {
-            mouse.current.x = e.clientX;
-            mouse.current.y = e.clientY;
-
-            if (!isVisible.current) {
-                isVisible.current = true;
-                if (cursorRef.current) cursorRef.current.style.opacity = "1";
-            }
+        const moveCursor = (e: MouseEvent) => {
+            cursorX.set(e.clientX);
+            cursorY.set(e.clientY);
+            if (!isVisible) setIsVisible(true);
         };
 
-        const onMouseOver = (e: MouseEvent) => {
+        const handleMouseOver = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
-            if (
-                target.tagName.toLowerCase() === 'a' ||
-                target.tagName.toLowerCase() === 'button' ||
-                target.closest('a') ||
-                target.closest('button') ||
-                window.getComputedStyle(target).cursor === 'pointer'
-            ) {
-                isHovering.current = true;
+            const isClickable = window.getComputedStyle(target).cursor === 'pointer' || 
+                              target.hasAttribute('data-cursor') ||
+                              target.tagName === 'A' ||
+                              target.tagName === 'BUTTON';
+            
+            setIsPointer(isClickable);
+            if (target.getAttribute('data-cursor') === 'magnetic') {
+                setIsHovered(true);
             } else {
-                isHovering.current = false;
+                setIsHovered(false);
             }
         };
 
-        const onMouseLeave = () => {
-            isVisible.current = false;
-            if (cursorRef.current) cursorRef.current.style.opacity = "0";
-        };
-
-        // Use passive event listeners for maximum performance
-        window.addEventListener("mousemove", onMouseMove, { passive: true });
-        window.addEventListener("mouseover", onMouseOver, { passive: true });
-        document.addEventListener("mouseleave", onMouseLeave, { passive: true });
-
-        let animationFrameId: number;
-
-        const render = () => {
-            // Smooth lerp for liquid trailing effect (bypasses Framer Motion overhead)
-            cursor.current.x += (mouse.current.x - cursor.current.x) * 0.15;
-            cursor.current.y += (mouse.current.y - cursor.current.y) * 0.15;
-
-            if (cursorRef.current) {
-                // Apply hardware-accelerated transforms
-                const size = isHovering.current ? 80 : 36;
-                cursorRef.current.style.transform = `translate3d(${cursor.current.x}px, ${cursor.current.y}px, 0) translate(-50%, -50%)`;
-                cursorRef.current.style.width = `${size}px`;
-                cursorRef.current.style.height = `${size}px`;
-
-                // Magnifying glass / Lens effect styles
-                if (isHovering.current) {
-                    // Stronger lens effect on hover (simulates magnification via contrast/saturation without heavy blur)
-                    cursorRef.current.style.backdropFilter = "blur(3px) saturate(300%) contrast(1.2) brightness(1.2)";
-                    if (dotRef.current) dotRef.current.style.opacity = "0";
-                } else {
-                    // Standard lens effect
-                    cursorRef.current.style.backdropFilter = "blur(1px) saturate(180%) brightness(1.1)";
-                    if (dotRef.current) dotRef.current.style.opacity = "1";
-                }
-            }
-            animationFrameId = requestAnimationFrame(render);
-        };
-
-        animationFrameId = requestAnimationFrame(render);
-
+        window.addEventListener("mousemove", moveCursor);
+        window.addEventListener("mouseover", handleMouseOver);
+        
         return () => {
-            window.removeEventListener("mousemove", onMouseMove);
-            window.removeEventListener("mouseover", onMouseOver);
-            document.removeEventListener("mouseleave", onMouseLeave);
-            cancelAnimationFrame(animationFrameId);
+            window.removeEventListener("mousemove", moveCursor);
+            window.removeEventListener("mouseover", handleMouseOver);
         };
-    }, []);
+    }, [cursorX, cursorY, isVisible]);
 
     return (
-        <div
-            ref={cursorRef}
-            className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center rounded-full transition-[width,height,backdrop-filter] duration-300 ease-out opacity-0 will-change-transform"
-            style={{
-                backgroundColor: "var(--cursor-bg)",
-                border: "1px solid var(--cursor-border)",
-                boxShadow: "var(--cursor-shadow)",
-            }}
-        >
-            <div
-                ref={dotRef}
-                className="w-1.5 h-1.5 rounded-full transition-opacity duration-300"
-                style={{
-                    backgroundColor: "var(--cursor-glow)",
-                    boxShadow: "0 0 8px var(--cursor-glow)"
-                }}
-            />
-        </div>
+        <AnimatePresence>
+            {isVisible && (
+                <div className="fixed inset-0 pointer-events-none z-[9999] hidden md:block">
+                    {/* Main Liquid Ring */}
+                    <motion.div
+                        style={{
+                            x: cursorXSpring,
+                            y: cursorYSpring,
+                            translateX: "-50%",
+                            translateY: "-50%",
+                        }}
+                        animate={{
+                            scale: isPointer ? 1.5 : 1,
+                            width: isHovered ? 80 : 40,
+                            height: isHovered ? 80 : 40,
+                        }}
+                        className="rounded-full border border-white/30 backdrop-blur-[2px] flex items-center justify-center mix-blend-difference"
+                    >
+                        <motion.div 
+                            animate={{
+                                scale: isPointer ? 0.5 : 1,
+                                opacity: isPointer ? 0.5 : 1
+                            }}
+                            className="w-1.5 h-1.5 bg-white rounded-full" 
+                        />
+                    </motion.div>
+                    
+                    {/* Trailing Glow */}
+                    <motion.div
+                        style={{
+                            x: cursorXSpring,
+                            y: cursorYSpring,
+                            translateX: "-50%",
+                            translateY: "-50%",
+                        }}
+                        className="w-[100px] h-[100px] bg-gvb-blue/10 rounded-full blur-3xl opacity-50"
+                    />
+                </div>
+            )}
+        </AnimatePresence>
     );
-}
+};

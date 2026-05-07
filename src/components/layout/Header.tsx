@@ -51,6 +51,7 @@ export function Header() {
                                     <li key={link.name}>
                                         <Link
                                             href={link.href}
+                                            data-cursor="magnetic"
                                             onClick={(e) => { if (link.href === '/' && pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }}
                                             className={`relative px-4 py-2 text-sm font-bold transition-all duration-300 rounded-full flex items-center justify-center ${isActive
                                                     ? "bg-white/10 text-white border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
