@@ -53,8 +53,8 @@ export function Header() {
                                             href={link.href}
                                             onClick={(e) => { if (link.href === '/' && pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }}
                                             className={`relative px-4 py-2 text-sm font-bold transition-all duration-300 rounded-full flex items-center justify-center ${isActive
-                                                    ? "bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-                                                    : "text-slate-300 hover:text-white hover:bg-white/10"
+                                                    ? "bg-white/10 text-white border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                                                    : "text-white hover:bg-white/5"
                                                 }`}
                                         >
                                             {link.name}
@@ -104,7 +104,7 @@ export function Header() {
                                         }
                                         setIsMobileMenuOpen(false);
                                     }}
-                                    className="block px-3 py-3 rounded-xl text-base font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+                                    className="block px-3 py-3 rounded-xl text-base font-semibold text-white hover:bg-white/10 transition-colors"
                                 >
                                     {link.name}
                                 </Link>

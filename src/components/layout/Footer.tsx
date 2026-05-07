@@ -12,70 +12,70 @@ export function Footer() {
     return (
         <footer className="w-full bg-[#020617] border-t border-white/5 overflow-hidden relative z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 text-center md:text-left items-start justify-center">
                     {/* Brand Col */}
-                    <div className="sm:col-span-2 lg:col-span-2">
+                    <div className="sm:col-span-2 lg:col-span-2 flex flex-col items-center md:items-start">
                         <Link href="/" onClick={(e) => { if (pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center group mb-6">
-                            <Logo className="scale-110 md:scale-125 origin-left mb-2 transition-transform duration-500" />
+                            <Logo className="scale-110 md:scale-125 origin-center md:origin-left mb-2 transition-transform duration-500" />
                         </Link>
-                        <p className="text-base text-slate-300 mb-6 font-bold max-w-sm opacity-90">
+                        <p className="text-base text-white mb-8 font-bold max-w-sm opacity-90 leading-relaxed">
                             Engineering tomorrow&apos;s solutions with proprietary trading, robust software, and strategic growth infrastructure.
                         </p>
                         <div className="flex space-x-5">
-                            <a href="https://github.com/BalajiKoushik01" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Github className="w-5 h-5" /></a>
-                            <a href="https://www.linkedin.com/in/balaji-koushik-05222a316" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Linkedin className="w-5 h-5" /></a>
-                            <a href="https://www.instagram.com/balajikoushik01?igsh=NGNpem1tOG11ZHVp" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Instagram className="w-5 h-5" /></a>
+                            <a href="https://github.com/BalajiKoushik01" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Github className="w-5 h-5" /></a>
+                            <a href="https://www.linkedin.com/in/balaji-koushik-05222a316" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Linkedin className="w-5 h-5" /></a>
+                            <a href="https://www.instagram.com/balajikoushik01?igsh=NGNpem1tOG11ZHVp" target="_blank" rel="noopener noreferrer" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Instagram className="w-5 h-5" /></a>
                         </div>
                     </div>
 
                     {/* Links 1 */}
-                    <div>
-                        <h3 className="text-sm font-bold text-slate-200 uppercase tracking-[0.2em] mb-6">Services</h3>
+                    <div className="flex flex-col items-center md:items-start">
+                        <h3 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8">Services</h3>
                         <ul className="space-y-4">
-                            <li><Link href="/services" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Proprietary Trading</Link></li>
-                            <li><Link href="/services" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Software Development</Link></li>
-                            <li><Link href="/services" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Strategy Consultation</Link></li>
-                            <li><Link href="/services" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Algorithm Development</Link></li>
+                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Proprietary Trading</Link></li>
+                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Software Development</Link></li>
+                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Strategy Consultation</Link></li>
+                            <li><Link href="/services" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Algorithm Development</Link></li>
                         </ul>
                     </div>
 
                     {/* Links 2 */}
-                    <div>
-                        <h3 className="text-sm font-bold text-slate-200 uppercase tracking-[0.2em] mb-6">Company</h3>
+                    <div className="flex flex-col items-center md:items-start">
+                        <h3 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8">Company</h3>
                         <ul className="space-y-4">
-                            <li><Link href="/about" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">About Us</Link></li>
-                            <li><Link href="/portfolio" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Portfolio</Link></li>
-                            <li><Link href="/blog" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Insights</Link></li>
-                            <li><Link href="/careers" className="text-sm font-semibold text-slate-400 hover:text-gvb-cyan transition-colors">Careers</Link></li>
+                            <li><Link href="/about" className="text-sm font-bold text-white hover:text-white/80 transition-colors">About Us</Link></li>
+                            <li><Link href="/portfolio" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Portfolio</Link></li>
+                            <li><Link href="/blog" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Insights</Link></li>
+                            <li><Link href="/careers" className="text-sm font-bold text-white hover:text-white/80 transition-colors">Careers</Link></li>
                         </ul>
                     </div>
 
                     {/* Contact Details */}
-                    <div>
-                        <h3 className="text-sm font-bold text-slate-200 uppercase tracking-[0.2em] mb-6">Contact</h3>
-                        <ul className="space-y-4">
-                            <li className="flex items-center space-x-3 text-sm font-semibold text-slate-300">
+                    <div className="flex flex-col items-center md:items-start">
+                        <h3 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8">Contact</h3>
+                        <ul className="space-y-5">
+                            <li className="flex items-center space-x-3 text-sm font-bold text-white">
                                 <Mail className="w-4 h-4 text-gvb-cyan" />
                                 <span>info@gvbtech.in</span>
                             </li>
-                            <li className="flex items-center space-x-3 text-sm font-semibold text-slate-300">
+                            <li className="flex items-center space-x-3 text-sm font-bold text-white">
                                 <Phone className="w-4 h-4 text-gvb-cyan" />
                                 <span>+91 9381958045</span>
                             </li>
-                            <li className="text-sm font-semibold text-slate-400 pl-7 leading-relaxed">
+                            <li className="text-xs font-bold text-white/60 pl-7 leading-relaxed tracking-wide">
                                 Sullurpeta, Andhra Pradesh<br />524121, IN
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p className="text-sm font-medium text-slate-500">
+                <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+                    <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
                         &copy; {currentYear} GVB Tech Solutions. All rights reserved.
                     </p>
-                    <div className="flex flex-wrap gap-8 justify-center md:justify-end">
-                        <Link href="/privacy" className="text-sm font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest text-[10px]">Privacy Policy</Link>
-                        <Link href="/terms" className="text-sm font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-widest text-[10px]">Terms of Service</Link>
+                    <div className="flex flex-wrap gap-10 justify-center md:justify-end">
+                        <Link href="/privacy" className="text-[10px] font-bold text-white/40 hover:text-white transition-colors uppercase tracking-widest">Privacy Policy</Link>
+                        <Link href="/terms" className="text-[10px] font-bold text-white/40 hover:text-white transition-colors uppercase tracking-widest">Terms of Service</Link>
                     </div>
                 </div>
             </div>
