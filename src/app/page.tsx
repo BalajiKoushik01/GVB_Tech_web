@@ -43,7 +43,7 @@ export default function Home() {
   const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.98]);
 
   return (
-    <div className="flex flex-col w-full relative bg-transparent selection:bg-black selection:text-white">
+    <div className="flex flex-col w-full relative bg-transparent selection:bg-white selection:text-black">
       {/* Background System (Fixed Depth - Rocket Only) */}
       <RocketMotion />
 
@@ -61,20 +61,20 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="inline-flex py-2 px-6 rounded-full liquid-glass mb-14 border-black/10 bg-white/40 whitespace-nowrap"
+            className="inline-flex py-2 px-6 rounded-full liquid-glass mb-14 border-white/10 bg-black/40 backdrop-blur-md whitespace-nowrap"
           >
-            <span className="text-[11px] font-black tracking-[0.25em] text-black uppercase">Launch Protocol Initiated</span>
+            <span className="text-[11px] font-black tracking-[0.25em] text-white uppercase">Launch Protocol Initiated</span>
           </motion.div>
 
           <MaskReveal>
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-6 text-black leading-[0.85] tracking-tighter">
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-6 text-white leading-[0.85] tracking-tighter">
               Empowering <br />
               <span className="text-gradient">Possibilities</span>
             </h1>
           </MaskReveal>
 
           <MaskReveal delay={0.2}>
-            <p className="text-lg md:text-2xl text-black mb-16 max-w-3xl mx-auto font-bold tracking-tight px-4 leading-relaxed opacity-80">
+            <p className="text-lg md:text-2xl text-slate-300 mb-16 max-w-3xl mx-auto font-bold tracking-tight px-4 leading-relaxed opacity-80">
               GVB Tech Solutions delivers world-class infrastructure and 
               algorithmic excellence for the next generation of industry leaders.
             </p>
@@ -88,15 +88,15 @@ export default function Home() {
           >
             <MagneticWrapper strength={0.4} radius={100}>
               <Link href="/contact" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full h-16 px-12 shadow-2xl bg-black text-white hover:bg-slate-900 border-none font-black uppercase tracking-widest text-sm relative overflow-hidden group">
-                  <span className="relative z-10">Initiate Launch</span>
+                <Button size="lg" className="w-full h-16 px-12 shadow-[0_0_40px_rgba(0,163,255,0.4)] bg-white text-black hover:bg-slate-200 border-none font-black uppercase tracking-widest text-sm relative overflow-hidden group">
+                  <span className="relative z-10 group-hover:text-white transition-colors duration-300">Initiate Launch</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-gvb-blue to-gvb-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Button>
               </Link>
             </MagneticWrapper>
             <MagneticWrapper strength={0.4} radius={100}>
               <Link href="/services" className="w-full sm:w-auto">
-                <Button size="lg" variant="glass" className="w-full h-16 px-12 liquid-glass border-black/20 text-black font-black uppercase text-sm tracking-widest bg-white/20 hover:bg-white/40">
+                <Button size="lg" variant="glass" className="w-full h-16 px-12 liquid-glass border-white/20 text-white font-black uppercase text-sm tracking-widest bg-black/20 hover:bg-black/40">
                   Solutions Hub
                 </Button>
               </Link>
@@ -111,20 +111,20 @@ export default function Home() {
           className="absolute bottom-12 left-0 w-full flex flex-col items-center z-30 pointer-events-none"
         >
           <div className="flex flex-col items-center">
-          <div className="w-[30px] h-[52px] rounded-full border-2 border-black/60 flex justify-center p-2 mb-3">
+          <div className="w-[30px] h-[52px] rounded-full border-2 border-white/60 flex justify-center p-2 mb-3">
             <motion.div
               animate={{ y: [0, 16, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-2 h-2 bg-gvb-blue rounded-full"
+              className="w-2 h-2 bg-gvb-cyan rounded-full"
             />
           </div>
-          <span className="text-[10px] text-black font-black uppercase tracking-[0.4em] opacity-60">Scroll to Explore</span>
+          <span className="text-[10px] text-white font-black uppercase tracking-[0.4em] opacity-60">Scroll to Explore</span>
           </div>
         </motion.div>
       </section>
 
       {/* Content Area: Naturally flows AFTER the Hero (z-10) */}
-      <div className="relative z-10 bg-transparent border-t border-black/5">
+      <div className="relative z-10 bg-transparent border-t border-white/5">
         <MarketDashboard />
 
         {/* Services Section with SVG Data Stream */}
@@ -134,10 +134,10 @@ export default function Home() {
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-24">
               <MaskReveal>
-                <h2 className="text-5xl md:text-[7rem] font-black mb-8 tracking-tighter text-black uppercase">Our Ecosystem</h2>
+                <h2 className="text-5xl md:text-[7rem] font-black mb-8 tracking-tighter text-white uppercase">Our Ecosystem</h2>
               </MaskReveal>
               <MaskReveal delay={0.2}>
-                <p className="text-xl md:text-2xl text-black max-w-3xl mx-auto font-bold tracking-tight leading-relaxed opacity-80">
+                <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto font-bold tracking-tight leading-relaxed opacity-80">
                   Premium engineering solutions designed with liquid precision and architectural integrity.
                 </p>
               </MaskReveal>
@@ -145,23 +145,23 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {services.map((service) => (
-                <GlassCard key={service.title} className="group overflow-hidden border-black/5 hover:border-black/20 transition-all !bg-white/5 duration-500 rounded-3xl">
+                <GlassCard key={service.title} className="group overflow-hidden border-white/10 hover:border-white/30 transition-all !bg-black/20 duration-500 rounded-3xl">
                   <div className="relative h-56 w-full">
                      <Image 
                         src={service.image} 
                         alt={service.title} 
                         fill 
-                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 opacity-70 group-hover:opacity-100"
+                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 opacity-60 group-hover:opacity-100"
                      />
-                     <div className="absolute inset-0 bg-gradient-to-t from-white/95 to-transparent" />
+                     <div className="absolute inset-0 bg-gradient-to-t from-[#020617] to-transparent" />
                   </div>
                   <div className="p-10">
-                      <div className={`w-14 h-14 mb-8 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-2xl`}>
+                      <div className={`w-14 h-14 mb-8 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-[0_0_30px_rgba(0,163,255,0.3)]`}>
                         <service.icon className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="text-3xl font-black mb-5 tracking-tight text-black">{service.title}</h3>
-                      <p className="text-black/70 mb-10 font-semibold leading-relaxed line-clamp-3">{service.description}</p>
-                      <Link href="/services" className="inline-flex items-center text-black font-black group-hover:translate-x-2 transition-transform self-start text-xs uppercase tracking-[0.25em] border-b-2 border-black pb-1">
+                      <h3 className="text-3xl font-black mb-5 tracking-tight text-white">{service.title}</h3>
+                      <p className="text-slate-300 mb-10 font-semibold leading-relaxed line-clamp-3">{service.description}</p>
+                      <Link href="/services" className="inline-flex items-center text-white font-black group-hover:text-gvb-cyan group-hover:translate-x-2 transition-all self-start text-xs uppercase tracking-[0.25em] border-b-2 border-white/30 hover:border-gvb-cyan pb-1">
                         Explore Strategy <ArrowRight className="ml-2 w-5 h-5" />
                       </Link>
                   </div>
@@ -174,17 +174,17 @@ export default function Home() {
         <LiveStats />
         
         {/* Final CTA */}
-        <section className="py-40 px-4 bg-slate-50 flex justify-center">
-          <GlassCard hoverEffect={false} className="max-w-6xl w-full text-center py-32 px-8 relative overflow-hidden !bg-white/40 backdrop-blur-3xl border-black/10 rounded-[3rem]">
+        <section className="py-40 px-4 flex justify-center">
+          <GlassCard hoverEffect={false} className="max-w-6xl w-full text-center py-32 px-8 relative overflow-hidden !bg-black/40 backdrop-blur-3xl border-white/10 rounded-[3rem]">
             <div className="relative z-10">
-              <h2 className="text-5xl md:text-8xl font-black mb-10 tracking-tighter text-black uppercase">Ready to <span className="text-gradient">Launch?</span></h2>
-              <p className="text-xl md:text-2xl text-black mb-14 max-w-3xl mx-auto font-bold tracking-tight opacity-90">
+              <h2 className="text-5xl md:text-8xl font-black mb-10 tracking-tighter text-white uppercase">Ready to <span className="text-gradient">Launch?</span></h2>
+              <p className="text-xl md:text-2xl text-slate-300 mb-14 max-w-3xl mx-auto font-bold tracking-tight opacity-90">
                 Integrate our world-class architecture to accelerate your digital and operational capabilities.
               </p>
               <div className="flex justify-center">
                 <MagneticWrapper strength={0.6} radius={120}>
                   <Link href="/contact">
-                    <Button size="lg" className="h-20 px-16 text-2xl shadow-3xl bg-black text-white hover:bg-slate-900 border-none uppercase font-black tracking-widest rounded-2xl">
+                    <Button size="lg" className="h-20 px-16 text-2xl shadow-[0_0_40px_rgba(0,163,255,0.5)] bg-white text-black hover:bg-slate-200 border-none uppercase font-black tracking-widest rounded-2xl">
                       Initiate Project
                     </Button>
                   </Link>

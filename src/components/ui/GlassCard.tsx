@@ -78,7 +78,7 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
                         />
                     )}
 
-                    <div className="relative z-10 w-full h-full p-6 md:p-8 rounded-[inherit] bg-white/40 backdrop-blur-sm shadow-xl">
+                    <div className="relative z-10 w-full h-full p-6 md:p-8 rounded-[inherit] bg-black/40 backdrop-blur-md shadow-2xl border border-white/5">
                         {children as React.ReactNode}
                     </div>
                     
