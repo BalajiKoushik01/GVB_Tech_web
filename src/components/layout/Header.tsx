@@ -71,13 +71,13 @@ export function Header() {
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="flex items-center space-x-4 md:hidden">
+                    <div className="flex items-center md:hidden">
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="p-2 text-white"
+                            className="w-10 h-10 flex items-center justify-center text-white bg-white/5 rounded-full border border-white/10"
                             aria-label="Toggle menu"
                         >
-                            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                         </button>
                     </div>
                 </div>
@@ -98,9 +98,9 @@ export function Header() {
 
                         <button 
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="absolute top-6 right-6 p-3 text-white bg-white/5 rounded-full border border-white/10 z-10"
+                            className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-white bg-white/5 rounded-full border border-white/10 z-10"
                         >
-                            <X className="w-6 h-6" />
+                            <X className="w-5 h-5" />
                         </button>
 
                         <div className="flex flex-col space-y-6 text-center w-full relative z-10">

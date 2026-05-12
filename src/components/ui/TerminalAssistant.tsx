@@ -19,7 +19,14 @@ export const TerminalAssistant = () => {
         "GVB TECH SOLUTIONS: READY TO SCALE",
         "------------------------------------",
         "SYSTEM STATUS: ALL ENGINES GO",
-        "TYPE 'HELP' FOR COMMAND LIST"
+        "------------------------------------",
+        "AVAILABLE COMMANDS:",
+        " - HELP: SHOW THIS MENU",
+        " - STATUS: SYSTEM HEALTH",
+        " - INFRA: GVB_OS / COREOS INFO",
+        " - SERVICES: CORE OFFERINGS",
+        " - CLEAR: PURGE CONSOLE",
+        "------------------------------------",
     ];
 
     useEffect(() => {
@@ -89,11 +96,11 @@ export const TerminalAssistant = () => {
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-24 right-6 md:right-8 z-[100] w-14 h-14 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(0,163,255,0.3)] group hover:border-gvb-cyan transition-all"
+                className="fixed bottom-[4.5rem] right-6 z-[100] w-12 h-12 bg-black/60 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(0,163,255,0.3)] group hover:border-gvb-cyan transition-all"
                 data-cursor="magnetic"
             >
                 <div className="absolute inset-0 bg-gvb-blue/20 rounded-full animate-ping opacity-20" />
-                <Terminal className="w-6 h-6 text-white group-hover:text-gvb-cyan transition-colors" />
+                <Terminal className="w-5 h-5 text-white group-hover:text-gvb-cyan transition-colors" />
             </motion.button>
 
             {/* Terminal Window */}
@@ -104,7 +111,7 @@ export const TerminalAssistant = () => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         onClick={() => inputRef.current?.focus()}
-                        className="fixed bottom-40 right-6 md:right-8 z-[100] w-[320px] md:w-[450px] h-[350px] bg-black/90 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono cursor-text"
+                        className="fixed bottom-[9rem] right-6 z-[100] w-[calc(100vw-48px)] sm:w-[420px] max-w-[460px] h-[320px] md:h-[350px] bg-black/90 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono cursor-text"
                     >
                         {/* Header */}
                         <div className="h-10 bg-white/5 border-b border-white/10 flex items-center justify-between px-4 select-none">

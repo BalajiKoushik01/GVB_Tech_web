@@ -47,11 +47,11 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                            <GlassCard className="h-full p-6 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10 group">
-                                <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gvb-blue/10 flex items-center justify-center mb-6 md:mb-8 transform group-hover:scale-110 transition-transform">
-                                    <Target className="w-7 h-7 md:w-8 md:h-8 text-gvb-blue" />
+                        <GlassCard className="h-full p-6 md:p-10 !bg-white/5 backdrop-blur-3xl border-white/10 group">
+                                <div className="w-14 h-14 rounded-2xl bg-gvb-blue/10 flex items-center justify-center mb-6 transform group-hover:scale-110 transition-transform">
+                                    <Target className="w-7 h-7 text-gvb-blue" />
                                 </div>
-                                <h2 className="text-2xl md:text-4xl font-black mb-4 md:mb-6 text-white tracking-tight uppercase">Our Mission</h2>
+                                <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Mission</h2>
                                 <p className="text-base md:text-xl text-white/70 font-bold leading-relaxed">
                                     To empower global businesses by delivering transformative digital solutions, merging strategic business consulting with cutting-edge technology to unlock unprecedented growth and efficiency.
                                 </p>
@@ -64,12 +64,12 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                            <GlassCard className="h-full p-8 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10 group">
-                                <div className="w-16 h-16 rounded-2xl bg-gvb-accent/10 flex items-center justify-center mb-8 transform group-hover:scale-110 transition-transform">
-                                    <Eye className="w-8 h-8 text-gvb-accent" />
+                            <GlassCard className="h-full p-6 md:p-10 !bg-white/5 backdrop-blur-3xl border-white/10 group">
+                                <div className="w-14 h-14 rounded-2xl bg-gvb-accent/10 flex items-center justify-center mb-6 transform group-hover:scale-110 transition-transform">
+                                    <Eye className="w-7 h-7 text-gvb-accent" />
                                 </div>
-                                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white tracking-tight uppercase">Our Vision</h2>
-                                <p className="text-lg md:text-xl text-white/70 font-bold leading-relaxed">
+                                <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Vision</h2>
+                                <p className="text-base md:text-xl text-white/70 font-bold leading-relaxed">
                                     To be the foremost global partner in technological innovation, known for crafting elegant, high-performance systems that redefine industry standards and propel humanity forward.
                                 </p>
                             </GlassCard>

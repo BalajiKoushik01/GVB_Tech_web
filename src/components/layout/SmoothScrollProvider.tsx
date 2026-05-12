@@ -1,9 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Lenis from "lenis";
+import { usePathname } from "next/navigation";
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+    const lenisRef = useRef<Lenis | null>(null);
+    const pathname = usePathname();
+
     useEffect(() => {
         const lenis = new Lenis({
             duration: 0.8,
@@ -15,17 +19,31 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
             touchMultiplier: 1.5,
         });
 
+        lenisRef.current = lenis;
+
+        let rafId: number;
         function raf(time: number) {
             lenis.raf(time);
-            requestAnimationFrame(raf);
+            rafId = requestAnimationFrame(raf);
         }
 
-        requestAnimationFrame(raf);
+        rafId = requestAnimationFrame(raf);
 
         return () => {
+            cancelAnimationFrame(rafId);
             lenis.destroy();
+            lenisRef.current = null;
         };
     }, []);
+
+    // Scroll to top on every page navigation
+    useEffect(() => {
+        if (lenisRef.current) {
+            lenisRef.current.scrollTo(0, { immediate: true });
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }, [pathname]);
 
     return <>{children}</>;
 }

@@ -165,7 +165,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-10 md:mb-24">
               <MaskReveal>
-                <h2 className="text-3xl md:text-[7rem] font-black mb-4 md:mb-8 tracking-tighter text-white uppercase px-2">Our Ecosystem</h2>
+                <h2 className="text-2xl sm:text-4xl md:text-[7rem] font-black mb-4 md:mb-8 tracking-tighter text-white uppercase px-2">Our Ecosystem</h2>
               </MaskReveal>
               <MaskReveal delay={0.2}>
                 <p className="text-base md:text-2xl text-white max-w-3xl mx-auto font-bold tracking-tight leading-relaxed px-4">

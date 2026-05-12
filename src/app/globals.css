@@ -36,7 +36,15 @@
     color: var(--foreground);
     @apply antialiased transition-all duration-700 ease-out font-sans selection:bg-white selection:text-black;
     overflow-x: hidden;
+    overscroll-behavior: none;
     color-scheme: dark !important;
+  }
+
+  /* Hide default cursor on desktop where custom cursor is active */
+  @media (pointer: fine) {
+    html, body, *:not(input):not(textarea):not(select) {
+      cursor: none !important;
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {

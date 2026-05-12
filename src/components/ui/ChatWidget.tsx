@@ -60,7 +60,7 @@ export function ChatWidget() {
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div className="fixed bottom-6 right-6 z-[90] flex flex-col items-end gap-3">
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -68,7 +68,7 @@ export function ChatWidget() {
                         animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                         exit={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(10px)" }}
                         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                        className="mb-4 w-[350px] sm:w-[400px]"
+                        className="w-[calc(100vw-48px)] sm:w-[380px] max-w-[400px]"
                     >
                         <div className="flex flex-col h-[500px] overflow-hidden p-0 rounded-2xl bg-[#020617]/95 backdrop-blur-3xl saturate-[1.8] transform translate-z-0 border border-white/20 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)]">
                             {/* Header */}
@@ -169,11 +169,9 @@ export function ChatWidget() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-14 h-14 rounded-full bg-black/10 dark:bg-space-blue/30 backdrop-blur-xl border border-black/10 dark:border-white/20 flex items-center justify-center shadow-[0_8px_32px_0_rgba(102,126,234,0.3)] hover:shadow-[0_8px_32px_0_rgba(102,126,234,0.5)] transition-shadow relative overflow-hidden group"
+                className="w-12 h-12 rounded-full bg-gradient-to-br from-gvb-deep to-gvb-cyan flex items-center justify-center shadow-[0_0_30px_rgba(0,163,255,0.4)] border border-white/20 transition-shadow hover:shadow-[0_0_40px_rgba(0,163,255,0.6)] relative overflow-hidden"
             >
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-start/20 to-accent-end/20" />
-                <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:animate-shimmer" />
-                {isOpen ? <X className="w-6 h-6 text-foreground relative z-10" /> : <MessageSquare className="w-6 h-6 text-foreground relative z-10" />}
+                {isOpen ? <X className="w-5 h-5 text-white relative z-10" /> : <MessageSquare className="w-5 h-5 text-white relative z-10" />}
             </motion.button>
         </div>
     );

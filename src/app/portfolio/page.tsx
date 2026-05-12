@@ -95,7 +95,7 @@ export default function PortfolioPage() {
                 {/* Grid */}
                 <div className="max-w-7xl mx-auto px-4">
                     <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
-                        <AnimatePresence mode="popLayout">
+                        <AnimatePresence mode="sync">
                             {filteredProjects.map((project, idx) => (
                                 <motion.div
                                     key={project.id}

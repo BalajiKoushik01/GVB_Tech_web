@@ -19,15 +19,15 @@ export const RocketMotion = memo(() => {
     const flameOpacity = useTransform(smoothProgress, [0, 0.05, 1], [0, 1, 1]);
 
     return (
-        <div className="fixed inset-0 pointer-events-none z-[1] flex items-center justify-center overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none z-[1] flex items-center justify-center overflow-hidden" style={{ top: '30%' }}>
             <motion.div
                 style={{ y: yTransform }}
                 className="relative flex flex-col items-center"
             >
-                {/* 2D High-Performance SVG Rocket (Recovery V9.0) */}
+                {/* 2D High-Performance SVG Rocket */}
                 <svg 
                     viewBox="0 0 100 150" 
-                    className="w-24 h-36 md:w-40 md:h-60 drop-shadow-[0_20px_50px_rgba(0,163,255,0.2)]"
+                    className="w-16 h-24 md:w-40 md:h-60 drop-shadow-[0_20px_50px_rgba(0,163,255,0.2)]"
                 >
                     {/* Rocket Body (Single Path for Efficiency) */}
                     <path 
