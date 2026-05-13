@@ -11,9 +11,9 @@ interface MaskRevealProps {
 
 export function MaskReveal({ children, className = "", delay = 0 }: MaskRevealProps) {
     return (
-        // pb-4 on the outer wrapper extends the overflow-hidden boundary downward
-        // so large uppercase letters and descenders are never clipped
-        <div className={`overflow-hidden pb-4 ${className}`}>
+        // py-4 on the outer wrapper extends the overflow-hidden boundary upward and downward
+        // so large uppercase letters, ascenders, and descenders are never clipped
+        <div className={`overflow-hidden py-4 ${className}`}>
             <motion.div
                 initial={{ y: "100%", opacity: 0 }}
                 whileInView={{ y: "0%", opacity: 1 }}

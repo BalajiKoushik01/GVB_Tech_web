@@ -100,7 +100,7 @@ export default function Home() {
           </motion.div>
 
           <MaskReveal>
-            <h1 className="text-[1.75rem] sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-4 text-white leading-[1] lg:leading-[0.85] tracking-tighter uppercase px-1">
+            <h1 className="text-[1.75rem] sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-4 text-white leading-[1] lg:leading-none tracking-tighter uppercase px-1">
               Beyond <br />
               <span className="text-gradient">Intelligence</span>
             </h1>
@@ -108,28 +108,27 @@ export default function Home() {
 
           <MaskReveal delay={0.2}>
             <p className="text-xs md:text-2xl text-white/80 mb-6 md:mb-16 max-w-xl mx-auto font-bold tracking-tight px-4 leading-relaxed">
-              GVB Tech Solutions delivers world-class infrastructure and 
-              algorithmic excellence for the next generation of industry leaders.
+              Engineering proprietary high-frequency trading systems and enterprise software architecture with liquid precision.
             </p>
           </MaskReveal>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-col sm:flex-row gap-4 md:gap-8 justify-center items-center w-full max-w-md mx-auto mb-20 md:mb-32"
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 md:gap-6 z-50"
           >
-            <MagneticWrapper strength={0.4} radius={100}>
-              <Link href="/contact" className="w-full sm:w-auto" data-cursor="magnetic">
-                <Button size="lg" className="w-full h-16 px-12 shadow-[0_0_50px_rgba(255,255,255,0.2)] bg-white/90 text-black hover:bg-white border-none font-black uppercase tracking-widest text-sm relative overflow-hidden group rounded-full">
-                  <span className="relative z-10">Initiate Launch</span>
+            <MagneticWrapper>
+              <Link href="/contact">
+                <Button data-cursor="magnetic" size="lg" className="h-14 md:h-20 px-8 md:px-14 text-sm md:text-xl bg-white text-black hover:bg-white/90 border-none uppercase font-black tracking-widest rounded-full shadow-[0_0_50px_rgba(255,255,255,0.2)]">
+                  Get Started
                 </Button>
               </Link>
             </MagneticWrapper>
-            <MagneticWrapper strength={0.4} radius={100}>
-              <Link href="/services" className="w-full sm:w-auto">
-                <Button size="lg" variant="glass" className="w-full h-16 px-12 liquid-glass border-white/20 text-white font-black uppercase text-sm tracking-widest bg-black/20 hover:bg-black/40">
-                  Solutions Hub
+            <MagneticWrapper>
+              <Link href="/services">
+                <Button data-cursor="magnetic" size="lg" variant="outline" className="h-14 md:h-20 px-8 md:px-14 text-sm md:text-xl border-white/20 hover:bg-white/5 uppercase font-black tracking-widest rounded-full">
+                  Explore Solutions
                 </Button>
               </Link>
             </MagneticWrapper>

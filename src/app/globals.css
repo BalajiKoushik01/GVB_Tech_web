@@ -40,11 +40,16 @@
     color-scheme: dark !important;
   }
 
-  /* Hide default cursor on desktop where custom cursor is active */
-  @media (pointer: fine) {
-    html, body, *:not(input):not(textarea):not(select) {
-      cursor: none !important;
-    }
+  /* Robust cursor hiding */
+  .hide-native-cursor, .hide-native-cursor * {
+    cursor: none !important;
+  }
+
+  /* Scanline / Texture Overlay (CSS-based replacement for CSP-blocked external pattern) */
+  .grain-overlay {
+    background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
   }
 
   h1, h2, h3, h4, h5, h6 {

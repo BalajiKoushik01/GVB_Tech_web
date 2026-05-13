@@ -39,7 +39,7 @@ export const TerminalAssistant = () => {
                 } else {
                     clearInterval(interval);
                 }
-            }, 300);
+            }, 80);
             return () => clearInterval(interval);
         }
     }, [isOpen, lines.length]);

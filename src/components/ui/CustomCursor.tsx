@@ -1,50 +1,65 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 
 export const CustomCursor = () => {
     const [isHovered, setIsHovered] = useState(false);
     const [isPointer, setIsPointer] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     
     const cursorX = useMotionValue(-100);
     const cursorY = useMotionValue(-100);
     
-    const springConfig = { damping: 25, stiffness: 250 };
+    // Snappy spring config for elite performance feel
+    const springConfig = { damping: 35, stiffness: 450, mass: 0.5 };
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
 
-    useEffect(() => {
-        const moveCursor = (e: MouseEvent) => {
-            cursorX.set(e.clientX);
-            cursorY.set(e.clientY);
-            if (!isVisible) setIsVisible(true);
-        };
+    const handleMouseMove = useCallback((e: MouseEvent) => {
+        cursorX.set(e.clientX);
+        cursorY.set(e.clientY);
+        if (!isVisible) setIsVisible(true);
+    }, [cursorX, cursorY, isVisible]);
 
-        const handleMouseOver = (e: MouseEvent) => {
-            const target = e.target as HTMLElement;
-            const isClickable = window.getComputedStyle(target).cursor === 'pointer' || 
-                              target.hasAttribute('data-cursor') ||
-                              target.tagName === 'A' ||
-                              target.tagName === 'BUTTON';
-            
-            setIsPointer(isClickable);
-            if (target.getAttribute('data-cursor') === 'magnetic') {
+    const handleMouseOver = useCallback((e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        const interactive = target.closest('a, button, [data-cursor="magnetic"], input, select, textarea');
+        
+        if (interactive) {
+            setIsPointer(true);
+            if (interactive.getAttribute('data-cursor') === 'magnetic' || interactive.tagName === 'A' || interactive.tagName === 'BUTTON') {
                 setIsHovered(true);
             } else {
                 setIsHovered(false);
             }
-        };
+        } else {
+            setIsPointer(false);
+            setIsHovered(false);
+        }
+    }, []);
 
-        window.addEventListener("mousemove", moveCursor);
+    const handleMouseDown = useCallback(() => setIsClicked(true), []);
+    const handleMouseUp = useCallback(() => setIsClicked(false), []);
+
+    useEffect(() => {
+        // Enforce cursor hiding on mount
+        document.documentElement.classList.add('hide-native-cursor');
+        
+        window.addEventListener("mousemove", handleMouseMove);
         window.addEventListener("mouseover", handleMouseOver);
+        window.addEventListener("mousedown", handleMouseDown);
+        window.addEventListener("mouseup", handleMouseUp);
         
         return () => {
-            window.removeEventListener("mousemove", moveCursor);
+            document.documentElement.classList.remove('hide-native-cursor');
+            window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseover", handleMouseOver);
+            window.removeEventListener("mousedown", handleMouseDown);
+            window.removeEventListener("mouseup", handleMouseUp);
         };
-    }, [cursorX, cursorY, isVisible]);
+    }, [handleMouseMove, handleMouseOver, handleMouseDown, handleMouseUp]);
 
     return (
         <AnimatePresence>
@@ -59,22 +74,26 @@ export const CustomCursor = () => {
                             translateY: "-50%",
                         }}
                         animate={{
-                            scale: isPointer ? 1.5 : 1,
-                            width: isHovered ? 80 : 40,
-                            height: isHovered ? 80 : 40,
+                            scale: isClicked ? 0.8 : (isPointer ? 1.5 : 1),
+                            width: isHovered ? 80 : 32,
+                            height: isHovered ? 80 : 32,
+                            borderWidth: isHovered ? "1px" : "2px",
+                            borderColor: isPointer ? "rgba(0, 209, 255, 0.8)" : "rgba(255, 255, 255, 0.3)",
                         }}
-                        className="rounded-full border border-white/30 backdrop-blur-[2px] flex items-center justify-center mix-blend-difference"
+                        className="rounded-full border backdrop-blur-[1px] flex items-center justify-center mix-blend-difference transition-colors duration-200"
                     >
+                        {/* Inner Dot */}
                         <motion.div 
                             animate={{
-                                scale: isPointer ? 0.5 : 1,
-                                opacity: isPointer ? 0.5 : 1
+                                scale: isPointer ? 0.3 : 1,
+                                opacity: isPointer ? 0 : 1,
+                                backgroundColor: isClicked ? "#00d1ff" : "#ffffff"
                             }}
-                            className="w-1.5 h-1.5 bg-white rounded-full" 
+                            className="w-1.5 h-1.5 rounded-full" 
                         />
                     </motion.div>
                     
-                    {/* Trailing Glow */}
+                    {/* Trailing Glow Layer */}
                     <motion.div
                         style={{
                             x: cursorXSpring,
@@ -82,7 +101,11 @@ export const CustomCursor = () => {
                             translateX: "-50%",
                             translateY: "-50%",
                         }}
-                        className="w-[100px] h-[100px] bg-gvb-blue/10 rounded-full blur-3xl opacity-50"
+                        animate={{
+                            scale: isPointer ? 2 : 1,
+                            opacity: isPointer ? 0.3 : 0.1
+                        }}
+                        className="w-[60px] h-[60px] bg-gvb-blue rounded-full blur-2xl pointer-events-none"
                     />
                 </div>
             )}

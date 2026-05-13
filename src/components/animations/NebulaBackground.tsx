@@ -59,7 +59,7 @@ export const NebulaBackground = () => {
             </motion.div>
 
             {/* Scanline / Texture Overlay */}
-            <div className="absolute inset-0 w-full h-full opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+            <div className="absolute inset-0 w-full h-full opacity-[0.05] pointer-events-none grain-overlay" />
         </div>
     );
 };

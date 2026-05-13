@@ -38,7 +38,7 @@ export function Header() {
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between transition-all duration-500">
-                    <Link href="/" onClick={(e) => { if (pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center group">
+                    <Link href="/" data-cursor="magnetic" onClick={(e) => { if (pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }} className="flex items-center group">
                         <Logo className={`transition-all duration-500 origin-left ${isScrolled ? 'scale-90' : 'scale-100'}`} />
                     </Link>
 
@@ -67,7 +67,7 @@ export function Header() {
                     </nav>
 
                     <div className="hidden md:flex items-center space-x-6">
-                        <Link href="/contact"><Button size="sm" className="bg-gvb-blue hover:bg-gvb-deep">Get Started</Button></Link>
+                        <Link href="/contact"><Button data-cursor="magnetic" size="sm" className="bg-gvb-blue hover:bg-gvb-deep">Get Started</Button></Link>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -76,6 +76,7 @@ export function Header() {
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             className="w-10 h-10 flex items-center justify-center text-white bg-white/5 rounded-full border border-white/10"
                             aria-label="Toggle menu"
+                            data-cursor="magnetic"
                         >
                             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                         </button>
