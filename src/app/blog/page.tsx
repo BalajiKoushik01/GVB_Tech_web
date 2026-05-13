@@ -58,7 +58,7 @@ export default function BlogPage() {
                     <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
                         Intelligence Feed
                     </div>
-                    <h1 className="text-5xl md:text-8xl font-black tracking-tighter mb-8 text-white uppercase">
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-8 text-white uppercase">
                         Insights & <span className="text-gradient">Protocol</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-white/60 font-bold tracking-tight">

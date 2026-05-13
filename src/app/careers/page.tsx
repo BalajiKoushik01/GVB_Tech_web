@@ -47,7 +47,7 @@ export default function CareersPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-8xl font-black mb-8 tracking-tighter text-white uppercase"
+                        className="text-5xl md:text-6xl lg:text-7xl font-black mb-8 tracking-tighter text-white uppercase"
                     >
                         Engineer the <span className="text-gradient">Future</span>
                     </motion.h1>

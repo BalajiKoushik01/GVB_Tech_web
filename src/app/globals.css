@@ -116,3 +116,30 @@
     }
   }
 }
+
+/* Elite "Military-Premium" WebKit Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #22d3ee, #2563eb);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #ffffff, #22d3ee);
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.8);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #22d3ee #020617;
+}

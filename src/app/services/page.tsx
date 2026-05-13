@@ -73,7 +73,7 @@ export default function ServicesPage() {
                         <motion.h1
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="text-5xl md:text-8xl lg:text-9xl font-black mb-8 text-white tracking-tighter uppercase leading-[0.85]"
+                            className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 text-white tracking-tighter uppercase leading-[0.95]"
                         >
                             Solutions for <br />
                             <span className="text-gradient">The Vanguard</span>
@@ -82,7 +82,7 @@ export default function ServicesPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-xl md:text-3xl text-white/60 font-bold tracking-tight leading-relaxed max-w-2xl mx-auto"
+                            className="text-lg md:text-xl text-white/60 font-bold tracking-tight leading-relaxed max-w-2xl mx-auto"
                         >
                             Propelling enterprise infrastructure with low-latency engineering and neural intelligence.
                         </motion.p>
@@ -120,7 +120,7 @@ export default function ServicesPage() {
                                         <span className="w-1.5 h-1.5 bg-gvb-cyan rounded-full animate-pulse" />
                                         <span>Operational Protocol 0{idx + 1}</span>
                                     </div>
-                                    <h2 className="text-4xl md:text-7xl font-black mb-8 text-white tracking-tighter uppercase leading-none">{service.title}</h2>
+                                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 text-white tracking-tighter uppercase leading-none">{service.title}</h2>
                                     <p className="text-xl md:text-2xl text-white/60 mb-10 leading-relaxed font-bold">
                                         {service.description}
                                     </p>

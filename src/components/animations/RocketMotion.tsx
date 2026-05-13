@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useVelocity } from "framer-motion";
 
 // Stable particle data for the engine exhaust
@@ -38,7 +38,6 @@ export const RocketMotion = memo(() => {
     }, [mouseX, mouseY]);
 
     // ── Scroll & Velocity driven values ──────────────────────────────────────────
-    // Lift off animation: move up based on scroll
     const rocketY  = useTransform(smoothedScroll, [0, 1], [0, -1200]);
     const rocketOp = useTransform(smoothedScroll, [0, 0.9, 1], [1, 1, 0]);
     
@@ -47,22 +46,22 @@ export const RocketMotion = memo(() => {
     const tiltY = useTransform(springX, [-1, 1], [-10, 10]);
     
     // Dynamic Engine Intensity
-    const absVelocity = useTransform(scrollVelocity, (v) => Math.min(Math.abs(v) * 20, 1));
+    const absVelocity = useTransform(scrollVelocity, (v) => Math.min(Math.abs(v) * 25, 1));
     const intensity = useSpring(absVelocity, { stiffness: 100, damping: 20 });
     
-    const flameScale = useTransform(intensity, [0, 1], [1, 2.5]);
+    const flameScale = useTransform(intensity, [0, 1], [1, 2.8]);
     const flameColor = useTransform(intensity, [0, 1], ["#f97316", "#22d3ee"]); 
 
     return (
         <div
             aria-hidden
             className="fixed z-[9999] pointer-events-none"
-            style={{ right: "4px", bottom: "100px" }}
+            style={{ right: "12px", bottom: "100px", minWidth: "80px" }}
         >
             <motion.div
-                initial={{ opacity: 0, y: 100 }}
+                initial={{ opacity: 0, y: 150 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
                 style={{ y: rocketY, opacity: rocketOp }}
                 className="relative flex flex-col items-center"
             >
@@ -79,7 +78,7 @@ export const RocketMotion = memo(() => {
                     }}
                     className="relative flex flex-col items-center preserve-3d"
                 >
-                    {/* Shockwaves (Simpler implementation for better visibility) */}
+                    {/* Shockwaves */}
                     <motion.div
                         style={{ opacity: intensity }}
                         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
@@ -115,35 +114,25 @@ export const RocketMotion = memo(() => {
                             }}
                         >
                             <defs>
-                                <linearGradient id="rocket-silver-v3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <linearGradient id="rocket-silver-final" x1="0%" y1="0%" x2="100%" y2="0%">
                                     <stop offset="0%" stopColor="#94a3b8" />
                                     <stop offset="50%" stopColor="#f1f5f9" />
                                     <stop offset="100%" stopColor="#64748b" />
                                 </linearGradient>
-                                <linearGradient id="rocket-accent-v3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <linearGradient id="rocket-accent-final" x1="0%" y1="0%" x2="100%" y2="0%">
                                     <stop offset="0%" stopColor="#22d3ee" />
                                     <stop offset="100%" stopColor="#2563eb" />
                                 </linearGradient>
                             </defs>
 
-                            {/* Nose */}
-                            <path d="M32,0 C20,20 14,50 14,75 L50,75 C50,50 44,20 32,0Z" fill="url(#rocket-silver-v3)" />
-                            
-                            {/* Body */}
-                            <rect x="14" y="73" width="36" height="34" rx="2" fill="url(#rocket-silver-v3)" />
-                            
-                            {/* Cockpit */}
+                            <path d="M32,0 C20,20 14,50 14,75 L50,75 C50,50 44,20 32,0Z" fill="url(#rocket-silver-final)" />
+                            <rect x="14" y="73" width="36" height="34" rx="2" fill="url(#rocket-silver-final)" />
                             <circle cx="32" cy="50" r="10" fill="#020617" stroke="#22d3ee" strokeWidth="2.5" />
                             <circle cx="28" cy="46" r="4" fill="white" fillOpacity="0.4" />
-
-                            {/* Fins */}
-                            <path d="M14,80 L0,110 L14,102 Z" fill="url(#rocket-accent-v3)" />
-                            <path d="M50,80 L64,110 L50,102 Z" fill="url(#rocket-accent-v3)" />
-
-                            {/* Nozzle Aligned at Y=107 */}
+                            <path d="M14,80 L0,110 L14,102 Z" fill="url(#rocket-accent-final)" />
+                            <path d="M50,80 L64,110 L50,102 Z" fill="url(#rocket-accent-final)" />
                             <path d="M20,107 L16,120 L48,120 L44,107 Z" fill="#1e293b" />
                             
-                            {/* Nozzle Glow */}
                             <motion.ellipse 
                                 animate={{ opacity: [0.6, 1, 0.6], scale: [0.95, 1.1, 0.95] }}
                                 transition={{ duration: 0.12, repeat: Infinity }}
@@ -151,17 +140,14 @@ export const RocketMotion = memo(() => {
                             />
                         </svg>
 
-                        {/* FLAME POSITIONED AT SVG NOZZLE EXIT */}
+                        {/* FLAME */}
                         <div className="absolute top-[120px] left-1/2 -translate-x-1/2 flex flex-col items-center">
-                            {/* Large Ambient Glow */}
                             <motion.div
                                 style={{ scale: flameScale, opacity: 0.4 }}
                                 animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }}
                                 transition={{ duration: 0.08, repeat: Infinity }}
                                 className="absolute top-0 w-20 h-40 bg-cyan-400/25 rounded-full blur-3xl"
                             />
-
-                            {/* Main Outer Flame */}
                             <motion.div
                                 style={{ 
                                     scaleY: flameScale,
@@ -175,8 +161,6 @@ export const RocketMotion = memo(() => {
                                 transition={{ duration: 0.1, repeat: Infinity }}
                                 className="w-12 h-28 rounded-b-full origin-top blur-[3px]"
                             />
-
-                            {/* High-Heat Inner Core */}
                             <motion.div
                                 style={{ scaleY: useTransform(flameScale, (s) => s * 0.65) }}
                                 animate={{ scaleX: [0.6, 1.4, 0.6], opacity: [0.8, 1, 0.8] }}
@@ -186,7 +170,7 @@ export const RocketMotion = memo(() => {
                         </div>
                     </div>
 
-                    {/* ENGINE PARTICLES */}
+                    {/* PARTICLES */}
                     <div className="absolute top-[130px] left-1/2">
                         {PARTICLES.map(p => (
                             <motion.div

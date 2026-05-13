@@ -78,7 +78,7 @@ export default function PortfolioPage() {
         <div className="pt-20 md:pt-24 pb-16 min-h-[100dvh]">
             {/* Header */}
             <section className="px-6 py-12 md:py-16 text-center">
-                <h1 className="text-4xl md:text-7xl font-black mb-4 md:mb-6 text-white uppercase tracking-tighter leading-none">Our <span className="text-gradient">Work</span></h1>
+                <h1 className="text-4xl md:text-6xl font-black mb-4 md:mb-6 text-white uppercase tracking-tighter leading-none">Our <span className="text-gradient">Work</span></h1>
                 <p className="text-base md:text-xl text-white/70 max-w-2xl mx-auto mb-10 md:mb-12 font-bold leading-relaxed px-2">
                     Explore a selection of our finest projects across trading systems, enterprise software, and strategic consulting.
                 </p>

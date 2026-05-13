@@ -23,7 +23,7 @@ export default function AboutPage() {
                     <motion.h1
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="text-4xl md:text-7xl lg:text-8xl font-black mb-6 text-white tracking-tighter uppercase leading-none"
+                        className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 text-white tracking-tighter uppercase leading-none"
                     >
                         Our <span className="text-gradient">Story</span>
                     </motion.h1>

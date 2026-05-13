@@ -42,6 +42,7 @@ import { PageTransition } from "@/components/animations/PageTransition";
 
 import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
 import { MarketDashboard } from "@/components/ui/MarketDashboard";
+import { RocketMotion } from "@/components/animations/RocketMotion";
 
 export default function RootLayout({
   children,
@@ -70,6 +71,7 @@ export default function RootLayout({
           <CustomCursor />
           <Analytics />
           <SpeedInsights />
+          <RocketMotion />
         </SmoothScrollProvider>
       </body>
     </html>
