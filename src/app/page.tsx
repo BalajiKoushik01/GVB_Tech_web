@@ -68,7 +68,7 @@ export default function Home() {
           </motion.div>
 
           <MaskReveal>
-            <h1 className="text-[1.75rem] sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-4 text-white leading-[1] lg:leading-none tracking-tighter uppercase px-1">
+            <h1 className="text-[2rem] sm:text-7xl md:text-8xl lg:text-[11rem] font-black mb-6 md:mb-10 text-white leading-[1] lg:leading-none tracking-tighter uppercase px-1">
               Beyond <br />
               <span className="text-gradient">Intelligence</span>
             </h1>
@@ -84,18 +84,18 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 md:gap-6 z-50"
+            className="flex flex-col sm:flex-row gap-3 md:gap-6 z-50 w-full sm:w-auto"
           >
             <MagneticWrapper>
-              <Link href="/contact">
-                <Button data-cursor="magnetic" size="lg" className="h-14 md:h-20 px-8 md:px-14 text-sm md:text-xl bg-white text-black hover:bg-white/90 border-none uppercase font-black tracking-widest rounded-full shadow-[0_0_50px_rgba(255,255,255,0.2)]">
+              <Link href="/contact" className="w-full sm:w-auto">
+                <Button data-cursor="magnetic" size="lg" className="w-full sm:w-auto h-14 md:h-20 px-8 md:px-14 text-sm md:text-xl bg-white text-black hover:bg-white/90 border-none uppercase font-black tracking-widest rounded-full shadow-[0_0_50px_rgba(255,255,255,0.2)]">
                   Get Started
                 </Button>
               </Link>
             </MagneticWrapper>
             <MagneticWrapper>
-              <Link href="/services">
-                <Button data-cursor="magnetic" size="lg" variant="outline" className="h-14 md:h-20 px-8 md:px-14 text-sm md:text-xl border-white/20 hover:bg-white/5 uppercase font-black tracking-widest rounded-full">
+              <Link href="/services" className="w-full sm:w-auto">
+                <Button data-cursor="magnetic" size="lg" variant="outline" className="w-full sm:w-auto h-14 md:h-20 px-8 md:px-14 text-sm md:text-xl border-white/20 hover:bg-white/5 uppercase font-black tracking-widest rounded-full">
                   Explore Solutions
                 </Button>
               </Link>
@@ -130,9 +130,9 @@ export default function Home() {
           <DataStreamLine />
           
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-10 md:mb-24">
+            <div className="text-center mb-12 md:mb-24">
               <MaskReveal>
-                <h2 className="text-2xl sm:text-4xl md:text-[7rem] font-black mb-4 md:mb-8 tracking-tighter text-white uppercase px-2">Our Ecosystem</h2>
+                <h2 className="text-3xl sm:text-5xl md:text-[7rem] font-black mb-4 md:mb-8 tracking-tighter text-white uppercase px-2">Our Ecosystem</h2>
               </MaskReveal>
               <MaskReveal delay={0.2}>
                 <p className="text-base md:text-2xl text-white max-w-3xl mx-auto font-bold tracking-tight leading-relaxed px-4">

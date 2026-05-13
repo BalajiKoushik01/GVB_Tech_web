@@ -9,19 +9,25 @@ interface MaskRevealProps {
     delay?: number;
 }
 
+/**
+ * MaskReveal — text reveal animation using clipPath instead of overflow-hidden + y translate.
+ *
+ * WHY clipPath:
+ *   The old approach (overflow-hidden wrapper + y:"100%") required padding compensation
+ *   because overflow-hidden clips the child's bounding box, cutting off large ascenders.
+ *   clipPath animates the VISIBLE region of the element itself — no outer container
+ *   needed, zero risk of clipping the content at any font size or line-height.
+ */
 export function MaskReveal({ children, className = "", delay = 0 }: MaskRevealProps) {
     return (
-        // py-4 on the outer wrapper extends the overflow-hidden boundary upward and downward
-        // so large uppercase letters, ascenders, and descenders are never clipped
-        <div className={`overflow-hidden py-4 ${className}`}>
+        <div className={className}>
             <motion.div
-                initial={{ y: "100%", opacity: 0 }}
-                whileInView={{ y: "0%", opacity: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
+                initial={{ clipPath: "inset(105% 0% -5% 0%)", opacity: 0 }}
+                whileInView={{ clipPath: "inset(0% 0% -5% 0%)", opacity: 1 }}
+                viewport={{ once: true, margin: "-60px" }}
                 transition={{
-                    duration: 0.8,
-                    ease: [0.16, 1, 0.3, 1],
-                    delay: delay
+                    clipPath: { duration: 0.85, ease: [0.16, 1, 0.3, 1], delay },
+                    opacity:   { duration: 0.4, delay },
                 }}
             >
                 {children}
