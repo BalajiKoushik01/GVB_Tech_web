@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LaunchBackground } from "@/components/animations/LaunchBackground";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
-import { ChatWidget } from "@/components/ui/ChatWidget";
+import { FloatingWidgets } from "@/components/ui/FloatingWidgets";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { NebulaBackground } from "@/components/animations/NebulaBackground";
 import { PageTransition } from "@/components/animations/PageTransition";
-import { TerminalAssistant } from "@/components/ui/TerminalAssistant";
+
 import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
 import { MarketDashboard } from "@/components/ui/MarketDashboard";
 
@@ -66,8 +66,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <ScrollToTop />
-          <ChatWidget />
-          <TerminalAssistant />
+          <FloatingWidgets />
           <CustomCursor />
           <Analytics />
           <SpeedInsights />
