@@ -12,6 +12,8 @@ module.exports = {
         'gvb-deep': '#2563EB',
         'gvb-cyan': '#22D3EE',
         'gvb-accent': '#6366F1',
+        'accent-start': '#22D3EE',
+        'accent-end': '#6366F1',
         'launch-yellow': '#FDE047',
         'launch-orange': '#F97316',
         'launch-red': '#EF4444',

@@ -77,6 +77,22 @@ export default function AboutPage() {
                     </div>
                 </section>
 
+                {/* Methodology / Process */}
+                <section className="py-24 px-4 relative z-10">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-20">
+                            <h2 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tighter uppercase">Our <span className="text-gradient">Methodology</span></h2>
+                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">The engineering cycle that drives elite performance.</p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
+                            <ProcessStep number="01" title="Analysis" desc="Deep-dive into market data and architectural requirements." />
+                            <ProcessStep number="02" title="Blueprint" desc="Designing robust, low-latency infrastructure frameworks." />
+                            <ProcessStep number="03" title="Execution" desc="Iterative development with high-frequency testing." />
+                            <ProcessStep number="04" title="Deployment" desc="Seamless integration with real-time monitoring." />
+                        </div>
+                    </div>
+                </section>
+
                 {/* Core Values */}
                 <section className="py-24 px-4 relative z-10 mt-16">
                     <div className="max-w-7xl mx-auto">
@@ -127,5 +143,16 @@ function ValueCard({ icon: Icon, title, desc, delay }: { icon: React.ComponentTy
                 <p className="text-lg text-white/70 font-bold">{desc}</p>
             </GlassCard>
         </motion.div>
+    );
+}
+
+function ProcessStep({ number, title, desc }: { number: string, title: string, desc: string }) {
+    return (
+        <GlassCard hoverEffect={true} className="p-8 !bg-white/5 backdrop-blur-3xl border-white/10 relative overflow-hidden">
+            <span className="absolute -top-4 -right-2 text-7xl font-black text-white/5 pointer-events-none select-none">{number}</span>
+            <div className="text-gvb-cyan font-black mb-4 tracking-widest uppercase text-sm">Phase {number}</div>
+            <h3 className="text-2xl font-bold mb-4 text-white uppercase tracking-tight">{title}</h3>
+            <p className="text-white/60 font-bold leading-relaxed">{desc}</p>
+        </GlassCard>
     );
 }

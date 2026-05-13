@@ -45,9 +45,6 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full relative bg-transparent selection:bg-white selection:text-black">
 
-      {/* Background System (Fixed Depth - Rocket Only) */}
-      <RocketMotion />
-
       {/* Hero Section (Definitive Layering V11.5) */}
       <section className="relative min-h-[90vh] flex flex-col items-center justify-start overflow-visible z-30 pt-24 sm:pt-32 md:pt-[160px] px-6">
         <motion.div
@@ -75,7 +72,7 @@ export default function Home() {
           </MaskReveal>
 
           <MaskReveal delay={0.2}>
-            <p className="text-xs md:text-2xl text-white/80 mb-6 md:mb-16 max-w-xl mx-auto font-bold tracking-tight px-4 leading-relaxed">
+            <p className="text-xs md:text-2xl text-white/80 mb-10 md:mb-24 max-w-xl mx-auto font-bold tracking-tight px-4 leading-relaxed">
               Engineering proprietary high-frequency trading systems and enterprise software architecture with liquid precision.
             </p>
           </MaskReveal>
@@ -84,7 +81,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-3 md:gap-6 z-50 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row gap-6 md:gap-12 z-50 w-full sm:w-auto pb-24"
           >
             <MagneticWrapper>
               <Link href="/contact" className="w-full sm:w-auto">

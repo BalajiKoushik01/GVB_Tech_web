@@ -57,6 +57,14 @@ const projects = [
         image: "/assets/portfolio/saas.png",
         desc: "Helped a B2B startup achieve 300% YoY growth through aggressive performance marketing.",
     },
+    {
+        id: 7,
+        title: "Strategic Intelligence Platform",
+        category: "Strategy",
+        tech: ["Next.js", "AI", "BigQuery"],
+        image: "/assets/portfolio/saas.png",
+        desc: "A decision-support system for global venture funds to track emerging tech trends.",
+    },
 ];
 
 export default function PortfolioPage() {

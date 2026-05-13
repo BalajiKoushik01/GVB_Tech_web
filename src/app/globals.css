@@ -10,6 +10,8 @@
   --gvb-deep: #2563EB;
   --gvb-cyan: #22D3EE;
   --gvb-accent: #6366F1;
+  --accent-start: #22D3EE;
+  --accent-end: #6366F1;
   
   /* Atmospheric Palette */
   --sky-blue: #E0F2FE;

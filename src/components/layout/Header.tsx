@@ -12,6 +12,8 @@ const navLinks = [
     { name: "Home", href: "/" },
     { name: "Services", href: "/services" },
     { name: "Portfolio", href: "/portfolio" },
+    { name: "Blog", href: "/blog" },
+    { name: "Careers", href: "/careers" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
 ];
@@ -44,7 +46,7 @@ export function Header() {
 
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center space-x-2">
-                        <ul className="flex items-center space-x-2 bg-black/20 backdrop-blur-md border border-white/10 rounded-full px-2 py-1.5 shadow-sm">
+                        <ul className="flex items-center space-x-1 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-full px-2 py-1.5 shadow-2xl">
                             {navLinks.map((link) => {
                                 const isActive = pathname === link.href;
                                 return (
@@ -53,9 +55,9 @@ export function Header() {
                                             href={link.href}
                                             data-cursor="magnetic"
                                             onClick={(e) => { if (link.href === '/' && pathname === '/') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }}
-                                            className={`relative px-4 py-2 text-sm font-black transition-all duration-300 rounded-full flex items-center justify-center uppercase tracking-widest ${isActive
-                                                    ? "bg-white/10 text-white border border-gvb-cyan/30 shadow-[0_0_20px_rgba(34,211,238,0.2)]"
-                                                    : "text-white/60 hover:text-white hover:bg-white/5"
+                                            className={`relative px-5 py-2.5 text-[11px] font-black transition-all duration-300 rounded-full flex items-center justify-center uppercase tracking-[0.2em] ${isActive
+                                                    ? "text-white bg-white/10 shadow-[0_0_20px_rgba(255,255,255,0.1)] border border-white/20"
+                                                    : "text-white/40 hover:text-white hover:bg-white/5"
                                                 }`}
                                         >
                                             {link.name}
@@ -66,8 +68,12 @@ export function Header() {
                         </ul>
                     </nav>
 
-                    <div className="hidden md:flex items-center space-x-6">
-                        <Link href="/contact"><Button data-cursor="magnetic" size="sm" className="bg-gvb-blue hover:bg-gvb-deep">Get Started</Button></Link>
+                    <div className="hidden md:flex items-center">
+                        <Link href="/contact">
+                            <Button data-cursor="magnetic" size="sm" className="h-11 px-8 rounded-full bg-gvb-cyan text-black hover:bg-white font-black uppercase tracking-widest text-[10px] border-none shadow-[0_0_30px_rgba(34,211,238,0.3)]">
+                                Get Started
+                            </Button>
+                        </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -133,7 +139,7 @@ export function Header() {
                                 className="pt-8"
                             >
                                 <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <Button size="lg" className="w-full h-16 text-lg font-black uppercase tracking-widest bg-white text-black rounded-xl">
+                                    <Button size="lg" className="w-full h-16 text-lg font-black uppercase tracking-widest bg-gvb-cyan text-black rounded-2xl border-none shadow-[0_0_40px_rgba(34,211,238,0.4)]">
                                         Get Started
                                     </Button>
                                 </Link>
