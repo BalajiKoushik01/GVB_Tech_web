@@ -295,24 +295,24 @@ export function FloatingWidgets() {
             </AnimatePresence>
 
             {/* Button row — always visible, side by side */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
                 {/* Terminal button */}
                 <motion.button
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.92 }}
                     onClick={() => setActivePanel(p => p === "terminal" ? "none" : "terminal")}
                     data-cursor="magnetic"
-                    className={`w-12 h-12 rounded-full flex items-center justify-center border transition-all shadow-lg relative overflow-hidden ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all shadow-md relative overflow-hidden ${
                         activePanel === "terminal"
-                            ? "bg-gvb-cyan/20 border-gvb-cyan/60 shadow-[0_0_24px_rgba(0,209,255,0.4)]"
-                            : "bg-black/60 backdrop-blur-xl border-white/20 shadow-[0_0_20px_rgba(0,163,255,0.2)] hover:border-gvb-cyan/50"
+                            ? "bg-gvb-cyan/20 border-gvb-cyan/60 shadow-[0_0_20px_rgba(0,209,255,0.35)]"
+                            : "bg-black/60 backdrop-blur-xl border-white/20 hover:border-gvb-cyan/50"
                     }`}
                 >
                     {activePanel === "terminal"
-                        ? <X className="w-5 h-5 text-gvb-cyan" />
+                        ? <X className="w-4 h-4 text-gvb-cyan" />
                         : <>
                             <div className="absolute inset-0 bg-gvb-blue/20 rounded-full animate-ping opacity-20" />
-                            <Terminal className="w-5 h-5 text-white" />
+                            <Terminal className="w-4 h-4 text-white" />
                         </>
                     }
                 </motion.button>
@@ -323,15 +323,15 @@ export function FloatingWidgets() {
                     whileTap={{ scale: 0.92 }}
                     onClick={() => setActivePanel(p => p === "chat" ? "none" : "chat")}
                     data-cursor="magnetic"
-                    className={`w-12 h-12 rounded-full flex items-center justify-center border transition-all shadow-lg ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all shadow-md ${
                         activePanel === "chat"
-                            ? "bg-gvb-blue/30 border-gvb-blue/60 shadow-[0_0_24px_rgba(0,100,255,0.5)]"
-                            : "bg-gradient-to-br from-gvb-deep to-gvb-cyan border-white/20 shadow-[0_0_24px_rgba(0,163,255,0.3)] hover:shadow-[0_0_36px_rgba(0,163,255,0.5)]"
+                            ? "bg-gvb-blue/30 border-gvb-blue/60 shadow-[0_0_20px_rgba(0,100,255,0.4)]"
+                            : "bg-gradient-to-br from-gvb-deep to-gvb-cyan border-white/20 shadow-[0_0_16px_rgba(0,163,255,0.25)] hover:shadow-[0_0_28px_rgba(0,163,255,0.45)]"
                     }`}
                 >
                     {activePanel === "chat"
-                        ? <X className="w-5 h-5 text-white" />
-                        : <MessageSquare className="w-5 h-5 text-white" />
+                        ? <X className="w-4 h-4 text-white" />
+                        : <MessageSquare className="w-4 h-4 text-white" />
                     }
                 </motion.button>
             </div>

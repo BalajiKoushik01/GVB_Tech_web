@@ -32,23 +32,20 @@ export function ScrollToTop() {
         <AnimatePresence>
             {isVisible && (
                 <motion.button
-                    initial={{ opacity: 0, scale: 0.5, y: 20 }}
+                    initial={{ opacity: 0, scale: 0.5, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.5, y: 20 }}
+                    exit={{ opacity: 0, scale: 0.5, y: 10 }}
                     onClick={scrollToTop}
+                    data-cursor="magnetic"
                     className={cn(
-                        "fixed bottom-8 left-8 z-50 p-4 rounded-full",
-                        "bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/30 border-t-white/50",
-                        "text-foreground shadow-[0_0_20px_rgba(102,126,234,0.3)]",
-                        "hover:bg-white/20 dark:hover:bg-white/10 hover:shadow-[0_0_30px_rgba(102,126,234,0.6)]",
-                        "transition-all duration-300 group overflow-hidden"
+                        "fixed bottom-6 left-6 z-50 w-9 h-9 rounded-full",
+                        "bg-white/8 backdrop-blur-xl border border-white/20",
+                        "text-white/60 hover:text-white hover:bg-white/15 hover:border-white/40",
+                        "transition-all duration-300 flex items-center justify-center shadow-lg"
                     )}
                     aria-label="Scroll to top"
                 >
-                    {/* Liquid Glass Shimmer Effect */}
-                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none" />
-
-                    <ArrowUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform duration-300 relative z-10" />
+                    <ArrowUp className="w-4 h-4" />
                 </motion.button>
             )}
         </AnimatePresence>

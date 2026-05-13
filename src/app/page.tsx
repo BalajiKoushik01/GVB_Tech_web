@@ -44,38 +44,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full relative bg-transparent selection:bg-white selection:text-black">
-      {/* Mobile Signature: Scroll Progress Ring */}
-      <motion.div
-        className="fixed bottom-6 right-6 w-14 h-14 z-[100] md:hidden pointer-events-none"
-        style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [0, 1]) }}
-      >
-        <svg className="w-full h-full transform -rotate-90">
-          <circle
-            cx="28"
-            cy="28"
-            r="24"
-            stroke="rgba(255,255,255,0.1)"
-            strokeWidth="4"
-            fill="none"
-          />
-          <motion.circle
-            cx="28"
-            cy="28"
-            r="24"
-            stroke="url(#gradient)"
-            strokeWidth="4"
-            fill="none"
-            strokeDasharray="100 100"
-            style={{ pathLength: scrollYProgress }}
-          />
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#22D3EE" />
-              <stop offset="100%" stopColor="#6366F1" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </motion.div>
 
       {/* Background System (Fixed Depth - Rocket Only) */}
       <RocketMotion />
