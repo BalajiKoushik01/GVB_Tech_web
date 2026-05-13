@@ -10,24 +10,36 @@ interface MaskRevealProps {
 }
 
 /**
- * MaskReveal — text reveal animation using clipPath instead of overflow-hidden + y translate.
+ * MaskReveal — premium text reveal without clipping.
  *
- * WHY clipPath:
- *   The old approach (overflow-hidden wrapper + y:"100%") required padding compensation
- *   because overflow-hidden clips the child's bounding box, cutting off large ascenders.
- *   clipPath animates the VISIBLE region of the element itself — no outer container
- *   needed, zero risk of clipping the content at any font size or line-height.
+ * Approach: wraps children in a container that adds generous vertical
+ * padding, then slides the content in from below. The padding ensures
+ * overflow-hidden never clips large uppercase ascenders or descenders
+ * regardless of font size. Extra pb ensures descenders (g, p, y) show.
  */
 export function MaskReveal({ children, className = "", delay = 0 }: MaskRevealProps) {
     return (
-        <div className={className}>
+        <div
+            className={className}
+            style={{
+                overflow: "hidden",
+                // Top padding = room for large cap heights on any font size
+                // Bottom padding = room for descenders
+                paddingTop:    "0.35em",
+                paddingBottom: "0.2em",
+                // Negative margins cancel out the padding's effect on layout
+                // so surrounding spacing is not affected
+                marginTop:    "-0.35em",
+                marginBottom: "-0.2em",
+            }}
+        >
             <motion.div
-                initial={{ clipPath: "inset(105% 0% -5% 0%)", opacity: 0 }}
-                whileInView={{ clipPath: "inset(0% 0% -5% 0%)", opacity: 1 }}
-                viewport={{ once: true, margin: "-60px" }}
+                initial={{ y: "110%", opacity: 0 }}
+                whileInView={{ y: "0%", opacity: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{
-                    clipPath: { duration: 0.85, ease: [0.16, 1, 0.3, 1], delay },
-                    opacity:   { duration: 0.4, delay },
+                    y:       { duration: 0.9, ease: [0.16, 1, 0.3, 1], delay },
+                    opacity: { duration: 0.5, delay },
                 }}
             >
                 {children}
