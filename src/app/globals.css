@@ -119,22 +119,21 @@
 
 /* Elite "Military-Premium" WebKit Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 2px;
+  height: 2px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #22d3ee, #2563eb);
+  background: #22d3ee;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #ffffff, #22d3ee);
+  background: #ffffff;
   box-shadow: 0 0 15px rgba(34, 211, 238, 0.8);
 }
 
