@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { motion, useScroll, useTransform, useSpring, useVelocity } from "framer-motion";
 
 export const ScrollPulseNode = () => {
@@ -14,24 +14,53 @@ export const ScrollPulseNode = () => {
         restDelta: 0.001
     });
 
-    // Dynamic scale based on velocity (it "expands" when scrolling fast)
+    // Dynamic scale based on velocity
     const velocityScale = useTransform(scrollVelocity, (v) => 1 + Math.min(Math.abs(v) * 5, 2));
     const smoothScale = useSpring(velocityScale, { stiffness: 300, damping: 30 });
 
-    // Map scroll progress to vertical position (0 to 100vh)
-    // We offset it slightly from top and bottom to stay in track
+    // Map scroll progress to vertical position
     const nodeY = useTransform(smoothProgress, [0, 1], ["2vh", "98vh"]);
 
+    // Generate static "stock-style" bars for the track
+    const stockBars = useMemo(() => {
+        return Array.from({ length: 60 }).map((_, i) => ({
+            id: i,
+            height: 4 + Math.random() * 16, // Random heights for histogram look
+            opacity: 0.1 + Math.random() * 0.2
+        }));
+    }, []);
+
     return (
-        <div className="fixed right-[2px] top-0 bottom-0 w-1 z-[10000] pointer-events-none hidden md:block">
-            {/* Track Line */}
-            <div className="absolute inset-y-0 right-0 w-[1px] bg-white/5" />
+        <div className="fixed right-0 top-0 bottom-0 w-8 z-[10000] pointer-events-none hidden md:block">
+            {/* Stock Histogram Track */}
+            <div className="absolute inset-y-0 right-1 w-6 flex flex-col justify-between py-[2vh] opacity-30">
+                {stockBars.map((bar) => (
+                    <motion.div
+                        key={bar.id}
+                        className="bg-gvb-cyan self-end mr-1"
+                        style={{ 
+                            height: "1px", 
+                            width: `${bar.height}px`,
+                            opacity: bar.opacity
+                        }}
+                    />
+                ))}
+            </div>
 
             {/* The Pulsing Node */}
             <motion.div
                 style={{ top: nodeY, scale: smoothScale }}
-                className="absolute right-[-6px] -translate-y-1/2 flex items-center justify-center"
+                className="absolute right-[2px] -translate-y-1/2 flex items-center justify-center"
             >
+                {/* Active Stock Line (Horizontal indicator at current scroll) */}
+                <motion.div 
+                    className="absolute right-0 h-[1px] bg-gvb-cyan shadow-[0_0_15px_rgba(34,211,238,1)]"
+                    style={{ 
+                        width: useTransform(smoothScale, [1, 2], ["40px", "100px"]),
+                        opacity: 0.8
+                    }}
+                />
+
                 {/* Core Pulse */}
                 <motion.div
                     animate={{ 
@@ -42,7 +71,7 @@ export const ScrollPulseNode = () => {
                         ]
                     }}
                     transition={{ duration: 1.5, repeat: Infinity }}
-                    className="w-3 h-3 bg-gvb-cyan rounded-full border border-white shadow-[0_0_15px_rgba(34,211,238,0.6)]"
+                    className="w-2.5 h-2.5 bg-white rounded-full border border-gvb-cyan shadow-[0_0_15px_rgba(34,211,238,0.6)] z-20"
                 />
 
                 {/* Pulse Rings */}
@@ -51,7 +80,7 @@ export const ScrollPulseNode = () => {
                         key={i}
                         animate={{
                             scale: [1, 2.5],
-                            opacity: [0.6, 0]
+                            opacity: [0.4, 0]
                         }}
                         transition={{
                             duration: 1.5,
@@ -62,29 +91,23 @@ export const ScrollPulseNode = () => {
                         className="absolute w-4 h-4 rounded-full border border-gvb-cyan/50"
                     />
                 ))}
-
-                {/* Live "Data" Label (tiny) */}
-                <motion.div 
-                    style={{ opacity: useTransform(smoothScale, [1, 1.5], [0, 1]) }}
-                    className="absolute right-6 whitespace-nowrap"
-                >
-                    <span className="text-[8px] font-black text-gvb-cyan uppercase tracking-widest bg-black/80 px-2 py-0.5 rounded border border-gvb-cyan/20">
-                        LIVE PROTOCOL SYNC
-                    </span>
-                </motion.div>
                 
                 {/* SVG EKG Wave (Pulse) */}
-                <div className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-6 overflow-hidden opacity-40">
-                    <svg viewBox="0 0 100 40" className="w-full h-full stroke-gvb-cyan fill-none stroke-[2]">
+                <div className="absolute right-8 top-1/2 -translate-y-1/2 w-16 h-8 overflow-hidden">
+                    <svg viewBox="0 0 100 40" className="w-full h-full stroke-gvb-cyan fill-none stroke-[2.5]">
                         <motion.path
                             animate={{
                                 d: [
                                     "M0,20 L30,20 L35,10 L45,30 L50,20 L100,20",
-                                    "M0,20 L30,20 L35,5 L45,35 L50,20 L100,20",
+                                    "M0,20 L30,20 L35,-5 L45,45 L50,20 L100,20",
                                     "M0,20 L30,20 L35,10 L45,30 L50,20 L100,20"
                                 ]
                             }}
-                            transition={{ duration: 0.2, repeat: Infinity }}
+                            transition={{ duration: 0.25, repeat: Infinity }}
+                            style={{ 
+                                opacity: useTransform(smoothScale, [1, 2], [0.3, 1]),
+                                filter: "drop-shadow(0 0 5px rgba(34,211,238,0.5))"
+                            }}
                         />
                     </svg>
                 </div>

@@ -117,10 +117,10 @@
   }
 }
 
-/* Elite "Military-Premium" WebKit Scrollbar */
+/* Hidden Native Scrollbar to support Custom Stock-Style Indicator */
 ::-webkit-scrollbar {
-  width: 2px;
-  height: 2px;
+  width: 0px;
+  height: 0px;
 }
 
 ::-webkit-scrollbar-track {
@@ -128,13 +128,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #22d3ee;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #ffffff;
-  box-shadow: 0 0 15px rgba(34, 211, 238, 0.8);
+  background: transparent;
 }
 
 /* Firefox */
