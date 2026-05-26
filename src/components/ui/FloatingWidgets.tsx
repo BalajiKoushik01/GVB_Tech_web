@@ -88,7 +88,7 @@ function TerminalPanel({ onClose }: { onClose: () => void }) {
     return (
         <div
             onClick={() => inputRef.current?.focus()}
-            className="w-[calc(100vw-96px)] sm:w-[400px] h-[300px] bg-black/95 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono cursor-text"
+            className="w-[calc(100vw-48px)] sm:w-[400px] h-[300px] bg-black/95 backdrop-blur-2xl border border-white/10 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono cursor-text"
         >
             <div className="h-9 bg-white/5 border-b border-white/10 flex items-center justify-between px-3 select-none flex-shrink-0">
                 <div className="flex items-center gap-2">
@@ -173,7 +173,7 @@ function ChatPanel({ onClose }: { onClose: () => void }) {
     };
 
     return (
-        <div className="w-[calc(100vw-96px)] sm:w-[360px] h-[440px] flex flex-col overflow-hidden rounded-2xl bg-[#020617]/95 backdrop-blur-3xl border border-white/15 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9)]">
+        <div className="w-[calc(100vw-48px)] sm:w-[360px] h-[440px] flex flex-col overflow-hidden rounded-2xl bg-[#020617]/95 backdrop-blur-3xl border border-white/15 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9)]">
             {/* Header */}
             <div className="bg-gradient-to-r from-gvb-deep to-gvb-blue p-3.5 flex items-center justify-between flex-shrink-0">
                 <div className="flex items-center gap-3">

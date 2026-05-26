@@ -173,7 +173,7 @@ export default function Home() {
 
       {/* Final CTA */}
       <section className="py-24 md:py-32 px-4">
-        <div className="max-w-4xl mx-auto text-center glass-card p-12 md:p-24 rounded-[3rem] relative overflow-hidden border border-white/10 bg-white/5 backdrop-blur-3xl">
+        <div className="max-w-4xl mx-auto text-center glass-card p-6 sm:p-12 md:p-24 rounded-3xl sm:rounded-[3rem] relative overflow-hidden border border-white/10 bg-white/5 backdrop-blur-3xl">
           <div className="absolute inset-0 bg-gradient-to-br from-gvb-cyan/10 via-transparent to-gvb-blue/10 opacity-50 pointer-events-none" />
           <h2 className="text-4xl md:text-6xl font-black mb-8 text-white tracking-tighter uppercase leading-none">Ready to <span className="text-gradient">Scale?</span></h2>
           <p className="text-xl md:text-2xl text-white/60 mb-12 font-bold max-w-2xl mx-auto">Integrate our high-performance systems and elite algorithmic strategies into your operation.</p>

@@ -55,7 +55,7 @@ export const RocketMotion = memo(() => {
     return (
         <div
             aria-hidden
-            className="fixed z-[9999] pointer-events-none"
+            className="fixed z-[9999] pointer-events-none hidden md:block"
             style={{ right: "12px", bottom: "100px", minWidth: "80px" }}
         >
             <motion.div

@@ -97,7 +97,7 @@ export function Header() {
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed inset-0 z-[60] bg-[#020617] md:hidden flex flex-col justify-center items-center px-6 overflow-hidden"
+                        className="fixed inset-0 z-[60] bg-[#020617] md:hidden flex flex-col justify-start items-center px-6 pt-24 pb-12 overflow-y-auto"
                     >
                         {/* Signature Background: Technical Grid */}
                         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
@@ -110,7 +110,7 @@ export function Header() {
                             <X className="w-5 h-5" />
                         </button>
 
-                        <div className="flex flex-col space-y-6 text-center w-full relative z-10">
+                        <div className="flex flex-col space-y-4 text-center w-full max-w-sm my-auto relative z-10">
                             {navLinks.map((link, idx) => {
                                 const isActive = pathname === link.href;
                                 return (
@@ -123,7 +123,7 @@ export function Header() {
                                         <Link
                                             href={link.href}
                                             onClick={() => setIsMobileMenuOpen(false)}
-                                            className={`text-4xl font-black uppercase tracking-tighter transition-all block ${
+                                            className={`text-3xl sm:text-4xl font-black uppercase tracking-tighter transition-all block ${
                                                 isActive ? "text-gvb-cyan" : "text-white/60 hover:text-white"
                                             }`}
                                         >
@@ -136,10 +136,10 @@ export function Header() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.5 }}
-                                className="pt-8"
+                                className="pt-4 sm:pt-6"
                             >
                                 <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <Button size="lg" className="w-full h-16 text-lg font-black uppercase tracking-widest bg-gvb-cyan text-black rounded-2xl border-none shadow-[0_0_40px_rgba(34,211,238,0.4)]">
+                                    <Button size="lg" className="w-full h-14 sm:h-16 text-sm sm:text-lg font-black uppercase tracking-widest bg-gvb-cyan text-black rounded-2xl border-none shadow-[0_0_40px_rgba(34,211,238,0.4)]">
                                         Get Started
                                     </Button>
                                 </Link>

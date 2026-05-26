@@ -103,7 +103,7 @@ export default function ServicesPage() {
                             >
                                 {/* Visual Side */}
                                 <div className="flex-1 w-full relative group">
-                                    <GlassCard hoverEffect={true} className="aspect-square lg:aspect-[4/3] overflow-hidden relative !p-0 border-white/10 shadow-2xl rounded-[3rem]">
+                                    <GlassCard hoverEffect={true} className="aspect-square lg:aspect-[4/3] overflow-hidden relative !p-0 border-white/10 shadow-2xl rounded-2xl sm:rounded-[3rem]">
                                         <Image 
                                             src={service.image} 
                                             alt={service.title}
@@ -145,7 +145,7 @@ export default function ServicesPage() {
 
                 {/* CTA */}
                 <section className="py-32 px-4">
-                    <div className="max-w-5xl mx-auto text-center liquid-glass p-12 md:p-24 !bg-white/5 shadow-2xl relative overflow-hidden rounded-[4rem] border border-white/10">
+                    <div className="max-w-5xl mx-auto text-center liquid-glass p-6 sm:p-12 md:p-24 !bg-white/5 shadow-2xl relative overflow-hidden rounded-3xl sm:rounded-[4rem] border border-white/10">
                         <div className="absolute inset-0 bg-gradient-to-br from-gvb-blue/20 to-transparent opacity-50" />
                         <div className="relative z-10">
                             <h2 className="text-4xl md:text-7xl font-black mb-8 text-white uppercase tracking-tighter">Custom Infrastructure?</h2>

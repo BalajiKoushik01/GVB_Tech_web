@@ -1,7 +1,8 @@
-import { ReactNode } from "react";
+"use client";
 
-// PageTransition in layout.tsx handles all transitions.
-// Template intentionally passes through without animation to avoid double-wrapping.
+import { ReactNode } from "react";
+import { PageTransition } from "@/components/animations/PageTransition";
+
 export default function Template({ children }: { children: ReactNode }) {
-    return <>{children}</>;
+    return <PageTransition>{children}</PageTransition>;
 }
