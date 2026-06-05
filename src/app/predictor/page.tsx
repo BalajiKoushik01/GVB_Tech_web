@@ -121,6 +121,19 @@ export default function Dashboard() {
   const [countdown, setCountdown] = useState(0);
   const [countdownMax, setCountdownMax] = useState(0);
 
+  // Live real-time training progress from backend polling
+  const [liveProgress, setLiveProgress] = useState<{
+    phase: string;
+    model: string;
+    epoch: number;
+    total_epochs: number;
+    loss: number;
+    horizon_step: number;
+    horizon_total: number;
+    step_label: string;
+    pct: number;
+  } | null>(null);
+
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
     let timer = 0;
@@ -193,6 +206,29 @@ export default function Dashboard() {
       if (timerId) clearTimeout(timerId);
     };
   }, [countdown, loading, predicting, backtesting]);
+
+  // Poll /api/pipeline/progress every second while predicting to show live epoch/loss/phase
+  useEffect(() => {
+    if (!predicting) {
+      // Don't clear immediately — keep last state visible for 1s after completion
+      const tid = setTimeout(() => setLiveProgress(null), 1200);
+      return () => clearTimeout(tid);
+    }
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/pipeline/progress`);
+        if (res.ok && !cancelled) {
+          const data = await res.json();
+          setLiveProgress(data);
+        }
+      } catch { /* ignore transient network errors */ }
+      if (!cancelled) setTimeout(poll, 1000);
+    };
+    poll();
+    return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [predicting, API_BASE]);
 
   const runCointegration = async () => {
     setCointLoading(true);
@@ -999,7 +1035,7 @@ export default function Dashboard() {
 
             <div className="chart-container-wrapper">
               {loading || predicting || uploading ? (
-                <div className="overlay-message" style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', width: '100%', maxWidth: '450px', margin: '0 auto', padding: '20px 0' }}>
+                <div className="overlay-message" style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', width: '100%', maxWidth: '500px', margin: '0 auto', padding: '20px 0' }}>
                   {/* Glowing Radar Scanner */}
                   <div className="radar-scanner">
                     <div className="radar-sweep"></div>
@@ -1007,21 +1043,116 @@ export default function Dashboard() {
                     <div className="radar-circle inner"></div>
                     <Cpu size={24} color="var(--accent-cyan)" className="radar-icon" />
                   </div>
-                  
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', width: '100%' }}>
-                    <span style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--accent-cyan)', letterSpacing: '0.5px', textTransform: 'uppercase', textAlign: 'center' }}>
-                      {progressLog || "Initializing Simulation Engine..."}
-                    </span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
-                      Calibrating dynamic ensemble weights & conformal risk intervals
-                    </span>
-                  </div>
+
+                  {/* Live Epoch Progress Panel — shown only when predicting and liveProgress is available */}
+                  {predicting && liveProgress && liveProgress.phase !== 'idle' ? (
+                    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {/* Phase label */}
+                      <div style={{ textAlign: 'center' }}>
+                        <span style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--accent-cyan)', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
+                          {liveProgress.phase === 'tft_pretrain' ? 'TFT Model — Pre-Training' :
+                           liveProgress.phase === 'tft_conformal' ? 'TFT Conformal — Calibration' :
+                           liveProgress.phase.startsWith('horizon_') ? `Horizon Sweep — Step ${liveProgress.horizon_step} / ${liveProgress.horizon_total}` :
+                           liveProgress.phase === 'done' ? 'Assembling Results...' : 'Processing...'}
+                        </span>
+                        <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                          {liveProgress.model || 'Initializing model engines...'}
+                        </div>
+                      </div>
+
+                      {/* Epoch counter + loss — shown during TFT training phases */}
+                      {(liveProgress.phase === 'tft_pretrain' || liveProgress.phase === 'tft_conformal') && liveProgress.total_epochs > 0 && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', background: 'rgba(0,242,254,0.04)', border: '1px solid rgba(0,242,254,0.15)', borderRadius: '8px', padding: '10px 14px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontFamily: 'monospace' }}>
+                              Epoch
+                            </span>
+                            <span style={{ fontSize: '0.82rem', fontWeight: '700', color: '#fff', fontFamily: 'monospace' }}>
+                              {liveProgress.epoch} <span style={{ color: 'var(--text-secondary)' }}>/ {liveProgress.total_epochs}</span>
+                            </span>
+                          </div>
+                          {/* Epoch mini progress bar */}
+                          <div style={{ height: '3px', background: 'rgba(255,255,255,0.06)', borderRadius: '2px', overflow: 'hidden' }}>
+                            <div style={{
+                              height: '100%',
+                              width: `${liveProgress.total_epochs > 0 ? (liveProgress.epoch / liveProgress.total_epochs) * 100 : 0}%`,
+                              background: 'linear-gradient(90deg, var(--accent-cyan), #00b4d8)',
+                              borderRadius: '2px',
+                              transition: 'width 0.6s ease'
+                            }} />
+                          </div>
+                          {liveProgress.loss > 0 && (
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem' }}>
+                              <span style={{ color: 'var(--text-secondary)', fontFamily: 'monospace' }}>MSE Loss</span>
+                              <span style={{ color: liveProgress.loss < 0.001 ? '#4ade80' : liveProgress.loss < 0.01 ? 'var(--accent-cyan)' : '#fbbf24', fontWeight: '700', fontFamily: 'monospace' }}>
+                                {liveProgress.loss.toFixed(6)}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Horizon step indicator */}
+                      {liveProgress.horizon_total > 0 && liveProgress.horizon_step > 0 && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.73rem', color: 'var(--text-secondary)' }}>
+                            <span style={{ fontFamily: 'monospace' }}>Horizon Step</span>
+                            <span style={{ color: '#fff', fontWeight: '600', fontFamily: 'monospace' }}>
+                              {liveProgress.horizon_step} / {liveProgress.horizon_total}
+                            </span>
+                          </div>
+                          <div style={{ height: '3px', background: 'rgba(255,255,255,0.06)', borderRadius: '2px', overflow: 'hidden' }}>
+                            <div style={{
+                              height: '100%',
+                              width: `${(liveProgress.horizon_step / liveProgress.horizon_total) * 100}%`,
+                              background: 'linear-gradient(90deg, #7c3aed, #a855f7)',
+                              borderRadius: '2px',
+                              transition: 'width 0.6s ease'
+                            }} />
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Overall progress bar */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.71rem', color: 'var(--text-secondary)' }}>
+                          <span>Overall Progress</span>
+                          <span style={{ color: 'var(--accent-cyan)', fontWeight: '600' }}>{liveProgress.pct.toFixed(1)}%</span>
+                        </div>
+                        <div style={{ height: '4px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', overflow: 'hidden' }}>
+                          <div style={{
+                            height: '100%',
+                            width: `${liveProgress.pct}%`,
+                            background: 'linear-gradient(90deg, var(--accent-cyan), #06b6d4, #7c3aed)',
+                            borderRadius: '2px',
+                            transition: 'width 0.8s ease'
+                          }} />
+                        </div>
+                      </div>
+
+                      {/* Step label */}
+                      {liveProgress.step_label && (
+                        <div style={{ fontSize: '0.7rem', color: 'rgba(163,178,197,0.7)', textAlign: 'center', fontFamily: 'monospace', lineHeight: '1.4' }}>
+                          {liveProgress.step_label}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', width: '100%' }}>
+                      <span style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--accent-cyan)', letterSpacing: '0.5px', textTransform: 'uppercase', textAlign: 'center' }}>
+                        {progressLog || "Initializing Simulation Engine..."}
+                      </span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
+                        Calibrating dynamic ensemble weights & conformal risk intervals
+                      </span>
+                    </div>
+                  )}
 
                   {/* Estimated Time Countdown */}
                   {countdown > 0 && (
                     <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'flex', gap: '6px', alignItems: 'center', background: 'rgba(255,255,255,0.02)', padding: '4px 12px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
                       <Gauge size={14} color="var(--accent-cyan)" />
-                      <span>Estimated completion: <strong>{countdown}s</strong> remaining</span>
+                      <span>Est. completion: <strong>{Math.floor(countdown / 60) > 0 ? `${Math.floor(countdown / 60)}m ` : ''}{countdown % 60}s</strong> remaining</span>
                     </div>
                   )}
 
@@ -1032,6 +1163,7 @@ export default function Dashboard() {
                     </div>
                   )}
                 </div>
+
               ) : chartData.length > 0 ? (
                 <ApexChart data={chartData} forecasts={forecasts} activeTab={activeTab} />
               ) : (
