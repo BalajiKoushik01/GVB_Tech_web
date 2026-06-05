@@ -343,8 +343,8 @@ export default function Dashboard() {
     const t = (targetTicker ?? tickerRef.current).trim().toUpperCase();
     if (!t) { setError('Please enter or select a stock ticker first.'); return; }
     setLoading(true);
-    setCountdown(15);
-    setCountdownMax(15);
+    setCountdown(90);
+    setCountdownMax(90);
     setError(null);
     setChartData([]);
     setForecasts([]);
@@ -386,8 +386,8 @@ export default function Dashboard() {
     const t = (targetTicker ?? tickerRef.current).trim().toUpperCase();
     if (!t) return;
     setPredicting(true);
-    setCountdown(15);
-    setCountdownMax(15);
+    setCountdown(180);
+    setCountdownMax(180);
     setError(null);
     try {
       const res = await fetch(`${API_BASE}/api/pipeline/predict?ticker=${t}&horizon_steps=${horizon}`, { method: 'POST' });
@@ -423,8 +423,8 @@ export default function Dashboard() {
     const t = (targetTicker ?? tickerRef.current).trim().toUpperCase();
     if (!t) return;
     setBacktesting(true);
-    setCountdown(20);
-    setCountdownMax(20);
+    setCountdown(120);
+    setCountdownMax(120);
     setError(null);
     try {
       const res = await fetch(`${API_BASE}/api/pipeline/backtest?ticker=${t}&horizon_steps=${horizon}`, { method: 'POST' });
