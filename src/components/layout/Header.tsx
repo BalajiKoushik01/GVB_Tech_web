@@ -15,6 +15,7 @@ const navLinks = [
     { name: "Blog", href: "/blog" },
     { name: "Careers", href: "/careers" },
     { name: "About", href: "/about" },
+    { name: "Stock Market Predictor", href: "/predictor" },
     { name: "Contact", href: "/contact" },
 ];
 
