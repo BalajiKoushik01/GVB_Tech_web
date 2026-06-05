@@ -8,6 +8,7 @@ export function middleware(request: NextRequest) {
     // Define strict CSP rules
     const cspHeader = `
     default-src 'self';
+    connect-src 'self' https://balajikoushik-apex-backend.hf.space https://*.hf.space;
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://images.unsplash.com;
