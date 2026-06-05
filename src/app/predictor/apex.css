@@ -189,13 +189,22 @@
 }
 
 .apex-page-wrapper .kpi-card {
-  background: rgba(255, 255, 255, 0.02);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.03) 100%);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.2rem;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.apex-page-wrapper .kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 242, 254, 0.25);
+  box-shadow: 0 8px 25px rgba(0, 242, 254, 0.06);
+  background: linear-gradient(135deg, rgba(0, 242, 254, 0.02) 0%, rgba(79, 172, 254, 0.02) 100%);
 }
 
 .apex-page-wrapper .kpi-label {
@@ -401,4 +410,132 @@
   padding: 2px 6px;
   border-radius: 4px;
   font-weight: 600;
+}
+
+/* Radar Scanner Animation */
+.apex-page-wrapper .radar-scanner {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 242, 254, 0.15);
+  background: rgba(0, 242, 254, 0.02);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.05);
+  margin-bottom: 8px;
+}
+
+.apex-page-wrapper .radar-sweep {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 50%, rgba(0, 242, 254, 0.15) 100%);
+  animation: radar-rotate 2s linear infinite;
+}
+
+.apex-page-wrapper .radar-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 242, 254, 0.2);
+  width: 80%;
+  height: 80%;
+}
+
+.apex-page-wrapper .radar-circle.inner {
+  width: 50%;
+  height: 50%;
+  border: 1px solid rgba(0, 242, 254, 0.1);
+}
+
+.apex-page-wrapper .radar-icon {
+  z-index: 2;
+  animation: pulse-glow 1.5s ease-in-out infinite alternate;
+}
+
+.apex-page-wrapper .progress-bar-container {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 2px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.apex-page-wrapper .progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+  width: 5%;
+}
+
+@keyframes radar-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  from { transform: scale(0.95); opacity: 0.8; filter: drop-shadow(0 0 2px rgba(0, 242, 254, 0.3)); }
+  to { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.8)); }
+}
+
+/* Tooltip styles */
+.apex-page-wrapper .tooltip-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+}
+
+.apex-page-wrapper .tooltip-icon {
+  color: var(--text-secondary);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  margin-left: 4px;
+}
+
+.apex-page-wrapper .tooltip-container:hover .tooltip-icon {
+  opacity: 1;
+  color: var(--accent-cyan);
+}
+
+.apex-page-wrapper .tooltip-content {
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  width: 260px;
+  background: rgba(11, 15, 25, 0.98);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 200;
+  backdrop-filter: blur(12px);
+  font-weight: normal;
+  text-transform: none;
+}
+
+.apex-page-wrapper .tooltip-container:hover .tooltip-content {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.apex-page-wrapper .tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(11, 15, 25, 0.98) transparent transparent transparent;
 }

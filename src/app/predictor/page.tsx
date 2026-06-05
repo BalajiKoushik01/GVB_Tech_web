@@ -17,7 +17,13 @@ import {
   Search,
   Layers,
   LineChart,
-  Calendar
+  Calendar,
+  HelpCircle,
+  ShieldCheck,
+  CheckCircle,
+  FileSpreadsheet,
+  XCircle,
+  Gauge
 } from 'lucide-react';
 import ApexChart from '@/components/ui/ApexChart';
 import './apex.css';
@@ -91,7 +97,7 @@ export default function Dashboard() {
 
   // Fundamental metrics state
   const [fundamentals, setFundamentals] = useState<any>(null);
-  const [fundamentalRegime, setFundamentalRegime] = useState<string>('⚖️ STANDARD COMPOSITE');
+  const [fundamentalRegime, setFundamentalRegime] = useState<string>('STANDARD COMPOSITE');
 
   // Benchmarking and Ensemble state
   const [benchmark, setBenchmark] = useState<{ beta: number; alpha_annualized: number; correlation: number } | null>(null);
@@ -109,6 +115,11 @@ export default function Dashboard() {
 
   // Background pipeline progress tracker log state
   const [progressLog, setProgressLog] = useState<string>('');
+  
+  // Keyboard navigation and estimated countdown timer states
+  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
+  const [countdown, setCountdown] = useState(0);
+  const [countdownMax, setCountdownMax] = useState(0);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -116,13 +127,13 @@ export default function Dashboard() {
     
     if (loading) {
       const steps = [
-        "🔌 Establishing secure handshake with TradingView guest feeds...",
-        "📊 Downloading full historical OHLCV data...",
-        "🕸️ Scraping financial ratios from Screener.in with yfinance fallback...",
-        "🧬 Running Fractional Differencing (FFD) memory optimization...",
-        "🧮 Decomposing non-stationary price signals via EMD cycles...",
-        "🗄️ Persisting preprocessed registries in DuckDB cache database...",
-        "⏳ Compiling dataset parameters, almost ready..."
+        "Establishing secure connection with TradingView data stream...",
+        "Downloading historical daily market OHLCV records...",
+        "Scraping financial metrics from Screener.in and Yahoo Finance...",
+        "Executing Fractional Differencing (FFD) stationary transformation...",
+        "Applying Empirical Mode Decomposition (EMD) to filter noise...",
+        "Caching preprocessed registers to DuckDB database storage...",
+        "Finalizing market dataset serialization..."
       ];
       setProgressLog(steps[0]);
       interval = setInterval(() => {
@@ -132,13 +143,13 @@ export default function Dashboard() {
       }, 1000);
     } else if (predicting) {
       const steps = [
-        "🏋️ Calibrating PyTorch Temporal Fusion Transformer (TFT) attention weights...",
-        "🌲 Fitting Robust Gradient Boosting Regressor (GBR) decision trees...",
-        "📈 Estimating Linear Ridge trend structures...",
-        "🌊 Resolving Holt-Winters exponential trend projections...",
-        "💎 Detecting fundamental regime & adjusting prior weights...",
-        "🛡️ Running MAPIE conformal prediction residuals calibration...",
-        "🏁 Compiling final dynamic prediction ensembles..."
+        "Calibrating PyTorch Temporal Fusion Transformer (TFT) weights...",
+        "Optimizing Gradient Boosting (GBR) tree paths...",
+        "Estimating robust linear Ridge trend components...",
+        "Solving Holt-Winters exponential trend equations...",
+        "Adjusting model weights based on fundamental regimes...",
+        "Calibrating out-of-sample MAPIE conformal risk intervals...",
+        "Assembling dynamic prediction target envelope..."
       ];
       setProgressLog(steps[0]);
       interval = setInterval(() => {
@@ -148,12 +159,12 @@ export default function Dashboard() {
       }, 1000);
     } else if (backtesting) {
       const steps = [
-        "⏱️ Initializing out-of-sample Walk-Forward simulation...",
-        "⚙️ Executing rolling ensembling windows...",
-        "📊 Compiling cumulative strategy performance...",
-        "⚖️ Estimating risk metrics: Sharpe Ratio & Max Drawdown...",
-        "🎯 Measuring Directional Prediction Accuracy...",
-        "🏁 Finalizing optimizer diagnostics..."
+        "Initializing out-of-sample walk-forward backtest...",
+        "Evaluating ensembled model outputs on rolling windows...",
+        "Compiling cumulative strategy returns...",
+        "Calculating performance metrics (Sharpe Ratio, drawdown)...",
+        "Computing directional forecasting accuracy...",
+        "Saving backtest simulation results..."
       ];
       setProgressLog(steps[0]);
       interval = setInterval(() => {
@@ -169,6 +180,19 @@ export default function Dashboard() {
       if (interval) clearInterval(interval);
     };
   }, [loading, predicting, backtesting]);
+
+  // Real-time estimated countdown timer effect
+  useEffect(() => {
+    let timerId: NodeJS.Timeout | null = null;
+    if (countdown > 0 && (loading || predicting || backtesting)) {
+      timerId = setTimeout(() => {
+        setCountdown(prev => prev - 1);
+      }, 1000);
+    }
+    return () => {
+      if (timerId) clearTimeout(timerId);
+    };
+  }, [countdown, loading, predicting, backtesting]);
 
   const runCointegration = async () => {
     setCointLoading(true);
@@ -319,6 +343,8 @@ export default function Dashboard() {
     const t = (targetTicker ?? tickerRef.current).trim().toUpperCase();
     if (!t) { setError('Please enter or select a stock ticker first.'); return; }
     setLoading(true);
+    setCountdown(15);
+    setCountdownMax(15);
     setError(null);
     setChartData([]);
     setForecasts([]);
@@ -348,7 +374,7 @@ export default function Dashboard() {
       
       // Use the preview data from pipeline response directly — no extra DB call needed
       await fetchAlignedData(resolvedTicker, pipelineResult.preview || []);
-      setMacroStatus(`✓ ${resolvedTicker}: ${pipelineResult.data_count} sessions loaded. FFD d=${pipelineResult.optimal_d?.toFixed(3)}`);
+      setMacroStatus(`${resolvedTicker}: ${pipelineResult.data_count} sessions loaded. FFD d=${pipelineResult.optimal_d?.toFixed(3)}`);
     } catch (e: any) {
       setError(e.message || 'An unexpected pipeline error occurred.');
     } finally {
@@ -360,6 +386,8 @@ export default function Dashboard() {
     const t = (targetTicker ?? tickerRef.current).trim().toUpperCase();
     if (!t) return;
     setPredicting(true);
+    setCountdown(15);
+    setCountdownMax(15);
     setError(null);
     try {
       const res = await fetch(`${API_BASE}/api/pipeline/predict?ticker=${t}&horizon_steps=${horizon}`, { method: 'POST' });
@@ -370,7 +398,7 @@ export default function Dashboard() {
       const predictResult = await res.json();
       setForecasts(predictResult.forecasts || []);
       setRegimeState(predictResult.current_regime ?? 0);
-      setRegimeLabel(predictResult.regime_label ?? 'Bull/Low Vol');
+      setRegimeLabel(predictResult.regime_label ? predictResult.regime_label.replace(/[^\w\s/]/g, '').trim() : 'Bull/Low Vol');
       
       if (predictResult.ensemble_weights) {
         setEnsembleWeights(predictResult.ensemble_weights);
@@ -380,7 +408,7 @@ export default function Dashboard() {
         setFundamentals(predictResult.fundamentals);
       }
       if (predictResult.fundamental_regime) {
-        setFundamentalRegime(predictResult.fundamental_regime);
+        setFundamentalRegime(predictResult.fundamental_regime.replace(/[^\w\s/]/g, '').trim());
       }
       
       setMacroStatus('Multi-Model Ensemble forecast path mapped with inverse-accuracy weights.');
@@ -395,6 +423,8 @@ export default function Dashboard() {
     const t = (targetTicker ?? tickerRef.current).trim().toUpperCase();
     if (!t) return;
     setBacktesting(true);
+    setCountdown(20);
+    setCountdownMax(20);
     setError(null);
     try {
       const res = await fetch(`${API_BASE}/api/pipeline/backtest?ticker=${t}&horizon_steps=${horizon}`, { method: 'POST' });
@@ -418,6 +448,8 @@ export default function Dashboard() {
     if (!file) return;
 
     setUploading(true);
+    setCountdown(35);
+    setCountdownMax(35);
     setError(null);
 
     const formData = new FormData();
@@ -442,7 +474,7 @@ export default function Dashboard() {
       setSearchQuery(customTicker);
       setOptimalD(uploadResult.optimal_d);
       setFundamentals(null);
-      setFundamentalRegime('⚖️ STANDARD COMPOSITE');
+      setFundamentalRegime('STANDARD COMPOSITE');
 
       // Instantly run forecasting and backtesting metrics on uploaded set!
       await fetchAlignedData(customTicker);
@@ -486,15 +518,38 @@ export default function Dashboard() {
                   onChange={(e) => {
                     const val = e.target.value;
                     setSearchQuery(val);
+                    setActiveSuggestionIndex(-1);
                     if (val.trim().length >= 1) setShowSuggestions(true);
                     else setShowSuggestions(false);
                   }}
                   onFocus={() => { if (searchQuery.trim().length >= 1) setShowSuggestions(true); }}
                   onKeyDown={async (e) => {
-                    if (e.key === 'Enter' && searchQuery.trim().length >= 1) {
-                      const t = searchQuery.trim().toUpperCase();
-                      setTicker(t); tickerRef.current = t; setShowSuggestions(false);
-                      await runPipeline(t); await generateForecast(t); await triggerBacktest(t);
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault();
+                      setActiveSuggestionIndex(prev => Math.min(suggestions.length - 1, prev + 1));
+                    } else if (e.key === 'ArrowUp') {
+                      e.preventDefault();
+                      setActiveSuggestionIndex(prev => Math.max(0, prev - 1));
+                    } else if (e.key === 'Enter') {
+                      e.preventDefault();
+                      if (activeSuggestionIndex >= 0 && activeSuggestionIndex < suggestions.length) {
+                        const selected = suggestions[activeSuggestionIndex];
+                        const sym = selected.symbol.trim().toUpperCase();
+                        setTicker(sym);
+                        setSearchQuery(sym);
+                        tickerRef.current = sym;
+                        setShowSuggestions(false);
+                        setSuggestions([]);
+                        setActiveSuggestionIndex(-1);
+                        await runPipeline(sym);
+                        await generateForecast(sym);
+                        await triggerBacktest(sym);
+                      } else if (searchQuery.trim().length >= 1) {
+                        const t = searchQuery.trim().toUpperCase();
+                        setTicker(t); tickerRef.current = t; setShowSuggestions(false);
+                        setActiveSuggestionIndex(-1);
+                        await runPipeline(t); await generateForecast(t); await triggerBacktest(t);
+                      }
                     }
                   }}
                   placeholder="SEARCH STOCK (E.G. DIXON)"
@@ -503,10 +558,14 @@ export default function Dashboard() {
               </div>
               {showSuggestions && suggestions.length > 0 && (
                 <div className="suggestions-dropdown">
-                  {suggestions.map((item) => (
+                  {suggestions.map((item, index) => (
                     <div 
                       key={item.symbol} 
-                      className="suggestion-item"
+                      className={`suggestion-item ${index === activeSuggestionIndex ? 'active' : ''}`}
+                      style={{
+                        background: index === activeSuggestionIndex ? 'rgba(0, 242, 254, 0.08)' : 'transparent',
+                        borderColor: index === activeSuggestionIndex ? 'var(--accent-cyan)' : 'transparent'
+                      }}
                       onClick={async () => {
                         const sym = item.symbol.trim().toUpperCase();
                         setTicker(sym);
@@ -514,6 +573,7 @@ export default function Dashboard() {
                         tickerRef.current = sym;
                         setShowSuggestions(false);
                         setSuggestions([]);
+                        setActiveSuggestionIndex(-1);
                         await runPipeline(sym);
                         await generateForecast(sym);
                         await triggerBacktest(sym);
@@ -619,8 +679,14 @@ export default function Dashboard() {
         {/* KPI Cards row */}
         <div className="kpi-row">
           <div className="kpi-card">
-            <span className="kpi-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span className="kpi-label" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <TrendingUp size={16} color="var(--accent-cyan)" /> Raw Equity Price
+              <div className="tooltip-container">
+                <span className="tooltip-icon">ⓘ</span>
+                <div className="tooltip-content">
+                  The latest closing price retrieved from daily market sessions.
+                </div>
+              </div>
             </span>
             <span className="kpi-value">
               {latestData ? `₹${latestData.close_raw.toFixed(2)}` : '—'}
@@ -631,8 +697,14 @@ export default function Dashboard() {
           </div>
 
           <div className="kpi-card">
-            <span className="kpi-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span className="kpi-label" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <ShieldAlert size={16} color={regimeState === 1 ? 'var(--accent-red)' : 'var(--accent-green)'} /> Classified Regime
+              <div className="tooltip-container">
+                <span className="tooltip-icon">ⓘ</span>
+                <div className="tooltip-content">
+                  Market environment state classified via Gaussian Hidden Markov Model (HMM) on price log-returns.
+                </div>
+              </div>
             </span>
             <span className={`kpi-value ${regimeState === 1 ? 'negative' : 'positive'}`} style={{ fontSize: '1.4rem' }}>
               {regimeLabel}
@@ -643,8 +715,14 @@ export default function Dashboard() {
           </div>
 
           <div className="kpi-card">
-            <span className="kpi-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span className="kpi-label" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Cpu size={16} color="var(--accent-green)" /> Conformal Bands (95%)
+              <div className="tooltip-container">
+                <span className="tooltip-icon">ⓘ</span>
+                <div className="tooltip-content">
+                  Calibrated forecasting deviation margins under 95% out-of-sample coverage requirements.
+                </div>
+              </div>
             </span>
             <span className="kpi-value cyan">
               {forecasts.length > 0 ? `±₹${((forecasts[0].upper_95 - forecasts[0].lower_95) / 2).toFixed(2)}` : '—'}
@@ -655,8 +733,14 @@ export default function Dashboard() {
           </div>
 
           <div className="kpi-card">
-            <span className="kpi-label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span className="kpi-label" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Percent size={16} color="var(--accent-blue)" /> Put/Call Ratio (PCR)
+              <div className="tooltip-container">
+                <span className="tooltip-icon">ⓘ</span>
+                <div className="tooltip-content">
+                  The volume ratio of put options relative to call options open interest contracts.
+                </div>
+              </div>
             </span>
             <span className="kpi-value">
               {latestData ? latestData.pcr_oi.toFixed(2) : '—'}
@@ -915,14 +999,38 @@ export default function Dashboard() {
 
             <div className="chart-container-wrapper">
               {loading || predicting || uploading ? (
-                <div className="overlay-message" style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-                  <div className="spinner"></div>
-                  <span style={{ fontSize: '1rem', fontWeight: '700', color: 'var(--accent-cyan)' }}>
-                    {progressLog || "Executing Mathematical Pipelines..."}
-                  </span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                    Please wait, this calibrates multi-model attention weights and dynamic risk margins on the fly.
-                  </span>
+                <div className="overlay-message" style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', width: '100%', maxWidth: '450px', margin: '0 auto', padding: '20px 0' }}>
+                  {/* Glowing Radar Scanner */}
+                  <div className="radar-scanner">
+                    <div className="radar-sweep"></div>
+                    <div className="radar-circle"></div>
+                    <div className="radar-circle inner"></div>
+                    <Cpu size={24} color="var(--accent-cyan)" className="radar-icon" />
+                  </div>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', width: '100%' }}>
+                    <span style={{ fontSize: '0.95rem', fontWeight: '700', color: 'var(--accent-cyan)', letterSpacing: '0.5px', textTransform: 'uppercase', textAlign: 'center' }}>
+                      {progressLog || "Initializing Simulation Engine..."}
+                    </span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
+                      Calibrating dynamic ensemble weights & conformal risk intervals
+                    </span>
+                  </div>
+
+                  {/* Estimated Time Countdown */}
+                  {countdown > 0 && (
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'flex', gap: '6px', alignItems: 'center', background: 'rgba(255,255,255,0.02)', padding: '4px 12px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                      <Gauge size={14} color="var(--accent-cyan)" />
+                      <span>Estimated completion: <strong>{countdown}s</strong> remaining</span>
+                    </div>
+                  )}
+
+                  {/* Micro Progress Bar */}
+                  {countdownMax > 0 && (
+                    <div className="progress-bar-container">
+                      <div className="progress-bar-fill" style={{ width: `${((countdownMax - countdown) / countdownMax) * 100}%`, transition: 'width 1s linear' }}></div>
+                    </div>
+                  )}
                 </div>
               ) : chartData.length > 0 ? (
                 <ApexChart data={chartData} forecasts={forecasts} activeTab={activeTab} />
@@ -1120,8 +1228,9 @@ export default function Dashboard() {
                       {/* Anomaly 1: HMM Regime Shock */}
                       <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px' }}>
                         <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: '600', display: 'block' }}>HMM REGIME DETECTED</span>
-                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: regimeState === 1 ? 'var(--accent-red)' : 'var(--accent-green)', display: 'block', marginTop: '2px' }}>
-                          {regimeState === 1 ? '⚠ HIGH VOLATILITY BEAR REGIME' : '✓ LOW VOLATILITY BULL REGIME'}
+                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: regimeState === 1 ? 'var(--accent-red)' : 'var(--accent-green)', display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+                          {regimeState === 1 ? <AlertTriangle size={14} /> : <ShieldCheck size={14} />}
+                          {regimeState === 1 ? 'HIGH SYSTEMATIC VOLATILITY REGIME' : 'STABLE VOLATILITY REGIME'}
                         </span>
                         <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginTop: '4px' }}>
                           {regimeState === 1 ? 'High systematic variance. Enforce tight stop-loss boundaries.' : 'Stable upward drift. Multi-model dynamic forecasting validated.'}
@@ -1133,22 +1242,26 @@ export default function Dashboard() {
                         const latestRsi = chartData[chartData.length - 1]?.rsi ?? 50;
                         let rsiText = "Stable Momentum range. No overbought/oversold shocks.";
                         let rsiColor = "var(--text-primary)";
-                        let rsiLabel = "✓ NORMAL MONEMTUM CONVERGENCE";
+                        let rsiLabel = "NORMAL MOMENTUM CONVERGENCE";
+                        let rsiIcon = <CheckCircle size={14} color="var(--accent-blue)" />;
                         
                         if (latestRsi > 70) {
-                          rsiLabel = "⚠ OVERBOUGHT EXTREME SHOCK";
+                          rsiLabel = "OVERBOUGHT EXTENSION WARNING";
                           rsiColor = "var(--accent-red)";
+                          rsiIcon = <AlertTriangle size={14} color="var(--accent-red)" />;
                           rsiText = `RSI at ${latestRsi.toFixed(1)} indicates atypical buying acceleration. Correction probability elevated.`;
                         } else if (latestRsi < 30) {
-                          rsiLabel = "⚠ OVERSOLD PANIC CAPITULATION";
+                          rsiLabel = "OVERSOLD DIVERGENCE ZONE";
                           rsiColor = "var(--accent-green)";
+                          rsiIcon = <ShieldAlert size={14} color="var(--accent-green)" />;
                           rsiText = `RSI at ${latestRsi.toFixed(1)} indicates heavy selling exhaust. Strong potential turnaround region.`;
                         }
                         
                         return (
                           <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px' }}>
                             <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: '600', display: 'block' }}>RSI MOMENTUM ANOMALY</span>
-                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: rsiColor, display: 'block', marginTop: '2px' }}>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: rsiColor, display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+                              {rsiIcon}
                               {rsiLabel}
                             </span>
                             <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginTop: '4px' }}>
@@ -1161,8 +1274,9 @@ export default function Dashboard() {
                       {/* Anomaly 3: Systematic Beta Shocks */}
                       <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px' }}>
                         <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: '600', display: 'block' }}>BENCHMARK SYSTEMATIC RISK</span>
-                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: benchmark && benchmark.beta > 1.2 ? 'var(--accent-red)' : 'var(--accent-cyan)', display: 'block', marginTop: '2px' }}>
-                          {benchmark ? (benchmark.beta > 1.25 ? '⚠ HIGH SYSTEMATIC AMPLITUDE' : '✓ DEFENSIVE RISK PROFILE') : 'AWAITING BENCHMARK RUN'}
+                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: benchmark && benchmark.beta > 1.25 ? 'var(--accent-red)' : 'var(--accent-cyan)', display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+                          {benchmark ? (benchmark.beta > 1.25 ? <AlertTriangle size={14} color="var(--accent-red)" /> : <ShieldCheck size={14} color="var(--accent-cyan)" />) : null}
+                          {benchmark ? (benchmark.beta > 1.25 ? 'HIGH SYSTEMATIC BETA RISK' : 'LOW-BETA DEFENSIVE PROFILE') : 'AWAITING BENCHMARK RUN'}
                         </span>
                         <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginTop: '4px' }}>
                           {benchmark ? `Asset beta is ${benchmark.beta.toFixed(2)}. ${benchmark.beta > 1.25 ? 'Highly reactive to Nifty 50 movement. High index-beta shock risk.' : 'Defensive counter-cyclical anchor. Insulated from indexing cascades.'}` : 'Run pipeline to acquire historical index-benchmarking stats.'}
@@ -1172,24 +1286,28 @@ export default function Dashboard() {
                       {/* Anomaly 4: PCR Option Chain Sentiment */}
                       {(() => {
                         const latestPcr = chartData[chartData.length - 1]?.pcr_oi ?? 1.0;
-                        let pcrLabel = "✓ BALANCED DERIVATIVES EXPOSURE";
+                        let pcrLabel = "BALANCED OPTION CHAIN SENTIMENT";
                         let pcrColor = "var(--text-primary)";
+                        let pcrIcon = <CheckCircle size={14} color="var(--text-secondary)" />;
                         let pcrText = "Standard put/call hedging patterns. Smooth institutional market clearance.";
                         
                         if (latestPcr > 1.45) {
-                          pcrLabel = "⚠ BULLISH LIQUIDITY BUILDUP";
+                          pcrLabel = "BULLISH DERIVATIVES LIQUIDITY CLUSTERING";
                           pcrColor = "var(--accent-green)";
+                          pcrIcon = <TrendingUp size={14} color="var(--accent-green)" />;
                           pcrText = `PCR at ${latestPcr.toFixed(2)}: heavy institutional Put writing supporting local price floor.`;
                         } else if (latestPcr < 0.65) {
-                          pcrLabel = "⚠ BEARISH HEDGING OUTFLOW";
+                          pcrLabel = "BEARISH DERIVATIVES HEDGING DIVERGENCE";
                           pcrColor = "var(--accent-red)";
+                          pcrIcon = <ShieldAlert size={14} color="var(--accent-red)" />;
                           pcrText = `PCR at ${latestPcr.toFixed(2)}: massive Call buying/writing hedging against systematic correction.`;
                         }
                         
                         return (
                           <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px' }}>
                             <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', fontWeight: '600', display: 'block' }}>OPTIONS MICROSTRUCTURE</span>
-                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: pcrColor, display: 'block', marginTop: '2px' }}>
+                            <span style={{ fontSize: '0.85rem', fontWeight: '700', color: pcrColor, display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+                              {pcrIcon}
                               {pcrLabel}
                             </span>
                             <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginTop: '4px' }}>
@@ -1554,18 +1672,30 @@ export default function Dashboard() {
                       <span style={{ fontWeight: '800', color: 'var(--accent-cyan)' }}>{fundamentalRegime}</span>
                     </div>
 
-                    <div style={{ color: 'var(--text-secondary)', lineHeight: '1.4', fontSize: '0.8rem', background: 'rgba(0, 242, 254, 0.02)', border: '1px solid rgba(0, 242, 254, 0.1)', padding: '10px', borderRadius: '6px' }}>
+                    <div style={{ color: 'var(--text-secondary)', lineHeight: '1.4', fontSize: '0.8rem', background: 'rgba(0, 242, 254, 0.02)', border: '1px solid rgba(0, 242, 254, 0.1)', padding: '10px', borderRadius: '6px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       {fundamentalRegime.includes('QUALITY') && (
-                        <span><strong>💎 Growth Quality Regime active:</strong> Heavy allocation (50%) is automatically mapped to the Temporal Fusion Transformer (TFT) self-attention networks. Since the stock exhibits superior capital efficiency (high ROE/ROCE) and safe leverage levels, we compress the Conformal Risk bands by <strong>5% (0.95x multiplier)</strong> to reflect high forecasting certainty.</span>
+                        <div style={{ display: 'flex', alignItems: 'start', gap: '8px' }}>
+                          <ShieldCheck size={16} color="var(--accent-cyan)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                          <span><strong>Growth Quality Regime active:</strong> Heavy allocation (50%) is automatically mapped to the Temporal Fusion Transformer (TFT) self-attention networks. Since the stock exhibits superior capital efficiency (high ROE/ROCE) and safe leverage levels, we compress the Conformal Risk bands by <strong>5% (0.95x multiplier)</strong> to reflect high forecasting certainty.</span>
+                        </div>
                       )}
                       {fundamentalRegime.includes('RISK') && (
-                        <span><strong>⚠️ High Leverage/Risk Regime active:</strong> Weights are redirected to Robust Gradient Boosting Trees (40%) to handle non-linear market shocks. Due to high debt ratios or capital weakness, Conformal Uncertainty envelopes are expanded by <strong>25% (1.25x multiplier)</strong> to hedge against sudden credit or solvency shocks.</span>
+                        <div style={{ display: 'flex', alignItems: 'start', gap: '8px' }}>
+                          <AlertTriangle size={16} color="var(--accent-red)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                          <span><strong>High Leverage/Risk Regime active:</strong> Weights are redirected to Robust Gradient Boosting Trees (40%) to handle non-linear market shocks. Due to high debt ratios or capital weakness, Conformal Uncertainty envelopes are expanded by <strong>25% (1.25x multiplier)</strong> to hedge against sudden credit or solvency shocks.</span>
+                        </div>
                       )}
                       {fundamentalRegime.includes('VALUE') && (
-                        <span><strong>📈 Value/Cyclical Regime active:</strong> System redirects priority allocation to linear and historical trend models: Robust Ridge (35%) and Holt-Winters (30%). These assets tend to exhibit long-term mean reversion, which linear regressors capture with optimal bias/variance tradeoffs.</span>
+                        <div style={{ display: 'flex', alignItems: 'start', gap: '8px' }}>
+                          <TrendingUp size={16} color="var(--accent-green)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                          <span><strong>Value/Cyclical Regime active:</strong> System redirects priority allocation to linear and historical trend models: Robust Ridge (35%) and Holt-Winters (30%). These assets tend to exhibit long-term mean reversion, which linear regressors capture with optimal bias/variance tradeoffs.</span>
+                        </div>
                       )}
                       {fundamentalRegime.includes('STANDARD') && (
-                        <span><strong>⚖️ Standard Composite Regime active:</strong> Allocations are calibrated using out-of-fold validation MAPE performance (40%) combined with a balanced prior (60%), keeping a standard 1.0x conformal interval width.</span>
+                        <div style={{ display: 'flex', alignItems: 'start', gap: '8px' }}>
+                          <Layers size={16} color="var(--text-secondary)" style={{ marginTop: '2px', flexShrink: 0 }} />
+                          <span><strong>Standard Composite Regime active:</strong> Allocations are calibrated using out-of-fold validation MAPE performance (40%) combined with a balanced prior (60%), keeping a standard 1.0x conformal interval width.</span>
+                        </div>
                       )}
                     </div>
 
