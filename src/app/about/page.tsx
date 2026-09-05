@@ -17,7 +17,7 @@ export default function AboutPage() {
                         className="inline-flex items-center space-x-3 px-5 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-6 md:mb-8"
                     >
                         <span className="w-1.5 h-1.5 bg-gvb-cyan rounded-full animate-pulse" />
-                        <span className="text-[9px] md:text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Corporate Evolution</span>
+                        <span className="text-[9px] md:text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Engineering Leadership</span>
                     </motion.div>
                     
                     <motion.h1
@@ -25,7 +25,7 @@ export default function AboutPage() {
                         animate={{ opacity: 1, scale: 1 }}
                         className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 text-white tracking-tighter uppercase leading-none"
                     >
-                        Our <span className="text-gradient">Story</span>
+                        Engineering <span className="text-gradient">Rigor</span> & Focus
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -33,9 +33,31 @@ export default function AboutPage() {
                         transition={{ delay: 0.1 }}
                         className="text-base md:text-2xl text-white/70 max-w-3xl mx-auto font-bold tracking-tight leading-relaxed px-2"
                     >
-                        GVB Tech Solutions was born from the vision of bridging elite proprietary trading intelligence
-                        with world-class enterprise software development. We engineer the future.
+                        GVB Tech Solutions is a specialized software and AI consultancy founded by Balaji Koushik. We combine aerospace testing discipline and decision-science experience to build clean, high-performance technology tools for modern operations.
                     </motion.p>
+                </section>
+
+                {/* Founder Credentials & Origin */}
+                <section className="px-4 py-12 relative z-10 max-w-6xl mx-auto">
+                    <GlassCard className="p-8 md:p-14 !bg-white/5 backdrop-blur-3xl border-white/10">
+                        <div className="inline-block px-4 py-1.5 rounded-full bg-gvb-cyan/10 border border-gvb-cyan/20 text-gvb-cyan text-xs font-black uppercase tracking-widest mb-6">
+                            Founding Backstory & Credentials
+                        </div>
+                        <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-6">
+                            Bridging Technical Rigor with Applied Analytics
+                        </h2>
+                        <div className="space-y-6 text-white/70 text-base md:text-lg font-bold leading-relaxed">
+                            <p>
+                                Grounded in an engineering internship at <strong className="text-white">ISRO SDSC SHAR</strong> (Satish Dhawan Space Centre), founder Balaji Koushik developed a foundational commitment to high-reliability systems and testing protocols.
+                            </p>
+                            <p>
+                                Further honed by consulting experience at <strong className="text-white">Mu Sigma</strong> in decision science and quantitative modeling, GVB Tech Solutions was established to deliver that same level of analytical precision to custom software, automated tools, and interactive dashboards.
+                            </p>
+                            <p>
+                                Operating as an agile, family-supported technology firm based in Sullurpeta, Andhra Pradesh, we focus on building robust R&D projects and delivering tailored technical systems for our clients with total transparency and engineering integrity.
+                            </p>
+                        </div>
+                    </GlassCard>
                 </section>
 
                 {/* Mission & Vision */}
@@ -47,13 +69,13 @@ export default function AboutPage() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                        <GlassCard className="h-full p-6 md:p-10 !bg-white/5 backdrop-blur-3xl border-white/10 group">
+                            <GlassCard className="h-full p-6 md:p-10 !bg-white/5 backdrop-blur-3xl border-white/10 group">
                                 <div className="w-14 h-14 rounded-2xl bg-gvb-blue/10 flex items-center justify-center mb-6 transform group-hover:scale-110 transition-transform">
                                     <Target className="w-7 h-7 text-gvb-blue" />
                                 </div>
-                                <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Mission</h2>
+                                <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Purpose</h2>
                                 <p className="text-base md:text-xl text-white/70 font-bold leading-relaxed">
-                                    To empower global businesses by delivering transformative digital solutions, merging strategic business consulting with cutting-edge technology to unlock unprecedented growth and efficiency.
+                                    To solve complex operational challenges by building high-reliability automated tools, bespoke software architecture, and decision-support dashboards backed by verifiable engineering principles.
                                 </p>
                             </GlassCard>
                         </motion.div>
@@ -68,9 +90,9 @@ export default function AboutPage() {
                                 <div className="w-14 h-14 rounded-2xl bg-gvb-accent/10 flex items-center justify-center mb-6 transform group-hover:scale-110 transition-transform">
                                     <Eye className="w-7 h-7 text-gvb-accent" />
                                 </div>
-                                <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Vision</h2>
+                                <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Approach</h2>
                                 <p className="text-base md:text-xl text-white/70 font-bold leading-relaxed">
-                                    To be the foremost global partner in technological innovation, known for crafting elegant, high-performance systems that redefine industry standards and propel humanity forward.
+                                    &ldquo;Convergence of academia and industry&rdquo; — maintaining active R&D into machine learning, medical AI, industrial data pipelines, and quantitative modeling while delivering lean, production-grade solutions.
                                 </p>
                             </GlassCard>
                         </motion.div>
@@ -82,13 +104,13 @@ export default function AboutPage() {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-20">
                             <h2 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tighter uppercase">Our <span className="text-gradient">Methodology</span></h2>
-                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">The engineering cycle that drives elite performance.</p>
+                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">The engineering cycle that delivers reliable software solutions.</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
-                            <ProcessStep number="01" title="Analysis" desc="Deep-dive into market data and architectural requirements." />
-                            <ProcessStep number="02" title="Blueprint" desc="Designing robust, low-latency infrastructure frameworks." />
-                            <ProcessStep number="03" title="Execution" desc="Iterative development with high-frequency testing." />
-                            <ProcessStep number="04" title="Deployment" desc="Seamless integration with real-time monitoring." />
+                            <ProcessStep number="01" title="Analysis" desc="Deep-dive into operational workflows and architectural requirements." />
+                            <ProcessStep number="02" title="Blueprint" desc="Designing modular, high-reliability software frameworks." />
+                            <ProcessStep number="03" title="Execution" desc="Iterative development backed by rigorous testing protocols." />
+                            <ProcessStep number="04" title="Deployment" desc="Seamless rollout with continuous telemetry and monitoring." />
                         </div>
                     </div>
                 </section>

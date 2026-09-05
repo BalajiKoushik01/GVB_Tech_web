@@ -157,11 +157,10 @@ export default function ContactPage() {
                                                 className={`w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border ${errors.service ? 'border-red-500' : 'border-white/10 dark:border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all appearance-none`}
                                             >
                                                 <option value="" className="bg-white dark:bg-space-blue text-black dark:text-white">Select a service...</option>
-                                                <option value="trading" className="bg-white dark:bg-space-blue text-black dark:text-white">Proprietary Trading</option>
-                                                <option value="software" className="bg-white dark:bg-space-blue text-black dark:text-white">Software Development</option>
+                                                <option value="automated-tools" className="bg-white dark:bg-space-blue text-black dark:text-white">Automated Tools & AI Workflows</option>
+                                                <option value="dashboards" className="bg-white dark:bg-space-blue text-black dark:text-white">Dashboards & Data Analytics</option>
+                                                <option value="web-app" className="bg-white dark:bg-space-blue text-black dark:text-white">Web & App Development</option>
                                                 <option value="strategy" className="bg-white dark:bg-space-blue text-black dark:text-white">Strategy Consultation</option>
-                                                <option value="marketing" className="bg-white dark:bg-space-blue text-black dark:text-white">Digital Marketing</option>
-                                                <option value="edtech" className="bg-white dark:bg-space-blue text-black dark:text-white">EdTech Solutions</option>
                                             </select>
                                             {errors.service && <p className="text-red-500 text-sm">{errors.service.message}</p>}
                                         </div>

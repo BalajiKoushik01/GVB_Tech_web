@@ -26,7 +26,7 @@ export function ROICalculator() {
                 <div className="text-center mb-12 md:mb-20 px-2 sm:px-0">
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 tracking-tighter text-slate-800">Projected ROI Calculator</h2>
                     <p className="text-lg sm:text-2xl text-slate-600 max-w-3xl mx-auto font-medium tracking-tight">
-                        Discover the potential financial impact of leveraging our proprietary trading algorithms and enterprise infrastructure.
+                        Discover the potential financial impact of leveraging our custom automation tools and modern software infrastructure.
                     </p>
                 </div>
 

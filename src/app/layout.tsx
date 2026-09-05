@@ -3,7 +3,6 @@ import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { LaunchBackground } from "@/components/animations/LaunchBackground";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { FloatingWidgets } from "@/components/ui/FloatingWidgets";
 import { CustomCursor } from "@/components/ui/CustomCursor";
@@ -22,13 +21,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GVB Tech Solutions | Engineering Tomorrow's Solutions",
-  description: "Elite proprietary trading systems, enterprise software development, algorithmic solutions, and strategic growth consulting.",
-  keywords: "proprietary trading software, algorithmic trading, enterprise software development, digital transformation, next js, react, tech consultancy",
+  title: "GVB Tech Solutions | Software & Automation Consultancy",
+  description: "Custom automated tools, interactive analytics dashboards, high-performance web systems, and data-driven strategy consulting.",
+  keywords: "software consultancy, automated tools, AI workflows, analytics dashboards, web development, app development, technology strategy, ISRO, Mu Sigma, GVB Tech",
   openGraph: {
-    title: "GVB Tech Solutions",
-    description: "Engineering tomorrow's solutions. Elite proprietary trading and enterprise software development.",
-    url: "https://gvbtech.example.com",
+    title: "GVB Tech Solutions | Software & Automation Consultancy",
+    description: "Engineering precision systems — custom automation, web platforms, dashboards, and technology consultation.",
+    url: "https://gvbtech.in",
     siteName: "GVB Tech Solutions",
     locale: "en_IN",
     type: "website",

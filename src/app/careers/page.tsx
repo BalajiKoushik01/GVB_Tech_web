@@ -8,25 +8,25 @@ import Link from "next/link";
 
 const openPositions = [
     {
-        title: "Quantitative Developer",
-        dept: "Proprietary Trading",
+        title: "Automation & Systems Engineer",
+        dept: "Software & Automation",
         type: "Full-time",
         icon: Target,
-        desc: "Design and implement low-latency execution strategies for high-frequency trading environments."
+        desc: "Design and implement workflow automation engines, background task processors, and API integrations."
     },
     {
         title: "Full Stack Engineer",
-        dept: "Enterprise Software",
+        dept: "Web & App Platforms",
         type: "Full-time",
         icon: Code2,
-        desc: "Build mission-critical web applications with Next.js, Go, and real-time data pipelines."
+        desc: "Build modern web applications with Next.js, React, and real-time data visualization consoles."
     },
     {
-        title: "AI Infrastructure Architect",
-        dept: "Neural Systems",
+        title: "Applied AI Engineer",
+        dept: "Data & AI Systems",
         type: "Hybrid",
         icon: Brain,
-        desc: "Architect scalable GPU-accelerated infrastructure for large-scale predictive models."
+        desc: "Develop machine learning models, computer vision pipelines, and predictive analytics integrations."
     }
 ];
 
@@ -41,7 +41,7 @@ export default function CareersPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="inline-block px-4 py-1.5 rounded-full bg-gvb-cyan/10 border border-gvb-cyan/20 text-gvb-cyan text-xs font-black uppercase tracking-[0.2em] mb-6"
                     >
-                        Join the Vanguard
+                        Join the Engineering Team
                     </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -57,7 +57,7 @@ export default function CareersPage() {
                         transition={{ delay: 0.2 }}
                         className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto font-bold tracking-tight"
                     >
-                        We are looking for elite engineers, researchers, and visionaries to join our mission-critical teams.
+                        We are looking for passionate engineers and researchers to help build clean, scalable systems.
                     </motion.p>
                 </div>
 
@@ -69,17 +69,17 @@ export default function CareersPage() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="text-4xl font-black mb-8 text-white uppercase tracking-tighter">The <span className="text-gvb-cyan">Vanguard</span> Culture</h2>
+                            <h2 className="text-4xl font-black mb-8 text-white uppercase tracking-tighter">Our <span className="text-gvb-cyan">Engineering</span> Culture</h2>
                             <div className="space-y-6">
                                 <CultureItem 
                                     icon={Zap} 
-                                    title="Elite Performance" 
-                                    desc="We operate at the intersection of high-frequency trading and cutting-edge software engineering." 
+                                    title="Technical Rigor" 
+                                    desc="Grounded in aerospace testing standards and decision-science experience." 
                                 />
                                 <CultureItem 
                                     icon={Shield} 
                                     title="Radical Ownership" 
-                                    desc="Every engineer owns their infrastructure end-to-end, from blueprint to production deployment." 
+                                    desc="Every developer owns their software features end-to-end, from architecture to production deployment." 
                                 />
                                 <CultureItem 
                                     icon={Star} 
@@ -106,10 +106,10 @@ export default function CareersPage() {
                 <section className="mb-32 py-24 border-y border-white/5">
                     <h2 className="text-4xl font-black mb-16 text-white text-center uppercase tracking-tighter">How We <span className="text-gradient">Select</span></h2>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <ProcessNode step="01" title="Signal Analysis" desc="Resume & portfolio review to identify elite technical signals." />
-                        <ProcessNode step="02" title="Tech Protocol" desc="Intensive technical deep-dive and architectural challenge." />
-                        <ProcessNode step="03" title="Strategic Fit" desc="Direct alignment with our mission and operational mindset." />
-                        <ProcessNode step="04" title="Final Clearance" desc="Executive review and final offer for vanguard status." />
+                        <ProcessNode step="01" title="Portfolio Review" desc="Resume and GitHub review to evaluate hands-on technical depth." />
+                        <ProcessNode step="02" title="Technical Deep-Dive" desc="Systems architecture discussion and real-world coding assessment." />
+                        <ProcessNode step="03" title="Values Alignment" desc="Direct conversation on engineering rigor, ownership, and mindset." />
+                        <ProcessNode step="04" title="Offer & Onboarding" desc="Final offer and integration into active software development." />
                     </div>
                 </section>
 
@@ -154,7 +154,7 @@ export default function CareersPage() {
     );
 }
 
-function CultureItem({ icon: Icon, title, desc }: { icon: any, title: string, desc: string }) {
+function CultureItem({ icon: Icon, title, desc }: { icon: React.ComponentType<{ className?: string }>, title: string, desc: string }) {
     return (
         <div className="flex gap-6">
             <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center shrink-0 text-gvb-cyan">

@@ -19,18 +19,17 @@ function TerminalPanel({ onClose }: { onClose: () => void }) {
 
     const bootSequence = [
         "INITIALIZING GVB_CORE v1.0.4...",
-        "AUTHENTICATING QUANTUM CHANNEL...",
-        "SCANNING GLOBAL LIQUIDITY POOLS [OK]",
-        "PROPRIETARY ALGORITHMS: STATUS_STABLE",
-        "NEURAL NETWORK SYNC: 98.4%",
-        "GVB TECH SOLUTIONS: READY TO SCALE",
+        "VERIFYING SYSTEM ARCHITECTURE [OK]",
+        "AUTOMATED WORKFLOW ENGINE: ONLINE",
+        "ANALYTICS & DASHBOARDS: READY",
+        "GVB TECH SOLUTIONS: READY TO BUILD",
         "------------------------------------",
-        "SYSTEM STATUS: ALL ENGINES GO",
+        "SYSTEM STATUS: ALL SYSTEMS GO",
         "------------------------------------",
         "AVAILABLE COMMANDS:",
         " - HELP: SHOW THIS MENU",
         " - STATUS: SYSTEM HEALTH",
-        " - INFRA: GVB_OS / COREOS INFO",
+        " - INFRA: ARCHITECTURE INFO",
         " - SERVICES: CORE OFFERINGS",
         " - CLEAR: PURGE CONSOLE",
         "------------------------------------",
@@ -68,13 +67,13 @@ function TerminalPanel({ onClose }: { onClose: () => void }) {
                     setLines(prev => [...prev, "AVAILABLE COMMANDS:", " - STATUS", " - INFRA", " - SERVICES", " - CLEAR"]);
                     break;
                 case "STATUS":
-                    setLines(prev => [...prev, "CPU: 128-CORE QUANTUM", "MEMORY: 2TB HBM3", "LATENCY: 0.002ms", "UPTIME: 99.999%"]);
+                    setLines(prev => [...prev, "ENGINEERING RIGOR: HIGH", "ENVIRONMENT: CLOUD-NATIVE", "WORKFLOW ENGINE: OPERATIONAL", "SECURITY: ENCRYPTED"]);
                     break;
                 case "INFRA":
-                    setLines(prev => [...prev, "GVB_OS (BUILT ON COREOS):", "CONTAINER-OPTIMIZED OS", "HIGH-SECURITY TRADING CLUSTERS"]);
+                    setLines(prev => [...prev, "GVB_TECH STACK:", "FRONTEND: NEXT.JS APP ROUTER", "BACKEND: PYTHON & FASTAPI", "DESIGNS: HIGH-PERFORMANCE GLASS UI"]);
                     break;
                 case "SERVICES":
-                    setLines(prev => [...prev, "1. PROPRIETARY TRADING", "2. ENTERPRISE SOFTWARE", "3. AI/ALGO DEVELOPMENT"]);
+                    setLines(prev => [...prev, "1. AUTOMATED TOOLS & AI WORKFLOWS", "2. DASHBOARDS & DATA ANALYTICS", "3. WEB & APP DEVELOPMENT", "4. STRATEGY CONSULTATION"]);
                     break;
                 case "CLEAR":
                     setLines([]);

@@ -3,58 +3,42 @@
 import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 const allServices = [
     {
-        id: "trading",
-        title: "Proprietary Trading",
-        description: "Advanced algorithmic strategies and robust risk management systems engineered for global markets.",
-        image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop",
-        features: ["High-Frequency Trading setup", "Alpha Generation", "Risk modeling", "Market making strategies"],
-        color: "from-gvb-deep to-gvb-blue"
+        id: "automated-tools",
+        title: "Automated Tools & AI Workflow Systems",
+        description: "Custom background automation, intelligent task processing, neural network integrations, and API workflow pipelines built for precision and reliability.",
+        image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
+        features: ["Workflow Automation Engines", "Background Task Orchestration", "Applied AI & ML Models", "Custom API Integrations"],
+        color: "from-gvb-deep to-gvb-cyan"
     },
     {
-        id: "software",
-        title: "Software Development",
-        description: "End-to-end custom application development for enterprise web and mobile ecosystems.",
-        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
-        features: ["Full-stack capabilities", "Enterprise Architecture", "Cloud-native solutions", "Performance optimization"],
+        id: "dashboards",
+        title: "Dashboards & Data Analytics",
+        description: "Interactive metric dashboards, real-time data visualizers, and customized reporting suites for clear operational oversight.",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+        features: ["Real-Time Telemetry Consoles", "Financial & Operational Dashboards", "Interactive Data Filtering", "Custom Analytics Pipelines"],
         color: "from-gvb-blue to-gvb-cyan"
+    },
+    {
+        id: "web-app",
+        title: "Web & App Development",
+        description: "End-to-end full-stack development crafting high-performance web applications, responsive client interfaces, and cloud architectures.",
+        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
+        features: ["Full-Stack React & Next.js", "Responsive Mobile & Web UI", "Scalable REST & GraphQL APIs", "Performance & SEO Optimization"],
+        color: "from-gvb-cyan to-gvb-blue"
     },
     {
         id: "strategy",
         title: "Strategy Consultation",
-        description: "Data-driven business strategies aiming at sustainable competitive advantage and digital scale.",
+        description: "Data-backed technical consulting guiding digital transformation, software architecture choices, and operational efficiency.",
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-        features: ["Digital Transformation", "Market Entry strategy", "Operational efficiency", "Technology roadmap"],
+        features: ["Software Architecture Audits", "Technology Selection & Strategy", "Operational Workflow Optimization", "R&D Feasibility Studies"],
         color: "from-amber-500 to-orange-500"
-    },
-    {
-        id: "marketing",
-        title: "Marketing Solutions",
-        description: "Comprehensive marketing services to grow your brand&apos;s digital presence and conversion rates.",
-        image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=800&auto=format&fit=crop",
-        features: ["SEO & Content Strategy", "Performance Marketing", "Brand Identity", "Conversion Rate Optimization"],
-        color: "from-rose-500 to-red-500"
-    },
-    {
-        id: "edtech",
-        title: "EdTech Systems",
-        description: "Interactive and scalable platforms for the next generation of global learners.",
-        image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=800&auto=format&fit=crop",
-        features: ["LMS Development", "Interactive Content", "Student Analytics", "Gamification engines"],
-        color: "from-emerald-500 to-teal-500"
-    },
-    {
-        id: "algorithms",
-        title: "Intelligence Systems",
-        description: "Complex computational models and AI/ML solutions tailored to specific industry needs.",
-        image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
-        features: ["Machine Learning Models", "Predictive Analytics", "Natural Language Processing", "Computer Vision"],
-        color: "from-gvb-accent to-gvb-deep"
     }
 ];
 
@@ -75,8 +59,8 @@ export default function ServicesPage() {
                             animate={{ opacity: 1, scale: 1 }}
                             className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 text-white tracking-tighter uppercase leading-[0.95]"
                         >
-                            Solutions for <br />
-                            <span className="text-gradient">The Vanguard</span>
+                            Tailored Software & <br />
+                            <span className="text-gradient">Automated Solutions</span>
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
@@ -84,7 +68,7 @@ export default function ServicesPage() {
                             transition={{ delay: 0.1 }}
                             className="text-lg md:text-xl text-white/60 font-bold tracking-tight leading-relaxed max-w-2xl mx-auto"
                         >
-                            Propelling enterprise infrastructure with low-latency engineering and neural intelligence.
+                            Empowering operational workflows with bespoke automation, clean analytics dashboards, modern web systems, and strategic technology direction.
                         </motion.p>
                     </div>
                 </section>

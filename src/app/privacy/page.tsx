@@ -32,11 +32,11 @@ export default function PrivacyPage() {
                     <section className="mb-10">
                         <h2 className="text-2xl font-black uppercase tracking-tight mb-4">1. Information Collection Architecture</h2>
                         <p>
-                            GVB Tech Solutions operates under strict data minimization protocols. We collect information that is strictly necessary for the delivery of our proprietary trading algorithms, software systems, and strategic consultation.
+                            GVB Tech Solutions operates under strict data minimization protocols. We collect information that is strictly necessary for the delivery of our custom software systems, automated tools, analytics dashboards, and strategic consultation.
                         </p>
                         <ul className="list-disc pl-6 space-y-2 text-white/70">
                             <li><strong>Identity Data:</strong> Full name, professional title, and organizational affiliation.</li>
-                            <li><strong>Technical Data:</strong> IP address, browser type, and system specifications required for low-latency handshakes.</li>
+                            <li><strong>Technical Data:</strong> IP address, browser type, and system logs required for secure sessions.</li>
                             <li><strong>Communication Data:</strong> Records of inquiries, project briefs, and consultation notes.</li>
                         </ul>
                     </section>
@@ -44,12 +44,12 @@ export default function PrivacyPage() {
                     <section className="mb-10">
                         <h2 className="text-2xl font-black uppercase tracking-tight mb-4">2. Utilization of Data Assets</h2>
                         <p>
-                            Collected data is processed to maintain high-performance operational standards and to enhance our neural models for predictive analytics.
+                            Collected data is processed to maintain high-performance operational standards and deliver custom technological solutions.
                         </p>
                         <ul className="list-disc pl-6 space-y-2 text-white/70">
                             <li>Internal troubleshooting and resolution of software anomalies.</li>
-                            <li>Optimization of proprietary trading execution paths.</li>
-                            <li>Legal compliance and regulatory reporting for financial operations.</li>
+                            <li>Optimization of automated workflow execution paths.</li>
+                            <li>Legal compliance and standard business recordkeeping.</li>
                         </ul>
                     </section>
 

@@ -59,7 +59,7 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
         // Dynamic shine that follows the mouse using percentage
         const background = useTransform(
             [mouseX, mouseY],
-            ([xVal, yVal]: any[]) => `radial-gradient(1000px circle at ${xVal * 100}% ${yVal * 100}%, rgba(0, 163, 255, 0.15), transparent 40%)`
+            ([xVal, yVal]: [number, number]) => `radial-gradient(1000px circle at ${xVal * 100}% ${yVal * 100}%, rgba(0, 163, 255, 0.15), transparent 40%)`
         );
 
         return (

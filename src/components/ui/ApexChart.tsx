@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { createChart, IChartApi, ColorType, LineStyle } from 'lightweight-charts';
+import { createChart, ColorType, LineStyle } from 'lightweight-charts';
 
 interface DataPoint {
   timestamp: string;
@@ -37,7 +38,7 @@ interface ApexChartProps {
 
 export default function ApexChart({ data, forecasts = [], activeTab }: ApexChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
-  const chartRef = useRef<IChartApi | null>(null);
+  const chartRef = useRef<any>(null);
 
   useEffect(() => {
     if (!chartContainerRef.current || data.length === 0) return;
@@ -46,7 +47,7 @@ export default function ApexChart({ data, forecasts = [], activeTab }: ApexChart
     chartContainerRef.current.innerHTML = '';
 
     // Initialize Chart
-    const chart = createChart(chartContainerRef.current, {
+    const chart: any = createChart(chartContainerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: '#0b0f19' },
         textColor: '#8e9cae',

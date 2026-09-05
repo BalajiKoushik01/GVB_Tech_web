@@ -1,42 +1,42 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, ArrowRight, Clock, Tag } from "lucide-react";
+import { Calendar, ArrowRight, Clock } from "lucide-react";
 import Image from "next/image";
 import { GlassCard } from "@/components/ui/GlassCard";
 
 const posts = [
     {
-        title: "The Evolution of High-Frequency Trading Algorithms in 2026",
+        title: "Architecting Resilient Background Automation Engines in 2026",
         date: "Feb 24, 2026",
         readTime: "8 min read",
-        category: "Quantitative Trading",
-        excerpt: "As latency barriers approach physical limits, the focus of HFT is shifting from pure speed to predictive AI micro-models that anticipate market micro-structures.",
-        image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        title: "Building Resilient Distributed Systems for Financial Tech",
-        date: "Feb 18, 2026",
-        readTime: "12 min read",
-        category: "Engineering",
-        excerpt: "A deep dive into how we architect zero-downtime systems capable of processing millions of transactions per second without compromising data integrity.",
-        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        title: "Why Rust is Dominating the FinTech Backend Landscape",
-        date: "Jan 30, 2026",
-        readTime: "6 min read",
-        category: "Software Development",
-        excerpt: "Memory safety without garbage collection overhead makes Rust the perfect candidate for mission-critical trading engines where every microsecond counts.",
-        image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        title: "The Role of Neural Networks in Dynamic Portfolio Optimization",
-        date: "Jan 15, 2026",
-        readTime: "10 min read",
-        category: "Artificial Intelligence",
-        excerpt: "Exploring how reinforcement learning agents are outperforming traditional Markowitz models in highly volatile crypto-asset environments.",
+        category: "Automation & Workflows",
+        excerpt: "A practical guide to designing fault-tolerant background task processors, idempotent worker queues, and automated data pipelines.",
         image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+        title: "Building High-Throughput Real-Time Telemetry & Metric Dashboards",
+        date: "Feb 18, 2026",
+        readTime: "10 min read",
+        category: "Data & Analytics",
+        excerpt: "How we structure high-performance web applications that visualize streaming telemetry and complex business KPIs with zero UI lag.",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+        title: "Modern Full-Stack Engineering: Clean Architecture with Next.js & Python",
+        date: "Jan 30, 2026",
+        readTime: "7 min read",
+        category: "Software Engineering",
+        excerpt: "Combining Next.js App Router with FastAPI microservices to deliver maintainable, type-safe, and lightning-fast enterprise web apps.",
+        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+        title: "Applied Machine Learning: From Neural Research to Production Pipelines",
+        date: "Jan 15, 2026",
+        readTime: "9 min read",
+        category: "Applied AI",
+        excerpt: "Best practices for operationalizing deep learning and computer vision models into robust, automated production workflows.",
+        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop"
     }
 ];
 
@@ -56,13 +56,13 @@ export default function BlogPage() {
                     className="max-w-3xl mb-24"
                 >
                     <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
-                        Intelligence Feed
+                        Technical Insights
                     </div>
                     <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-8 text-white uppercase">
-                        Insights & <span className="text-gradient">Protocol</span>
+                        Engineering <span className="text-gradient">Insights</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-white/60 font-bold tracking-tight">
-                        Strategic analysis on quantitative finance, low-latency engineering, and the neural systems of tomorrow.
+                        Articles on automated workflows, real-time dashboards, cloud software architecture, and applied AI systems.
                     </p>
                 </motion.div>
 
@@ -108,7 +108,7 @@ export default function BlogPage() {
                                         {post.excerpt}
                                     </p>
                                     <div className="mt-auto inline-flex items-center gap-2 text-white font-black uppercase text-xs tracking-[0.2em] group/btn">
-                                        Access Intel <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
+                                        Read Article <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
                                     </div>
                                 </div>
                             </GlassCard>

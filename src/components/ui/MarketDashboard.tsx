@@ -55,7 +55,7 @@ export function MarketDashboard() {
 
             <div className="absolute left-4 z-20 hidden sm:flex items-center text-white text-[9px] tracking-widest font-black uppercase py-1.5 px-3 rounded-full border border-white/10 shadow-sm bg-black/80 backdrop-blur-md">
                 <Activity className="w-3 h-3 mr-2 text-gvb-cyan animate-pulse" />
-                Live Pulse
+                Live Data Stream
             </div>
 
             <div className="flex animate-marquee whitespace-nowrap will-change-transform h-full items-center">

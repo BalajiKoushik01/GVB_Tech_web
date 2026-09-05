@@ -35,9 +35,6 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   productionBrowserSourceMaps: false,
-  experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion"]
-  }
 };
 
 export default nextConfig;

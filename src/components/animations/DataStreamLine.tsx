@@ -3,7 +3,12 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 
-export const DataStreamLine = () => {
+interface DataStreamLineProps {
+    direction?: "left" | "right" | string;
+    className?: string;
+}
+
+export const DataStreamLine = ({ direction = "right", className = "" }: DataStreamLineProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -17,9 +22,9 @@ export const DataStreamLine = () => {
     });
 
     return (
-        <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 overflow-hidden">
+        <div ref={containerRef} className={`absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40 overflow-hidden ${className}`}>
             <svg 
-                className="w-full h-[200%] absolute top-0" 
+                className={`w-full h-[200%] absolute top-0 ${direction === "left" ? "scale-x-[-1]" : ""}`} 
                 viewBox="0 0 100 1000" 
                 preserveAspectRatio="none"
             >

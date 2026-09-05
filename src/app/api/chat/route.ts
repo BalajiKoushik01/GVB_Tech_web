@@ -13,11 +13,11 @@ export async function POST(req: Request) {
             let demoResponse = "I am currently in Demo Mode. To enable full AI intelligence, please configure the GOOGLE_GENERATIVE_AI_API_KEY.";
             
             if (lastMessage.includes("service") || lastMessage.includes("do you do")) {
-                demoResponse = "GVB Tech Solutions specializes in proprietary trading systems, enterprise software development, and algorithmic strategy consultation. How can we help your business scale?";
+                demoResponse = "GVB Tech Solutions specializes in automated tools & AI workflows, dashboards & analytics, custom web/app development, and strategy consultation. How can we help your business?";
             } else if (lastMessage.includes("contact") || lastMessage.includes("email")) {
                 demoResponse = "You can reach our team at info@gvbtech.in or call us at +91 9381958045. We'd love to discuss your project!";
-            } else if (lastMessage.includes("trading")) {
-                demoResponse = "Our proprietary trading algorithms are engineered for high-frequency execution and quantitative excellence across global markets.";
+            } else if (lastMessage.includes("automation") || lastMessage.includes("tool")) {
+                demoResponse = "We build custom workflow automation, background task processors, applied machine learning models, and API integrations tailored for high reliability.";
             }
 
             return new Response(JSON.stringify({ text: demoResponse }), { 
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
         const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-        const prompt = `System: You are the GVB Assistant, an AI representative for GVB Tech Solutions. Your goal is to be helpful, professional, and guide users towards booking a consultation or exploring GVB's enterprise software and algorithmic trading services. Keep responses concise, premium, and intelligent. If you don't know an answer, direct them to contact us at balajikoushik01@gmail.com.\n\nUser: ${messages[messages.length - 1].content}`;
+        const prompt = `System: You are the GVB Assistant, an AI representative for GVB Tech Solutions. Your goal is to be helpful, professional, and guide users towards booking a consultation or exploring GVB's software development, automated tools, analytics dashboards, and technology consultation offerings. Keep responses concise, premium, and intelligent. If you don't know an answer, direct them to contact us at info@gvbtech.in.\n\nUser: ${messages[messages.length - 1].content}`;
 
         const result = await model.generateContent(prompt);
         const text = result.response.text();

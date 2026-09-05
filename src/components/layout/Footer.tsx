@@ -19,7 +19,7 @@ export function Footer() {
                             <Logo className="scale-110 md:scale-125 origin-center md:origin-left mb-2 transition-transform duration-500" />
                         </Link>
                         <p className="text-base text-white mb-8 font-bold max-w-sm opacity-90 leading-relaxed">
-                            Engineering tomorrow&apos;s solutions with proprietary trading, robust software, and strategic growth infrastructure.
+                            Engineering custom automated tools, high-performance dashboards, enterprise web & app platforms, and data-driven strategy solutions.
                         </p>
                         <div className="flex space-x-5">
                             <a href="https://github.com/BalajiKoushik01" target="_blank" rel="noopener noreferrer" data-cursor="magnetic" className="p-3.5 rounded-full bg-white/5 text-white hover:bg-white/10 border border-white/10 backdrop-blur-md transition-all shadow-xl"><Github className="w-5 h-5" /></a>
@@ -35,10 +35,10 @@ export function Footer() {
                             Services
                         </h3>
                         <ul className="space-y-4">
-                            <li><Link href="/services" data-cursor="magnetic" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Proprietary Trading</Link></li>
-                            <li><Link href="/services" data-cursor="magnetic" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Software Development</Link></li>
+                            <li><Link href="/services" data-cursor="magnetic" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Automated Tools & AI Workflows</Link></li>
+                            <li><Link href="/services" data-cursor="magnetic" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Dashboards & Data Analytics</Link></li>
+                            <li><Link href="/services" data-cursor="magnetic" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Web & App Development</Link></li>
                             <li><Link href="/services" data-cursor="magnetic" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Strategy Consultation</Link></li>
-                            <li><Link href="/services" data-cursor="magnetic" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">Algorithm Development</Link></li>
                         </ul>
                     </div>
 

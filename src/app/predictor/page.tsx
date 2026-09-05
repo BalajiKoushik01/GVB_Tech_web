@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -5,7 +6,6 @@ import {
   Activity, 
   TrendingUp, 
   Percent, 
-  MessageSquare, 
   Cpu, 
   RefreshCw, 
   AlertTriangle,
@@ -18,11 +18,8 @@ import {
   Layers,
   LineChart,
   Calendar,
-  HelpCircle,
   ShieldCheck,
   CheckCircle,
-  FileSpreadsheet,
-  XCircle,
   Gauge
 } from 'lucide-react';
 import ApexChart from '@/components/ui/ApexChart';
@@ -227,7 +224,6 @@ export default function Dashboard() {
     };
     poll();
     return () => { cancelled = true; };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [predicting, API_BASE]);
 
   const runCointegration = async () => {
@@ -702,7 +698,7 @@ export default function Dashboard() {
         {/* Quantitative Methodology Framework */}
         <div style={{ display: 'flex', gap: '15px', background: 'rgba(0, 242, 254, 0.02)', border: '1px solid rgba(0, 242, 254, 0.1)', borderRadius: '12px', padding: '14px 20px', marginBottom: '25px', fontSize: '0.85rem', color: '#a3b2c5', lineHeight: '1.4' }}>
           <span style={{ fontWeight: '700', color: 'var(--accent-cyan)' }}>QUANTITATIVE METHODOLOGY FRAMEWORK:</span>
-          <span>This institutional forecasting engine implements Fractional Differencing (FFD) to secure stationary features while preserving memory, utilizes Empirical Mode Decomposition (EMD) for signal noise filtering, applies a Gaussian Hidden Markov Model (HMM) to classify market volatility regimes, and compiles a dynamic weighted ensemble (TFT Attention, Robust Ridge, GBR, Holt-Winters) with Conformal calibration (MAPIE) to generate confidence envelopes. The ensembling weights and conformal prediction widths are dynamically calibrated based on the asset's fundamental regime (e.g. Growth, Value, Leverage) scraped from Screener.in/Yahoo Finance, blending long-term financial quality with short-term validation metrics.</span>
+          <span>This institutional forecasting engine implements Fractional Differencing (FFD) to secure stationary features while preserving memory, utilizes Empirical Mode Decomposition (EMD) for signal noise filtering, applies a Gaussian Hidden Markov Model (HMM) to classify market volatility regimes, and compiles a dynamic weighted ensemble (TFT Attention, Robust Ridge, GBR, Holt-Winters) with Conformal calibration (MAPIE) to generate confidence envelopes. The ensembling weights and conformal prediction widths are dynamically calibrated based on the asset&apos;s fundamental regime (e.g. Growth, Value, Leverage) scraped from Screener.in/Yahoo Finance, blending long-term financial quality with short-term validation metrics.</span>
         </div>
 
         {error && (

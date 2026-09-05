@@ -4,30 +4,29 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, X, Cpu, ChevronRight } from "lucide-react";
 
+const bootSequence = [
+    "INITIALIZING GVB_CORE v1.0.4...",
+    "VERIFYING SYSTEM ARCHITECTURE [OK]",
+    "AUTOMATED WORKFLOW ENGINE: ONLINE",
+    "ANALYTICS & DASHBOARDS: READY",
+    "GVB TECH SOLUTIONS: READY TO BUILD",
+    "------------------------------------",
+    "SYSTEM STATUS: ALL SYSTEMS GO",
+    "------------------------------------",
+    "AVAILABLE COMMANDS:",
+    " - HELP: SHOW THIS MENU",
+    " - STATUS: SYSTEM HEALTH",
+    " - INFRA: GVB_OS / ARCHITECTURE INFO",
+    " - SERVICES: CORE OFFERINGS",
+    " - CLEAR: PURGE CONSOLE",
+    "------------------------------------",
+];
+
 export const TerminalAssistant = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [lines, setLines] = useState<string[]>([]);
     const [input, setInput] = useState("");
     const terminalRef = useRef<HTMLDivElement>(null);
-
-    const bootSequence = [
-        "INITIALIZING GVB_CORE v1.0.4...",
-        "AUTHENTICATING QUANTUM CHANNEL...",
-        "SCANNING GLOBAL LIQUIDITY POOLS [OK]",
-        "PROPRIETARY ALGORITHMS: STATUS_STABLE",
-        "NEURAL NETWORK SYNC: 98.4%",
-        "GVB TECH SOLUTIONS: READY TO SCALE",
-        "------------------------------------",
-        "SYSTEM STATUS: ALL ENGINES GO",
-        "------------------------------------",
-        "AVAILABLE COMMANDS:",
-        " - HELP: SHOW THIS MENU",
-        " - STATUS: SYSTEM HEALTH",
-        " - INFRA: GVB_OS / COREOS INFO",
-        " - SERVICES: CORE OFFERINGS",
-        " - CLEAR: PURGE CONSOLE",
-        "------------------------------------",
-    ];
 
     useEffect(() => {
         if (isOpen && lines.length === 0) {
@@ -69,16 +68,16 @@ export const TerminalAssistant = () => {
         setTimeout(() => {
             switch (cmd) {
                 case "HELP":
-                    setLines(prev => [...prev, "AVAILABLE COMMANDS:", " - STATUS: SYSTEM HEALTH", " - INFRA: GVB_OS / COREOS INFO", " - SERVICES: CORE OFFERINGS", " - CLEAR: PURGE CONSOLE"]);
+                    setLines(prev => [...prev, "AVAILABLE COMMANDS:", " - STATUS: SYSTEM HEALTH", " - INFRA: ARCHITECTURE INFO", " - SERVICES: CORE OFFERINGS", " - CLEAR: PURGE CONSOLE"]);
                     break;
                 case "STATUS":
-                    setLines(prev => [...prev, "CPU: 128-CORE QUANTUM", "MEMORY: 2TB HBM3", "LATENCY: 0.002ms", "SECURITY: ENCRYPTED_AES_512"]);
+                    setLines(prev => [...prev, "ENGINEERING RIGOR: HIGH", "ENVIRONMENT: CLOUD-NATIVE", "WORKFLOW ENGINE: OPERATIONAL", "SECURITY: ENCRYPTED"]);
                     break;
                 case "INFRA":
-                    setLines(prev => [...prev, "GVB_OS (BUILT ON COREOS):", "COREOS IS A CONTAINER-OPTIMIZED OS.", "WE USE IT FOR HIGH-SECURITY,", "SCALABLE TRADING CLUSTERS.", "TOTAL UPTIME: 99.999%"]);
+                    setLines(prev => [...prev, "GVB_TECH STACK:", "FRONTEND: NEXT.JS APP ROUTER", "BACKEND: PYTHON & FASTAPI", "DESIGNS: HIGH-PERFORMANCE GLASS UI"]);
                     break;
                 case "SERVICES":
-                    setLines(prev => [...prev, "1. PROPRIETARY TRADING", "2. ENTERPRISE SOFTWARE", "3. AI/ALGO DEVELOPMENT"]);
+                    setLines(prev => [...prev, "1. AUTOMATED TOOLS & AI WORKFLOWS", "2. DASHBOARDS & DATA ANALYTICS", "3. WEB & APP DEVELOPMENT", "4. STRATEGY CONSULTATION"]);
                     break;
                 case "CLEAR":
                     setLines([]);
