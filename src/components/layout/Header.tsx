@@ -97,7 +97,7 @@ export function Header() {
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed inset-0 z-[60] bg-[#020617] md:hidden flex flex-col justify-start items-center px-6 pt-24 pb-12 overflow-y-auto"
+                        className="fixed inset-0 z-[300] bg-[#020617] md:hidden flex flex-col justify-start items-center px-6 pt-24 pb-12 overflow-y-auto"
                     >
                         {/* Signature Background: Technical Grid */}
                         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />

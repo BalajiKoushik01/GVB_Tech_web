@@ -31,7 +31,7 @@ export function MarketDashboard() {
     const tickerItems = [...capabilities, ...capabilities, ...capabilities, ...capabilities];
 
     return (
-        <div className="w-full bg-black/60 border-b border-white/10 overflow-hidden relative flex items-center h-10 md:h-14 cursor-default backdrop-blur-3xl z-[45]">
+        <div className="w-full bg-black/60 border-b border-white/10 overflow-hidden relative flex items-center h-10 md:h-14 cursor-default backdrop-blur-3xl z-[45] group">
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#020617] to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#020617] to-transparent z-10 pointer-events-none" />
 
@@ -40,7 +40,7 @@ export function MarketDashboard() {
                 Tech Stack
             </div>
 
-            <div className="flex animate-marquee whitespace-nowrap will-change-transform h-full items-center">
+            <div className="flex animate-marquee whitespace-nowrap will-change-transform h-full items-center group-hover:[animation-play-state:paused]">
                 {tickerItems.map((item, idx) => {
                     const IconComponent = item.icon;
                     return (

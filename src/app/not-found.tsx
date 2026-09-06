@@ -7,7 +7,7 @@ export default function NotFound() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-start/10 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 max-w-2xl mx-auto">
-                <h1 className="text-9xl font-bold text-gradient mb-8 animate-pulse">
+                <h1 className="text-9xl font-black text-gradient mb-8 drop-shadow-[0_0_40px_rgba(34,211,238,0.4)] select-none">
                     404
                 </h1>
                 <h2 className="text-4xl font-bold mb-6">

@@ -117,65 +117,65 @@ export default function ContactPage() {
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label htmlFor="name" className="text-sm font-medium text-foreground/80">Full Name *</label>
+                                            <label htmlFor="name" className="text-[10px] font-black text-white/40 uppercase tracking-widest block">Full Name *</label>
                                             <input
                                                 id="name"
                                                 {...register("name")}
-                                                className={`w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border ${errors.name ? 'border-red-500' : 'border-white/10 dark:border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all`}
+                                                className={`w-full bg-white/5 backdrop-blur-md border ${errors.name ? 'border-red-500' : 'border-white/10'} shadow-inner rounded-xl px-4 py-3.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-gvb-cyan/50 focus:bg-white/8 transition-all`}
                                                 placeholder="Enter full name"
                                             />
-                                            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+                                            {errors.name && <p className="text-red-400 text-xs mt-1 font-bold">{errors.name.message}</p>}
                                         </div>
                                         <div className="space-y-2">
-                                            <label htmlFor="email" className="text-sm font-medium text-foreground/80">Email Address *</label>
+                                            <label htmlFor="email" className="text-[10px] font-black text-white/40 uppercase tracking-widest block">Email Address *</label>
                                             <input
                                                 id="email"
                                                 {...register("email")}
                                                 type="email"
-                                                className={`w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border ${errors.email ? 'border-red-500' : 'border-white/10 dark:border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all`}
+                                                className={`w-full bg-white/5 backdrop-blur-md border ${errors.email ? 'border-red-500' : 'border-white/10'} shadow-inner rounded-xl px-4 py-3.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-gvb-cyan/50 focus:bg-white/8 transition-all`}
                                                 placeholder="Enter email address"
                                             />
-                                            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+                                            {errors.email && <p className="text-red-400 text-xs mt-1 font-bold">{errors.email.message}</p>}
                                         </div>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label htmlFor="phone" className="text-sm font-medium text-foreground/80">Phone Number</label>
+                                            <label htmlFor="phone" className="text-[10px] font-black text-white/40 uppercase tracking-widest block">Phone Number</label>
                                             <input
                                                 id="phone"
                                                 {...register("phone")}
-                                                className="w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border border-white/10 dark:border-white/10 shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all"
+                                                className="w-full bg-white/5 backdrop-blur-md border border-white/10 shadow-inner rounded-xl px-4 py-3.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-gvb-cyan/50 focus:bg-white/8 transition-all"
                                                 placeholder="Enter phone number"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label htmlFor="service" className="text-sm font-medium text-foreground/80">Interested Service *</label>
+                                            <label htmlFor="service" className="text-[10px] font-black text-white/40 uppercase tracking-widest block">Interested Service *</label>
                                             <select
                                                 id="service"
                                                 {...register("service")}
-                                                className={`w-full bg-white/5 dark:bg-black/20 backdrop-blur-md border ${errors.service ? 'border-red-500' : 'border-white/10 dark:border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-foreground focus:outline-none focus:ring-2 focus:ring-accent-start focus:bg-white/10 dark:focus:bg-white/5 transition-all appearance-none`}
+                                                className={`w-full bg-[#020617] backdrop-blur-md border ${errors.service ? 'border-red-500' : 'border-white/10'} shadow-inner rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-gvb-cyan/50 transition-all appearance-none cursor-pointer`}
                                             >
-                                                <option value="" className="bg-white dark:bg-space-blue text-black dark:text-white">Select a service...</option>
-                                                <option value="automated-tools" className="bg-white dark:bg-space-blue text-black dark:text-white">Automated Tools & AI Workflows</option>
-                                                <option value="dashboards" className="bg-white dark:bg-space-blue text-black dark:text-white">Dashboards & Data Analytics</option>
-                                                <option value="web-app" className="bg-white dark:bg-space-blue text-black dark:text-white">Web & App Development</option>
-                                                <option value="strategy" className="bg-white dark:bg-space-blue text-black dark:text-white">Strategy Consultation</option>
+                                                <option value="" className="bg-[#020617] text-white/40">Select a service...</option>
+                                                <option value="automated-tools" className="bg-[#020617] text-white">Automated Tools &amp; AI Workflows</option>
+                                                <option value="dashboards" className="bg-[#020617] text-white">Dashboards &amp; Data Analytics</option>
+                                                <option value="web-app" className="bg-[#020617] text-white">Web &amp; App Development</option>
+                                                <option value="strategy" className="bg-[#020617] text-white">Strategy Consultation</option>
                                             </select>
-                                            {errors.service && <p className="text-red-500 text-sm">{errors.service.message}</p>}
+                                            {errors.service && <p className="text-red-400 text-xs mt-1 font-bold">{errors.service.message}</p>}
                                         </div>
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label htmlFor="message" className="text-xs md:text-sm font-black text-white/40 uppercase tracking-widest">Your Message *</label>
+                                        <label htmlFor="message" className="text-[10px] font-black text-white/40 uppercase tracking-widest block">Your Message *</label>
                                         <textarea
                                             id="message"
                                             {...register("message")}
                                             rows={5}
-                                            className={`w-full bg-white/5 backdrop-blur-md border ${errors.message ? 'border-red-500' : 'border-white/10'} shadow-inner rounded-xl px-4 py-3 text-base text-white focus:outline-none focus:ring-2 focus:ring-gvb-cyan focus:bg-white/10 transition-all resize-none`}
+                                            className={`w-full bg-white/5 backdrop-blur-md border ${errors.message ? 'border-red-500' : 'border-white/10'} shadow-inner rounded-xl px-4 py-3.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-gvb-cyan/50 focus:bg-white/8 transition-all resize-none`}
                                             placeholder="Tell us about your project..."
                                         />
-                                        {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
+                                        {errors.message && <p className="text-red-400 text-xs mt-1 font-bold">{errors.message.message}</p>}
                                     </div>
 
                                     <Button type="submit" size="lg" className="h-16 px-12 bg-white text-black hover:bg-white/90 border-none font-black uppercase tracking-widest shadow-2xl" disabled={isSubmitting}>

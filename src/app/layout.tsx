@@ -31,8 +31,23 @@ export const metadata: Metadata = {
     siteName: "GVB Tech Solutions",
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/GVB_tech_logo.png",
+        width: 1200,
+        height: 630,
+        alt: "GVB Tech Solutions — Software & Automation Consultancy",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GVB Tech Solutions | Software & Automation Consultancy",
+    description: "Engineering precision systems — custom automation, web platforms, dashboards, and technology consultation.",
+    images: ["/GVB_tech_logo.png"],
   },
   robots: "index, follow",
+  metadataBase: new URL("https://gvbtech.in"),
 };
 
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";

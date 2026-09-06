@@ -60,15 +60,18 @@ export function Footer() {
 
                     {/* Contact Details */}
                     <div className="flex flex-col items-center md:items-start">
-                        <h3 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8">Contact</h3>
+                        <h3 className="text-xs font-black text-white uppercase tracking-[0.3em] mb-8 flex items-center">
+                            <span className="w-1 h-1 bg-gvb-cyan rounded-full mr-3 shadow-[0_0_8px_rgba(0,209,255,0.8)]" />
+                            Contact
+                        </h3>
                         <ul className="space-y-5">
-                            <li className="flex items-center space-x-3 text-sm font-bold text-white">
-                                <Mail className="w-4 h-4 text-gvb-cyan" />
-                                <span data-cursor="magnetic">info@gvbtech.in</span>
+                            <li className="flex items-start space-x-3">
+                                <Mail className="w-4 h-4 text-gvb-cyan mt-0.5 flex-shrink-0" />
+                                <a href="mailto:info@gvbtech.in" data-cursor="magnetic" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300 break-all">info@gvbtech.in</a>
                             </li>
-                            <li className="flex items-center space-x-3 text-sm font-bold text-white">
-                                <Phone className="w-4 h-4 text-gvb-cyan" />
-                                <span data-cursor="magnetic">+91 9381958045</span>
+                            <li className="flex items-start space-x-3">
+                                <Phone className="w-4 h-4 text-gvb-cyan mt-0.5 flex-shrink-0" />
+                                <a href="tel:+919381958045" data-cursor="magnetic" className="text-sm font-bold text-white hover:text-gvb-cyan transition-colors duration-300">+91 9381958045</a>
                             </li>
                             <li className="text-xs font-bold text-white/60 pl-7 leading-relaxed tracking-wide">
                                 Sullurpeta, Andhra Pradesh<br />524121, IN

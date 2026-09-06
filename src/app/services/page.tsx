@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { CheckCircle2 } from "lucide-react";
+import { ROICalculator } from "@/components/ui/ROICalculator";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -126,6 +127,11 @@ export default function ServicesPage() {
                         ))}
                     </div>
                 </section>
+
+                {/* ROI Calculator */}
+                <div className="border-t border-white/5 mx-4 sm:mx-8">
+                    <ROICalculator />
+                </div>
 
                 {/* CTA */}
                 <section className="py-32 px-4">
