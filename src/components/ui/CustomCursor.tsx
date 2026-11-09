@@ -3,153 +3,135 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
-const ZOOM = 1.7;
-const magnifiable = "h1,h2,h3,h4,p,span,strong,small,a,button,img,svg,li,[data-magnify]";
+type CursorMode = "idle" | "text" | "action" | "press";
+const ZOOM = 1.85;
+const TARGETS = "h1,h2,h3,h4,p,small,strong,em,span,li,img,[data-magnify]";
 
 export function CustomCursor() {
   const [visible, setVisible] = useState(false);
-  const [interactive, setInteractive] = useState(false);
-  const [hasSubject, setHasSubject] = useState(false);
-  const [pressing, setPressing] = useState(false);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const lastSubject = useRef<Element | null>(null);
-  const position = useRef({ x: 0, y: 0 });
-  const pointX = useMotionValue(-100);
-  const pointY = useMotionValue(-100);
-  const trailX = useSpring(pointX, { stiffness: 290, damping: 27, mass: 0.35 });
-  const trailY = useSpring(pointY, { stiffness: 290, damping: 27, mass: 0.35 });
+  const [mode, setMode] = useState<CursorMode>("idle");
+  const [speed, setSpeed] = useState(0);
+  const x = useMotionValue(-90);
+  const y = useMotionValue(-90);
+  const followerX = useSpring(x, { stiffness: 250, damping: 22, mass: 0.22 });
+  const followerY = useSpring(y, { stiffness: 250, damping: 22, mass: 0.22 });
+  const lensRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const pointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!pointer.matches || reduced.matches) return;
+    if (!fine.matches || reduced.matches) return;
 
     document.documentElement.classList.add("gvb-pointer-enabled");
-
-    const lensContent = contentRef.current;
-    let lastInteractive = false;
-    let lastHasSubject = false;
-    let frame = 0;
-    let clone: HTMLElement | null = null;
-    let current: Element | null = null;
+    const lens = lensRef.current;
+    let subject: Element | null = null;
+    let copy: HTMLElement | null = null;
     let magnet: HTMLElement | null = null;
-    const resetMagnet = () => { if (magnet) { magnet.style.removeProperty("--gvb-mx"); magnet.style.removeProperty("--gvb-my"); magnet = null; } };
+    let frame = 0;
+    let previous = { x: 0, y: 0, t: 0 };
+    let position = { x: 0, y: 0 };
 
-    const update = () => {
-      frame = 0;
-      if (!lensContent || !current) return;
-      const rect = current.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
-      const x = position.current.x;
-      const y = position.current.y;
-      // The lens is centered on the actual pointer. Matching the target
-      // element's rect preserves the magnified position beneath the lens.
-      if (clone) {
-        clone.style.left = `${36 - (x - rect.left) * ZOOM}px`;
-        clone.style.top = `${36 - (y - rect.top) * ZOOM}px`;
+    const clearMagnet = () => {
+      if (magnet) {
+        magnet.style.removeProperty("--gvb-mx");
+        magnet.style.removeProperty("--gvb-my");
       }
+      magnet = null;
+    };
+    const clearLens = () => {
+      subject = null;
+      copy = null;
+      lens?.replaceChildren();
+    };
+    const refreshLens = (element: Element | null) => {
+      if (subject === element) return;
+      clearLens();
+      if (!element || !lens) return;
+      const rect = element.getBoundingClientRect();
+      if (rect.width < 3 || rect.height < 3 || rect.width > 650 || rect.height > 280) return;
+      if (!(element instanceof HTMLElement)) return;
+      subject = element;
+      const cs = getComputedStyle(element);
+      const clone = element.cloneNode(true);
+      if (!(clone instanceof HTMLElement)) return;
+      clone.removeAttribute("id");
+      clone.removeAttribute("aria-label");
+      clone.removeAttribute("title");
+      clone.setAttribute("aria-hidden", "true");
+      clone.style.margin = "0";
+      clone.style.width = `${rect.width}px`;
+      clone.style.height = `${rect.height}px`;
+      clone.style.boxSizing = "border-box";
+      clone.style.font = cs.font;
+      clone.style.fontFamily = cs.fontFamily;
+      clone.style.fontWeight = cs.fontWeight;
+      clone.style.letterSpacing = cs.letterSpacing;
+      clone.style.lineHeight = cs.lineHeight;
+      clone.style.textAlign = cs.textAlign;
+      clone.style.color = cs.color;
+      clone.style.background = cs.background;
+      clone.style.padding = cs.padding;
+      clone.style.borderRadius = cs.borderRadius;
+      clone.style.pointerEvents = "none";
+      clone.style.transform = `scale(${ZOOM})`;
+      clone.style.transformOrigin = "0 0";
+      clone.classList.add("gvb-optical-copy");
+      lens.appendChild(clone);
+      copy = clone;
     };
 
-    const renderSubject = (subject: Element | null) => {
-      if (!lensContent) return;
-      lensContent.replaceChildren();
-      clone = null;
-      current = subject;
-      lastSubject.current = subject;
-      if (!subject) return;
-
+    const tick = () => {
+      frame = 0;
+      if (!copy || !subject) return;
       const rect = subject.getBoundingClientRect();
-      if (!rect.width || !rect.height || rect.width > 1300) return;
-      const source = subject instanceof HTMLImageElement ? subject : subject;
-      const copy = source.cloneNode(true);
-      if (!(copy instanceof HTMLElement || copy instanceof SVGElement)) return;
-      // A visual clone is inert, excluded from accessibility, and never inserted
-      // into the interactive document flow.
-      const wrapper = document.createElement("div");
-      wrapper.setAttribute("aria-hidden", "true");
-      wrapper.className = "gvb-lens-duplicate";
-      wrapper.style.width = `${rect.width}px`;
-      wrapper.style.height = `${rect.height}px`;
-      const computed = getComputedStyle(subject);
-      wrapper.style.color = computed.color;
-      wrapper.style.font = computed.font;
-      wrapper.style.lineHeight = computed.lineHeight;
-      wrapper.style.letterSpacing = computed.letterSpacing;
-      wrapper.style.textAlign = computed.textAlign;
-      wrapper.style.whiteSpace = computed.whiteSpace;
-      wrapper.style.backgroundColor = computed.backgroundColor;
-      wrapper.style.borderRadius = computed.borderRadius;
-      wrapper.style.padding = computed.padding;
-      wrapper.style.boxSizing = "border-box";
-      wrapper.style.transform = `scale(${ZOOM})`;
-      wrapper.style.transformOrigin = "top left";
-      if (copy instanceof HTMLElement) {
-        copy.removeAttribute("id");
-        copy.style.pointerEvents = "none";
-        copy.style.margin = "0";
-        copy.style.width = "100%";
-        copy.style.height = "100%";
-        if (copy instanceof HTMLImageElement) {
-          copy.style.objectFit = computed.objectFit;
-        }
-      } else {
-        copy.removeAttribute("id");
-        copy.style.pointerEvents = "none";
-        copy.style.width = "100%";
-        copy.style.height = "100%";
-      }
-      wrapper.appendChild(copy);
-      lensContent.appendChild(wrapper);
-      clone = wrapper;
+      // Center the magnified pixel under the exact mouse coordinates.
+      copy.style.left = `${28 - (position.x - rect.left) * ZOOM}px`;
+      copy.style.top = `${28 - (position.y - rect.top) * ZOOM}px`;
     };
 
     const onMove = (event: PointerEvent) => {
       if (event.pointerType === "touch") return;
-      pointX.set(event.clientX);
-      pointY.set(event.clientY);
-      position.current = { x: event.clientX, y: event.clientY };
+      const px = event.clientX, py = event.clientY;
+      x.set(px); y.set(py);
+      position = { x: px, y: py };
       setVisible(true);
+
+      const now = performance.now(), dt = Math.max(8, now - previous.t);
+      const velocity = Math.hypot(px - previous.x, py - previous.y) / dt;
+      if (previous.t) setSpeed(Math.min(1, velocity / 2.2));
+      previous = { x: px, y: py, t: now };
+
       const target = event.target;
       if (!(target instanceof Element)) return;
-      const nextMagnet = target.closest<HTMLElement>("a,button,[role=button],.gvb-service-card,.gvb-article-card");
-      if (nextMagnet !== magnet) resetMagnet();
-      if (nextMagnet && !nextMagnet.hasAttribute("data-no-magnetic")) {
-        magnet = nextMagnet;
-        const rect = magnet.getBoundingClientRect();
-        if (rect.width > 0 && rect.height > 0 && rect.width < 450 && rect.height < 220) {
-          const px = (event.clientX - (rect.left + rect.width / 2)) / rect.width;
-          const py = (event.clientY - (rect.top + rect.height / 2)) / rect.height;
-          magnet.style.setProperty("--gvb-mx", `${Math.max(-1,Math.min(1,px))*8}px`);
-          magnet.style.setProperty("--gvb-my", `${Math.max(-1,Math.min(1,py))*6}px`);
+      const actionable = target.closest<HTMLElement>("a,button,[role='button'],summary,[data-cursor='action']");
+      const blocked = target.closest("input,textarea,select,iframe,[contenteditable='true'],[data-no-magnify]");
+      const candidate = actionable || blocked ? null : target.closest(TARGETS);
+      const good = candidate && candidate instanceof HTMLElement && candidate.getBoundingClientRect().width < 650;
+      refreshLens(good ? candidate : null);
+      setMode(actionable ? "action" : good ? "text" : "idle");
+
+      if (actionable !== magnet) clearMagnet();
+      if (actionable && !actionable.hasAttribute("data-no-magnetic")) {
+        magnet = actionable;
+        const rect = actionable.getBoundingClientRect();
+        if (rect.width < 380 && rect.height < 130) {
+          const dx = (px - rect.left - rect.width / 2) / Math.max(rect.width, 1);
+          const dy = (py - rect.top - rect.height / 2) / Math.max(rect.height, 1);
+          actionable.style.setProperty("--gvb-mx", `${Math.max(-6, Math.min(6, dx * 10))}px`);
+          actionable.style.setProperty("--gvb-my", `${Math.max(-5, Math.min(5, dy * 8))}px`);
         }
       }
-      const clickable = Boolean(target.closest("a,button,[role='button'],input,select,textarea,summary,[data-cursor]"));
-      if (clickable !== lastInteractive) {
-        lastInteractive = clickable;
-        setInteractive(clickable);
-      }
-      // Avoid cloning controls, giant containers, or embedded documents.
-      const excluded = target.closest("input,textarea,select,iframe,[contenteditable='true'],[data-no-magnify]");
-      const subject = excluded ? null : target.closest(magnifiable);
-      const valid = Boolean(subject && subject.getBoundingClientRect().width < 750);
-      const next = valid ? subject : null;
-      if (next !== lastSubject.current) renderSubject(next);
-      if (valid !== lastHasSubject) {
-        lastHasSubject = valid;
-        setHasSubject(valid);
-      }
-      if (!frame) frame = requestAnimationFrame(update);
+      if (!frame) frame = requestAnimationFrame(tick);
     };
 
-    const down = () => setPressing(true);
-    const up = () => setPressing(false);
-    const hide = () => { setVisible(false); resetMagnet(); };
+    const down = () => setMode("press");
+    const up = (event: PointerEvent) => onMove(event);
+    const hide = () => { setVisible(false); clearMagnet(); clearLens(); };
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerdown", down);
     window.addEventListener("pointerup", up);
     window.addEventListener("blur", hide);
     document.addEventListener("mouseleave", hide);
-
     return () => {
       document.documentElement.classList.remove("gvb-pointer-enabled");
       window.removeEventListener("pointermove", onMove);
@@ -157,22 +139,26 @@ export function CustomCursor() {
       window.removeEventListener("pointerup", up);
       window.removeEventListener("blur", hide);
       document.removeEventListener("mouseleave", hide);
-      resetMagnet();
       if (frame) cancelAnimationFrame(frame);
-      if (lensContent) lensContent.replaceChildren();
+      clearMagnet();
+      clearLens();
     };
-  }, [pointX, pointY]);
+  }, [x, y]);
 
-  return <div className={`gvb-cursor-layer ${visible ? "is-visible" : ""}`} aria-hidden="true">
-    <motion.div className="gvb-cursor-aura" style={{ x: trailX, y: trailY }}
-      animate={{ scale: pressing ? .7 : interactive ? 1.15 : 1, opacity: visible ? .65 : 0 }} />
-    <motion.div className={`gvb-cursor-glass ${hasSubject ? "has-subject" : ""}`}
-      style={{ x: pointX, y: pointY }}
-      animate={{ scale: pressing ? .86 : interactive ? 1.06 : 1 }}
-      transition={{ type: "spring", stiffness: 430, damping: 24 }}>
-      <div className="gvb-cursor-magnified" ref={contentRef} />
-      <span className="gvb-cursor-reflection" />
+  return <div className={`gvb-cursor-v3 ${visible ? "is-visible" : ""} mode-${mode}`} aria-hidden="true">
+    <motion.span className="gvb-cursor-satellite" style={{ x: followerX, y: followerY }}
+      animate={{ scale: mode === "action" ? 1.25 : speed > .4 ? 1.3 : 1, opacity: visible ? .8 : 0 }} />
+    <motion.div className="gvb-cursor-core" style={{ x, y }}
+      animate={{ width: mode === "text" ? 56 : mode === "action" ? 43 : mode === "press" ? 19 : 13,
+        height: mode === "text" ? 56 : mode === "action" ? 43 : mode === "press" ? 19 : 13,
+        borderRadius: "50%",
+        scaleX: speed > .32 && mode === "idle" ? 1.4 : 1,
+        rotate: mode === "action" ? 12 : 0 }}
+      transition={{ type: "spring", stiffness: 550, damping: 28, mass: .4 }}>
+      <div className="gvb-cursor-optic" ref={lensRef} />
+      <span className="gvb-cursor-glint" />
+      {mode === "action" && <span className="gvb-cursor-action-label">↗</span>}
     </motion.div>
-    <motion.span className="gvb-cursor-pin" style={{ x: pointX, y: pointY }} />
+    <motion.span className="gvb-cursor-center" style={{ x, y }} animate={{ opacity: mode === "idle" ? 0 : .8 }} />
   </div>;
 }
