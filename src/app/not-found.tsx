@@ -1,26 +1,7 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
-
-export default function NotFound() {
-    return (
-        <div className="flex-1 min-h-[70vh] flex items-center justify-center relative overflow-hidden text-center px-4">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-start/10 rounded-full blur-[120px] pointer-events-none" />
-
-            <div className="relative z-10 max-w-2xl mx-auto">
-                <h1 className="text-9xl font-black text-gradient mb-8 drop-shadow-[0_0_40px_rgba(34,211,238,0.4)] select-none">
-                    404
-                </h1>
-                <h2 className="text-4xl font-bold mb-6">
-                    Page Not Found
-                </h2>
-                <p className="text-xl text-foreground/70 mb-10">
-                    The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
-                </p>
-
-                <Link href="/">
-                    <Button size="lg" className="px-10">Return Home</Button>
-                </Link>
-            </div>
-        </div>
-    );
-}
+export default function NotFound(){return <div className="mx-auto flex min-h-[70vh] max-w-3xl flex-col items-center justify-center px-6 text-center">
+<p className="mb-4 text-sm font-semibold uppercase tracking-[.25em] text-sky-300">404 / Page not found</p>
+<h1 className="mb-6 text-5xl font-bold text-white md:text-7xl">This page moved beyond the map.</h1>
+<p className="mb-9 max-w-lg text-lg leading-8 text-slate-300">The link may be outdated, or the page may have moved. Explore our services or return to the homepage.</p>
+<div className="flex flex-wrap justify-center gap-4"><Link href="/" className="rounded-full bg-sky-400 px-6 py-3 font-semibold text-slate-950">Back to home</Link><Link href="/services" className="rounded-full border border-white/30 px-6 py-3 font-semibold text-white">Explore services</Link></div>
+</div>}

@@ -15,7 +15,7 @@ const AtmosphereParticles = () => {
             duration: Math.random() * 0.8 + 0.2, // Much faster duration for speed
             height: Math.random() * 40 + 20 // Tall streaks
         }));
-        setParticles(p);
+        queueMicrotask(() => setParticles(p));
     }, []);
 
     return (

@@ -1,0 +1,61 @@
+name: Dependency security upgrade (feature branch only)
+on:
+  push:
+    branches: [feat/premium-site-redesign-brochure-2026]
+    paths: ['.github/workflows/dependency-remediation.yml', 'eslint.config.mjs', 'src/app/predictor/page.tsx', 'src/components/**']
+permissions:
+  contents: write
+jobs:
+  remediate:
+    if: github.repository == 'BalajiKoushik01/GVB_Tech_web'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Upgrade Next.js security patches and matching ESLint config
+        run: npm install next@^16.4.5 eslint-config-next@^16.4.5
+      - name: Migrate ESLint configuration for Next.js 16
+        run: |
+          cat > eslint.config.mjs <<'EOF'
+          import { defineConfig, globalIgnores } from "eslint/config";
+          import nextVitals from "eslint-config-next/core-web-vitals";
+          import nextTs from "eslint-config-next/typescript";
+          export default defineConfig([
+            ...nextVitals,
+            ...nextTs,
+            globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+          ]);
+          EOF
+      - name: Update compatible transitive dependencies
+        run: npm audit fix || true
+      - name: Pin patched minimatch transitive versions
+        run: |
+          npm pkg set "overrides.@typescript-eslint/typescript-estree.minimatch=^11.0.1"
+          npm install
+      - name: Verify security advisories
+        run: npm audit --audit-level=high
+      - name: Verify TypeScript
+        run: npx tsc --noEmit
+      - name: Verify ESLint
+        run: npm run lint
+      - name: Verify production build
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+      - name: Commit only fully verified upgrade
+        run: |
+          if git diff --quiet -- package.json package-lock.json eslint.config.mjs; then
+            echo "No dependency changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json eslint.config.mjs
+          git commit -m "security: upgrade Next.js and dependencies after passing full checks"
+          git push origin HEAD:feat/premium-site-redesign-brochure-2026
