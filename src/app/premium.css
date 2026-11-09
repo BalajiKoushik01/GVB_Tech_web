@@ -266,9 +266,9 @@ html{scroll-behavior:smooth;scroll-padding-top:96px}
 @media (hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.gvb-cursor-v3{display:none!important}}
 
 /* Native cursor, with accessible and tactile interactive controls. */
-html,body,body *{cursor:auto}
+html,body{cursor:auto}
 a,button,summary,[role="button"],[data-magnetic]{cursor:pointer!important}
-input,textarea,select{cursor:text}
+input,textarea,[contenteditable="true"]{cursor:text}
 @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
   .gvb-btn,.gvb-header-cta,.gvb-experience-choice,.gvb-experience-cta,.gvb-experience-reset,.gvb-site-header a,.gvb-site-footer a,.gvb-service-card,.gvb-article-card {
     translate:var(--gvb-mx,0px) var(--gvb-my,0px);
