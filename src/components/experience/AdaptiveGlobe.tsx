@@ -57,7 +57,7 @@ export function AdaptiveGlobe(){
   return <section className="gvb-guide" aria-label="Find a starting point for your business project">
     <div className="gvb-guide-top"><span className="gvb-guide-kicker">THE PROJECT GUIDE</span><span className="gvb-guide-edition">01 — 04</span></div>
     <h2>What would you like to improve?</h2>
-    <p className="gvb-guide-subtitle">Choose the problem that sounds most familiar. We'll suggest a sensible place to begin.</p>
+    <p className="gvb-guide-subtitle">Choose the problem that sounds most familiar. We’ll suggest a sensible place to begin.</p>
     <div className="gvb-guide-options" role="group" aria-label="Select a business challenge">
       {needs.map((need,index)=><button key={need.id} type="button" className={`gvb-guide-option ${index===chosen?"is-selected":""}`} aria-pressed={chosen===index} onClick={()=>{setChosen(index);setCopied(false);}}>
         <span className="gvb-guide-option-num">0{index+1}</span><span>{need.label}</span><ArrowUpRight size={16} aria-hidden="true"/>
