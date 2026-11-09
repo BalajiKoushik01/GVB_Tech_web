@@ -22,21 +22,15 @@ export default function Home() {
      <div className="gvb-shell gvb-hero-grid">
        <div className="gvb-hero-copy">
          <p className="gvb-eyebrow"><span className="gvb-dot"/>Technology & consulting · India</p>
-         <h1>Engineering what’s<br/><span>next for business.</span><br/>Built to perform.</h1>
-         <p className="gvb-lede">From intelligent automation to decision-ready platforms, we turn operational complexity into reliable digital products that people genuinely enjoy using.</p>
+         <h1>Better operations.<br/><span>Smarter systems.</span><br/>Real progress.</h1>
+         <p className="gvb-lede">We build practical software, automation and data products around the problems slowing your business down. Explore how a typical workflow improves when the right pieces work together.</p>
          <div className="gvb-actions">
            <Link href="/contact" className="gvb-btn gvb-btn-primary">Start a conversation <ArrowUpRight size={18}/></Link>
            <Link href="/brochure" className="gvb-btn gvb-btn-quiet">Explore our profile <ArrowRight size={18}/></Link>
          </div>
-         <div className="gvb-hero-note"><span className="gvb-note-line"/>Where research-led thinking meets real-world execution.</div>
+         <div className="gvb-hero-note"><span className="gvb-note-line"/>Explore the interactive examples to see how we approach business challenges.</div>
        </div>
-       <div className="gvb-hero-visual" aria-label="Interactive GVB technology capabilities"><AdaptiveGlobe/><div className="gvb-legacy-visual" aria-hidden="true">
-         <div className="gvb-orbit orbit-one"/><div className="gvb-orbit orbit-two"/>
-         <div className="gvb-visual-glow"/>
-         <div className="gvb-data-panel gvb-data-panel-top"><span>INTELLIGENCE LAYER</span><strong>Signals to insight</strong><div className="gvb-panel-bars"><i/><i/><i/><i/><i/><i/><i/></div></div>
-         <div className="gvb-system-core"><Image src="/logo_icon.png" alt="" width={104} height={104} priority/><span>GVB / SYSTEMS</span></div>
-         <div className="gvb-data-panel gvb-data-panel-bottom"><span>CONNECTED OPERATIONS</span><strong>Designed for clarity</strong><div className="gvb-flow-mini"><b/> <em/> <b/> <em/> <b/></div></div>
-         <span className="gvb-coordinate coordinate-a">01 / DISCOVER</span><span className="gvb-coordinate coordinate-b">02 / BUILD</span></div>
+       <div className="gvb-hero-visual"><AdaptiveGlobe/>
        </div>
      </div>
      <div className="gvb-shell gvb-hero-bottom"><span>Software engineering</span><span>Applied AI</span><span>Business automation</span><span>Decision intelligence</span></div>
