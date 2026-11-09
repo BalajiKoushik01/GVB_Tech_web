@@ -1,8 +1,6 @@
 name: Quality and security checks
 on:
   pull_request:
-  push:
-    branches: [feat/premium-site-redesign-brochure-2026]
 jobs:
   quality:
     runs-on: ubuntu-latest
