@@ -3,6 +3,8 @@
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+const seeded = (n: number) => { const x = Math.sin(n * 127.1) * 43758.5453; return x - Math.floor(x); };
+
 export const NebulaBackground = () => {
     const { scrollYProgress } = useScroll();
     
@@ -15,11 +17,11 @@ export const NebulaBackground = () => {
     const stars = React.useMemo(() => {
         return [...Array(60)].map((_, i) => ({
             id: i,
-            top: `${((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 * 100}%`,
-            left: `${((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 * 100}%`,
-            opacity: ((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 * 0.7 + 0.3,
-            size: ((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 * 2 + 0.5,
-            glow: ((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 > 0.8
+            top: `${seeded(i * 5 + 1) * 100}%`,
+            left: `${seeded(i * 5 + 2) * 100}%`,
+            opacity: seeded(i * 5 + 3) * 0.7 + 0.3,
+            size: seeded(i * 5 + 4) * 2 + 0.5,
+            glow: seeded(i * 5 + 5) > 0.8
         }));
     }, []);
 
