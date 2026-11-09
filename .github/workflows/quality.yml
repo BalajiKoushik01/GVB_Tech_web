@@ -6,7 +6,7 @@ on:
 jobs:
   quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -14,9 +14,16 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npx tsc --noEmit
-      - run: npm run lint
-      - run: npm audit --audit-level=high
-      - run: npm run build
+      - name: TypeScript
+        run: npx tsc --noEmit
+      - name: ESLint
+        if: success() || failure()
+        run: npm run lint
+      - name: Dependency security audit
+        if: success() || failure()
+        run: npm audit --audit-level=high
+      - name: Production build
+        if: success() || failure()
+        run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: '1'
