@@ -183,7 +183,7 @@ export default function Dashboard() {
         setProgressLog(steps[idx]);
       }, 1000);
     } else {
-      setProgressLog('');
+      queueMicrotask(() => setProgressLog(''));
     }
 
     return () => {
