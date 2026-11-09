@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { AlertTriangle } from "lucide-react";
 
@@ -11,6 +12,7 @@ export default function Error({
     error: Error & { digest?: string };
     reset: () => void;
 }) {
+    const router = useRouter();
     useEffect(() => {
         // Log the error to an error reporting service
         console.error("Global Application Error Captured:", error);
@@ -29,15 +31,14 @@ export default function Error({
             </h1>
 
             <p className="text-lg text-foreground/70 max-w-md text-center mb-10 relative z-10">
-                A critical error occurred while rendering this page. Our team has been notified.
-                Please try recovering the session.
+                We couldn’t load this page. Try again, or return to the homepage.
             </p>
 
             <div className="relative z-10 flex space-x-4">
                 <Button onClick={() => reset()} size="lg" variant="primary">
                     Try Again
                 </Button>
-                <Button onClick={() => window.location.href = '/'} size="lg" variant="outline">
+                <Button onClick={() => router.push('/')} size="lg" variant="outline">
                     Return Home
                 </Button>
             </div>
