@@ -10,7 +10,7 @@ export function AdaptiveGlobe(){
    const fine=window.matchMedia("(pointer: fine)").matches;
    const wide=window.matchMedia("(min-width: 900px)").matches;
    const saveData=(navigator as Navigator & {connection?:{saveData?:boolean}}).connection?.saveData;
-   if(reduced||!fine||!wide||saveData)return;
+   if(reduced||saveData)return;
    const io=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){setReady(true);io.disconnect();}},{rootMargin:"100px"});
    if(ref.current)io.observe(ref.current);
    return ()=>io.disconnect();
