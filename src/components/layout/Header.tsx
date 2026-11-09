@@ -8,7 +8,7 @@ const nav=[{label:"Home",href:"/"},{label:"Expertise",href:"/services"},{label:"
 export function Header(){
  const [open,setOpen]=useState(false);
  const pathname=usePathname();
- useEffect(()=>setOpen(false),[pathname]);
+ useEffect(()=>{queueMicrotask(()=>setOpen(false));},[pathname]);
  useEffect(()=>{document.body.style.overflow=open?"hidden":"";return()=>{document.body.style.overflow="";}},[open]);
  return <header className="gvb-site-header"><div className="gvb-shell gvb-header-inner">
    <Link href="/" className="gvb-brand" aria-label="GVB Tech Solutions home"><Image src="/logo_icon.png" alt="" width={39} height={39} priority/><span><b>GVB TECH</b><small>SOLUTIONS</small></span></Link>
