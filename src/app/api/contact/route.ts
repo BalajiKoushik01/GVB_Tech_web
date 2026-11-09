@@ -10,8 +10,8 @@ export async function POST(req:Request){
  const raw=await req.text();if(raw.length>12000)return NextResponse.json({error:"Request too large"},{status:413});
  let parsed:unknown;try{parsed=JSON.parse(raw)}catch{return NextResponse.json({error:"Invalid JSON"},{status:400})}
  const result=schema.safeParse(parsed);if(!result.success)return NextResponse.json({error:"Invalid form fields"},{status:400});
- const {website: _honeypot,...enquiry}=result.data;
- if(_honeypot)return NextResponse.json({success:true},{headers:{"Cache-Control":"no-store"}});
+ const {website,...enquiry}=result.data;
+ if(website)return NextResponse.json({success:true},{headers:{"Cache-Control":"no-store"}});
  const client=await dbClient();await client.db("gvb-tech").collection("enquiries").insertOne({...enquiry,createdAt:new Date()});
  return NextResponse.json({success:true,message:"Thank you. Your message has been received."},{status:200,headers:{"Cache-Control":"no-store"}});
  }catch(e){console.error("Contact submission failed",e instanceof Error?e.name:"unknown");return NextResponse.json({error:"Unable to process your request"},{status:500});}
