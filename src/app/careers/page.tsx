@@ -10,7 +10,7 @@ const openPositions = [
     {
         title: "Automation & Systems Engineer",
         dept: "Software & Automation",
-        type: "Full-time",
+        type: "Area of interest",
         icon: Target,
         desc: "Design and implement workflow automation engines, background task processors, and API integrations."
     },
@@ -24,7 +24,7 @@ const openPositions = [
     {
         title: "Applied AI Engineer",
         dept: "Data & AI Systems",
-        type: "Hybrid",
+        type: "Area of interest",
         icon: Brain,
         desc: "Develop machine learning models, computer vision pipelines, and predictive analytics integrations."
     }
@@ -41,7 +41,7 @@ export default function CareersPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="inline-block px-4 py-1.5 rounded-full bg-gvb-cyan/10 border border-gvb-cyan/20 text-gvb-cyan text-xs font-black uppercase tracking-[0.2em] mb-6"
                     >
-                        Join the Engineering Team
+                        BUILD WITH GVB TECH
                     </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -57,7 +57,7 @@ export default function CareersPage() {
                         transition={{ delay: 0.2 }}
                         className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto font-bold tracking-tight"
                     >
-                        We are looking for passionate engineers and researchers to help build clean, scalable systems.
+                        Explore our engineering culture and share your interest in future opportunities. Specific openings are confirmed directly by our team.
                     </motion.p>
                 </div>
 
