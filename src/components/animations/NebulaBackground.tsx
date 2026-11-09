@@ -15,11 +15,11 @@ export const NebulaBackground = () => {
     const stars = React.useMemo(() => {
         return [...Array(60)].map((_, i) => ({
             id: i,
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            opacity: Math.random() * 0.7 + 0.3,
-            size: Math.random() * 2 + 0.5,
-            glow: Math.random() > 0.8
+            top: `${((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 * 100}%`,
+            left: `${((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 * 100}%`,
+            opacity: ((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 * 0.7 + 0.3,
+            size: ((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 * 2 + 0.5,
+            glow: ((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1 > 0.8
         }));
     }, []);
 
