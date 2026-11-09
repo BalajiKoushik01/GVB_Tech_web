@@ -6,6 +6,8 @@ let cached:MongoClient|null=null;
 async function dbClient(){if(cached)return cached;const uri=process.env.MONGODB_URI;if(!uri)throw new Error("Contact service is not configured");const client=new MongoClient(uri,{serverSelectionTimeoutMS:6000,maxPoolSize:5});await client.connect();cached=client;return client;}
 export async function POST(req:Request){
  try{
+ const origin=req.headers.get("origin");
+ if(origin && new URL(origin).host!==new URL(req.url).host)return NextResponse.json({error:"Cross-origin request denied"},{status:403});
  const length=Number(req.headers.get("content-length")||"0");if(length>12000)return NextResponse.json({error:"Request too large"},{status:413});
  const raw=await req.text();if(raw.length>12000)return NextResponse.json({error:"Request too large"},{status:413});
  let parsed:unknown;try{parsed=JSON.parse(raw)}catch{return NextResponse.json({error:"Invalid JSON"},{status:400})}
