@@ -32,6 +32,8 @@ export function CustomCursor() {
     let frame = 0;
     let clone: HTMLElement | null = null;
     let current: Element | null = null;
+    let magnet: HTMLElement | null = null;
+    const resetMagnet = () => { if (magnet) { magnet.style.removeProperty("--gvb-mx"); magnet.style.removeProperty("--gvb-my"); magnet = null; } };
 
     const update = () => {
       frame = 0;
@@ -109,6 +111,18 @@ export function CustomCursor() {
       setVisible(true);
       const target = event.target;
       if (!(target instanceof Element)) return;
+      const nextMagnet = target.closest<HTMLElement>("a,button,[role=button],.gvb-service-card,.gvb-article-card");
+      if (nextMagnet !== magnet) resetMagnet();
+      if (nextMagnet && !nextMagnet.hasAttribute("data-no-magnetic")) {
+        magnet = nextMagnet;
+        const rect = magnet.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0 && rect.width < 450 && rect.height < 220) {
+          const px = (event.clientX - (rect.left + rect.width / 2)) / rect.width;
+          const py = (event.clientY - (rect.top + rect.height / 2)) / rect.height;
+          magnet.style.setProperty("--gvb-mx", `${Math.max(-1,Math.min(1,px))*8}px`);
+          magnet.style.setProperty("--gvb-my", `${Math.max(-1,Math.min(1,py))*6}px`);
+        }
+      }
       const clickable = Boolean(target.closest("a,button,[role='button'],input,select,textarea,summary,[data-cursor]"));
       if (clickable !== lastInteractive) {
         lastInteractive = clickable;
@@ -129,7 +143,7 @@ export function CustomCursor() {
 
     const down = () => setPressing(true);
     const up = () => setPressing(false);
-    const hide = () => setVisible(false);
+    const hide = () => { setVisible(false); resetMagnet(); };
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerdown", down);
     window.addEventListener("pointerup", up);
@@ -143,6 +157,7 @@ export function CustomCursor() {
       window.removeEventListener("pointerup", up);
       window.removeEventListener("blur", hide);
       document.removeEventListener("mouseleave", hide);
+      resetMagnet();
       if (frame) cancelAnimationFrame(frame);
       if (lensContent) lensContent.replaceChildren();
     };
