@@ -1,203 +1,71 @@
-"use client";
-
-import React from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Button } from "@/components/ui/Button";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Cpu, LayoutDashboard, Code2, Compass, ArrowRight } from "lucide-react";
-import { MagneticWrapper } from "@/components/animations/MagneticWrapper";
 import Link from "next/link";
-import { LiveStats } from "@/components/ui/LiveStats";
-import { MaskReveal } from "@/components/animations/MaskReveal";
-import { DataStreamLine } from "@/components/animations/DataStreamLine";
 import Image from "next/image";
-
-const services = [
-  {
-    title: "Automated Tools & AI Workflows",
-    icon: Cpu,
-    description: "Custom workflow automation, background processing engines, and machine learning models built for high reliability.",
-    color: "from-gvb-deep to-gvb-blue",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    title: "Dashboards & Analytics",
-    icon: LayoutDashboard,
-    description: "Real-time analytics dashboards, interactive data streams, and operational metrics visualization platforms.",
-    color: "from-gvb-blue to-gvb-cyan",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    title: "Web & App Development",
-    icon: Code2,
-    description: "High-performance web applications, responsive mobile ecosystems, and clean cloud-native architectures.",
-    color: "from-gvb-cyan to-gvb-blue",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800"
-  },
-  {
-    title: "Strategy Consultation",
-    icon: Compass,
-    description: "Data-driven technical consulting, architectural auditing, and digital transformation roadmaps for growing businesses.",
-    color: "from-gvb-deep to-gvb-cyan",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
-  }
+import { ArrowUpRight, ArrowRight, Download, Layers3, Workflow, BrainCircuit, ChartNoAxesCombined, MonitorSmartphone, Compass, Check, FileText } from "lucide-react";
+const capabilities = [
+  {number:"01",title:"Custom software",icon:Layers3,description:"Purpose-built applications, internal platforms and business tools designed around the way your teams work."},
+  {number:"02",title:"Applied AI",icon:BrainCircuit,description:"Practical AI-assisted experiences and intelligent systems grounded in real business needs."},
+  {number:"03",title:"Workflow automation",icon:Workflow,description:"Streamline repetitive processes, connect tools and create more reliable operational workflows."},
+  {number:"04",title:"Data & analytics",icon:ChartNoAxesCombined,description:"Accessible reporting and decision-support dashboards that bring clarity to complex information."},
+  {number:"05",title:"Web & digital products",icon:MonitorSmartphone,description:"Responsive web experiences and modern applications with usability and performance built in."},
+  {number:"06",title:"Technology consulting",icon:Compass,description:"Product discovery, architecture planning, feasibility studies and hands-on technical guidance."}
 ];
-
+const process = [
+  {n:"01",t:"Discover",d:"We learn the context, stakeholders and operational challenge."},
+  {n:"02",t:"Define",d:"Together we map priorities, scope and a practical technical direction."},
+  {n:"03",t:"Develop",d:"We build iteratively, review regularly and test what matters."},
+  {n:"04",t:"Improve",d:"We refine the experience around feedback and adoption."}
+];
 export default function Home() {
-  const { scrollYProgress } = useScroll();
-  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.98]);
-
-  return (
-    <div className="flex flex-col w-full relative bg-transparent selection:bg-white selection:text-black">
-
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex flex-col items-center justify-start overflow-visible z-30 pt-24 sm:pt-32 md:pt-[160px] px-6">
-        <motion.div
-          style={{ scale: heroScale }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="relative text-center max-w-7xl mx-auto flex flex-col items-center z-40"
-        >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="inline-flex py-1.5 px-4 md:py-2 md:px-6 rounded-full bg-white/5 backdrop-blur-xl mb-6 md:mb-10 border border-gvb-cyan/30 shadow-[0_0_20px_rgba(34,211,238,0.2)] whitespace-nowrap"
-          >
-            <span className="text-[9px] md:text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Software & Automation Consultancy</span>
-          </motion.div>
-
-          <MaskReveal>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 md:mb-8 text-white leading-[1] lg:leading-none tracking-tighter uppercase px-1">
-              Engineering <br />
-              <span className="text-gradient">Precision Systems</span>
-            </h1>
-          </MaskReveal>
-
-          <MaskReveal delay={0.2}>
-            <p className="text-sm md:text-xl text-white/80 mb-8 md:mb-12 max-w-2xl mx-auto font-bold tracking-tight px-4 leading-relaxed">
-              Building custom automated tools, interactive dashboards, enterprise web platforms, and data-driven strategy solutions.
-            </p>
-          </MaskReveal>
-
-          <MaskReveal delay={0.3}>
-            <div className="inline-block px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/60 text-xs md:text-sm font-semibold mb-10">
-              Convergence of academia and industry &bull; Founded by an engineer with ISRO SDSC SHAR & Mu Sigma background
-            </div>
-          </MaskReveal>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-6 md:gap-12 z-50 w-full sm:w-auto pb-24"
-          >
-            <MagneticWrapper>
-              <Link href="/contact" className="w-full sm:w-auto">
-                <Button data-cursor="magnetic" size="lg" className="w-full sm:w-auto h-14 md:h-20 px-8 md:px-14 text-sm md:text-lg bg-white text-black hover:bg-white/90 border-none uppercase font-black tracking-widest rounded-full shadow-[0_0_50px_rgba(255,255,255,0.2)]">
-                  Get Started
-                </Button>
-              </Link>
-            </MagneticWrapper>
-            <MagneticWrapper>
-              <Link href="/services" className="w-full sm:w-auto">
-                <Button data-cursor="magnetic" size="lg" variant="outline" className="w-full sm:w-auto h-14 md:h-20 px-8 md:px-14 text-sm md:text-lg border-white/20 hover:bg-white/5 uppercase font-black tracking-widest rounded-full">
-                  Explore Solutions
-                </Button>
-              </Link>
-            </MagneticWrapper>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-12 left-0 w-full flex flex-col items-center z-30 pointer-events-none"
-        >
-          <div className="flex flex-col items-center">
-            <div className="w-[30px] h-[52px] rounded-full border-2 border-white/60 flex justify-center p-2 mb-3">
-              <motion.div
-                animate={{ y: [0, 16, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="w-2 h-2 bg-gvb-cyan rounded-full"
-              />
-            </div>
-            <span className="text-[10px] text-white font-black uppercase tracking-[0.4em] opacity-60">Scroll to Explore</span>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-24 gap-8">
-            <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter mb-6 leading-none">
-                Core <span className="text-gradient">Ecosystem</span>
-              </h2>
-              <p className="text-lg md:text-xl text-white/60 font-bold max-w-lg">
-                Architecting modern software, automated workflows, and decision support platforms.
-              </p>
-            </div>
-            <Link href="/services">
-              <Button variant="outline" className="h-14 px-8 text-xs font-black uppercase tracking-[0.3em] rounded-full">
-                All Capabilities <ArrowRight className="ml-3 w-4 h-4" />
-              </Button>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, idx) => (
-              <GlassCard key={idx} className="group p-0 overflow-hidden rounded-[2.5rem] border-white/5 hover:border-gvb-cyan/30 transition-all duration-700 flex flex-col h-full">
-                <div className="relative h-56 w-full overflow-hidden">
-                  <Image src={service.image} alt={service.title} fill className="object-cover transition-transform duration-1000 group-hover:scale-110 grayscale hover:grayscale-0 opacity-40 group-hover:opacity-80" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent" />
-                  <div className="absolute bottom-6 left-6">
-                    <service.icon className="w-8 h-8 text-gvb-cyan mb-3 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]" />
-                    <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter leading-tight">{service.title}</h3>
-                  </div>
-                </div>
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <p className="text-white/60 text-xs md:text-sm font-bold leading-relaxed mb-6">
-                    {service.description}
-                  </p>
-                  <Link href="/services">
-                    <div className="flex items-center text-[10px] font-black text-gvb-cyan uppercase tracking-[0.3em] group-hover:translate-x-2 transition-transform">
-                      Learn More <ArrowRight className="ml-2 w-3 h-3" />
-                    </div>
-                  </Link>
-                </div>
-              </GlassCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Live Stats / Pillars */}
-      <section className="py-24 md:py-32 relative">
-        <DataStreamLine direction="right" className="top-0 opacity-20" />
-        <div className="max-w-7xl mx-auto px-6">
-          <LiveStats />
-        </div>
-        <DataStreamLine direction="left" className="bottom-0 opacity-20" />
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-24 md:py-32 px-4">
-        <div className="max-w-4xl mx-auto text-center glass-card p-6 sm:p-12 md:p-24 rounded-3xl sm:rounded-[3rem] relative overflow-hidden border border-white/10 bg-white/5 backdrop-blur-3xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-gvb-cyan/10 via-transparent to-gvb-blue/10 opacity-50 pointer-events-none" />
-          <h2 className="text-4xl md:text-6xl font-black mb-8 text-white tracking-tighter uppercase leading-none">Ready to <span className="text-gradient">Innovate?</span></h2>
-          <p className="text-xl md:text-2xl text-white/60 mb-12 font-bold max-w-2xl mx-auto">Partner with an engineering-led team to build custom automation, modern platforms, and data-driven systems.</p>
-          <Link href="/contact" className="inline-block relative z-10">
-            <Button size="lg" className="h-20 px-16 text-xl rounded-3xl bg-gvb-cyan text-black hover:bg-white transition-all font-black uppercase tracking-widest border-none shadow-[0_0_50px_rgba(34,211,238,0.3)]">
-              Initiate Consultation
-            </Button>
-          </Link>
-        </div>
-      </section>
+ return <div className="gvb-premium">
+   <section className="gvb-hero">
+     <div className="gvb-shell gvb-hero-grid">
+       <div className="gvb-hero-copy">
+         <p className="gvb-eyebrow"><span className="gvb-dot"/>Technology & consulting · India</p>
+         <h1>Better systems.<br/><span>Better decisions.</span><br/>Better business.</h1>
+         <p className="gvb-lede">We design and build thoughtful software, AI-enabled workflows and digital experiences that help ambitious businesses move forward.</p>
+         <div className="gvb-actions">
+           <Link href="/contact" className="gvb-btn gvb-btn-primary">Start a conversation <ArrowUpRight size={18}/></Link>
+           <Link href="/brochure" className="gvb-btn gvb-btn-quiet">Explore our profile <ArrowRight size={18}/></Link>
+         </div>
+         <div className="gvb-hero-note"><span className="gvb-note-line"/>Convergence of academia and industry.</div>
+       </div>
+       <div className="gvb-hero-visual" role="img" aria-label="Abstract visualization of connected business systems and insights">
+         <div className="gvb-orbit orbit-one"/><div className="gvb-orbit orbit-two"/>
+         <div className="gvb-visual-glow"/>
+         <div className="gvb-data-panel gvb-data-panel-top"><span>INTELLIGENCE LAYER</span><strong>Signals to insight</strong><div className="gvb-panel-bars"><i/><i/><i/><i/><i/><i/><i/></div></div>
+         <div className="gvb-system-core"><Image src="/logo_icon.png" alt="" width={104} height={104} priority/><span>GVB / SYSTEMS</span></div>
+         <div className="gvb-data-panel gvb-data-panel-bottom"><span>CONNECTED OPERATIONS</span><strong>Designed for clarity</strong><div className="gvb-flow-mini"><b/> <em/> <b/> <em/> <b/></div></div>
+         <span className="gvb-coordinate coordinate-a">01 / DISCOVER</span><span className="gvb-coordinate coordinate-b">02 / BUILD</span>
+       </div>
+     </div>
+     <div className="gvb-shell gvb-hero-bottom"><span>Software engineering</span><span>Applied AI</span><span>Business automation</span><span>Decision intelligence</span></div>
+   </section>
+   <section className="gvb-section gvb-intro" id="approach">
+     <div className="gvb-shell gvb-split">
+       <div><p className="gvb-label">OUR POINT OF VIEW</p><h2>Technology should make the complex <em>feel simple.</em></h2></div>
+       <div className="gvb-intro-right"><p>Good digital products do more than look impressive. They make work easier, information clearer and decisions more confident.</p><p>At GVB Tech Solutions, we combine analytical thinking with careful engineering to create technology that solves the right problem.</p><Link href="/about" className="gvb-text-link">Meet GVB Tech <ArrowUpRight size={17}/></Link></div>
+     </div>
+   </section>
+   <section className="gvb-section gvb-capabilities" id="capabilities">
+    <div className="gvb-shell">
+      <div className="gvb-section-heading"><div><p className="gvb-label">WHAT WE DO</p><h2>One partner.<br/>Connected capabilities.</h2></div><p>From the first question to a working solution, we bring strategy, design and technology together.</p></div>
+      <div className="gvb-service-grid">{capabilities.map(item=><Link href="/services" key={item.number} className="gvb-service-card"><div className="gvb-service-top"><span>{item.number} / 06</span><item.icon size={24} strokeWidth={1.6}/></div><h3>{item.title}</h3><p>{item.description}</p><span className="gvb-service-arrow"><ArrowUpRight size={20}/></span></Link>)}</div>
     </div>
-  );
+   </section>
+   <section className="gvb-section gvb-method">
+    <div className="gvb-shell">
+     <div className="gvb-section-heading"><div><p className="gvb-label">HOW WE WORK</p><h2>Thoughtful at every step.</h2></div><p>A straightforward process that keeps the focus on your goals and the people who use the solution.</p></div>
+     <div className="gvb-steps">{process.map(x=><div key={x.n} className="gvb-step"><span>{x.n}</span><h3>{x.t}</h3><p>{x.d}</p></div>)}</div>
+    </div>
+   </section>
+   <section className="gvb-section gvb-brochure-highlight" id="company-profile">
+    <div className="gvb-shell gvb-profile-layout">
+     <div className="gvb-profile-cover"><div className="gvb-profile-cover-inner"><Image src="/logo_icon.png" width={65} height={65} alt="GVB Tech Solutions mark"/><span>GVB TECH SOLUTIONS</span><div className="gvb-cover-heading">Technology,<br/>built around<br/>your business.</div><small>COMPANY PROFILE / 2026</small></div></div>
+     <div className="gvb-profile-info"><p className="gvb-label">THE COMPANY PROFILE</p><h2>A closer look at what we can build together.</h2><p>Explore our capabilities, approach and business applications in our eight-page corporate profile.</p><div className="gvb-profile-facts"><span><Check size={18}/> Eight-page A4 profile</span><span><Check size={18}/> Services & methodology</span><span><Check size={18}/> Company information</span></div><div className="gvb-actions"><Link href="/brochure" className="gvb-btn gvb-btn-primary"><FileText size={18}/> View brochure</Link><a className="gvb-btn gvb-btn-quiet" href="https://drive.google.com/uc?export=download&id=139HAqHJck3BBY9ShZZQOoPLYjjSOi8LH" target="_blank" rel="noopener noreferrer"><Download size={18}/> Download PDF</a></div></div>
+    </div>
+   </section>
+   <section className="gvb-section gvb-final">
+    <div className="gvb-shell gvb-final-inner"><p className="gvb-label">THE NEXT STEP</p><h2>Have something in mind?<br/><span>Let’s make it work.</span></h2><p>Whether it starts with an idea or an operational challenge, we’d love to hear what you are building.</p><Link href="/contact" className="gvb-btn gvb-btn-primary">Talk to us <ArrowUpRight size={18}/></Link><div className="gvb-final-email">Or email <a href="mailto:info@gvbtech.in">info@gvbtech.in</a></div></div>
+   </section>
+ </div>;
 }
