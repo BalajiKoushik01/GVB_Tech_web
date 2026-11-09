@@ -2,7 +2,7 @@ name: Dependency security upgrade (feature branch only)
 on:
   push:
     branches: [feat/premium-site-redesign-brochure-2026]
-    paths: ['.github/workflows/dependency-remediation.yml', 'eslint.config.mjs']
+    paths: ['.github/workflows/dependency-remediation.yml', 'eslint.config.mjs', 'src/app/predictor/page.tsx']
 permissions:
   contents: write
 jobs:
