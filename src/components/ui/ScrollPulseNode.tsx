@@ -3,6 +3,8 @@
 import React, { useMemo } from "react";
 import { motion, useScroll, useTransform, useSpring, useVelocity } from "framer-motion";
 
+const seeded = (n: number) => { const x = Math.sin(n * 127.1) * 43758.5453; return x - Math.floor(x); };
+
 export const ScrollPulseNode = () => {
     const { scrollYProgress } = useScroll();
     const scrollVelocity = useVelocity(scrollYProgress);
@@ -25,8 +27,8 @@ export const ScrollPulseNode = () => {
     const stockBars = useMemo(() => {
         return Array.from({ length: 60 }).map((_, i) => ({
             id: i,
-            height: 4 + (((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1) * 16, // Random heights for histogram look
-            opacity: 0.1 + (((Math.sin((i + 1) * 127.1) * 43758.5453) % 1 + 1) % 1) * 0.2
+            height: 4 + seeded(i + 1) * 16, // Random heights for histogram look
+            opacity: 0.1 + seeded(i + 101) * 0.2
         }));
     }, []);
 
