@@ -23,7 +23,7 @@ export function MarketDashboard() {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true);
+        queueMicrotask(() => setMounted(true));
     }, []);
 
     if (!mounted) return <div className="h-14 w-full bg-slate-900/10 border-b border-white/5" />;
