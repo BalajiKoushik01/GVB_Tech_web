@@ -24,7 +24,7 @@ jobs:
         run: npm audit fix || true
       - name: Pin patched minimatch transitive versions
         run: |
-          npm pkg set "overrides.minimatch=^11.0.1"
+          npm pkg set "overrides.@typescript-eslint/typescript-estree.minimatch=^11.0.1"
           npm install
       - name: Verify security advisories
         run: npm audit --audit-level=high
