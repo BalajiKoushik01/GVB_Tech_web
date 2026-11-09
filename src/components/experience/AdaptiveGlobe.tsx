@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { ArrowUpRight, ArrowRight, Check, Workflow, BrainCircuit, ChartNoAxesCombined } from "lucide-react";
 
@@ -61,7 +61,7 @@ export function AdaptiveGlobe() {
   const selected = scenarios[selection];
   const step = selected.steps[focusedStep];
 
-  return <section className="gvb-systems" aria-label="Explore practical GVB Tech solution workflows" style={{ "--systems-accent": selected.accent } as React.CSSProperties}>
+  return <section className="gvb-systems" aria-label="Explore practical GVB Tech solution workflows" style={{ "--systems-accent": selected.accent } as CSSProperties}>
     <div className="gvb-systems-top">
       <div className="gvb-systems-identity"><span className="gvb-systems-live" aria-hidden="true"/><span>GVB / SYSTEMS IN PRACTICE</span></div>
       <span className="gvb-systems-count">0{selection + 1} <span>/ 03</span></span>
