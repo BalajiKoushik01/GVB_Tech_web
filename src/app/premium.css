@@ -442,3 +442,13 @@ input,textarea,[contenteditable="true"]{cursor:text}
 .gvb-resource-link:focus-visible{outline:2px solid #296b91;outline-offset:4px}
 @media(max-width:800px){.gvb-resources{padding:70px 0}.gvb-resources-header{display:block}.gvb-resources-header>p{margin-top:17px;max-width:570px}.gvb-resource-grid{grid-template-columns:1fr}.gvb-resource-link{min-height:255px;padding:28px}}
 @media(prefers-reduced-motion:reduce){.gvb-resource-link,.gvb-resource-link strong svg{transition:none!important}}
+
+/* Cross-page visual restraint: better readability, less faux-glass and fewer heavy glows. */
+.liquid-glass{background:rgba(20,38,57,.84);border-color:rgba(185,209,230,.16);box-shadow:0 9px 32px rgba(0,0,0,.16);border-radius:14px;backdrop-filter:blur(12px) saturate(110%);-webkit-backdrop-filter:blur(12px) saturate(110%)}
+.liquid-glass:hover{background:rgba(26,47,68,.9);border-color:rgba(145,191,222,.48);transform:translateY(-3px) scale(1.005);box-shadow:0 16px 40px rgba(0,0,0,.18)}
+.text-gradient{background-image:linear-gradient(110deg,#95c9e7,#acc6da,#88b9ce)}
+.gvb-premium .gvb-btn{border-radius:6px}
+.gvb-premium .gvb-btn-primary{background:#dfe9ef;color:#173347}
+.gvb-premium .gvb-btn-quiet{border-color:#8ba6b879}
+.gvb-premium .gvb-btn-primary:hover{background:#f0f5f7}
+@media(prefers-reduced-motion:reduce){.liquid-glass,.liquid-glass:hover{transition:none;transform:none}}
