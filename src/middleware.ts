@@ -1,6 +1,6 @@
 import {NextResponse} from "next/server";
 import type {NextRequest} from "next/server";
-export function middleware(request:NextRequest){
+export function middleware(_request:NextRequest){
  const response=NextResponse.next();
  const policy=["default-src 'self'","script-src 'self' 'unsafe-inline'","style-src 'self' 'unsafe-inline'","img-src 'self' data: blob: https:","font-src 'self' data:","connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com","frame-src https://drive.google.com","object-src 'none'","base-uri 'self'","form-action 'self'","frame-ancestors 'none'","upgrade-insecure-requests"].join("; ");
  response.headers.set("Content-Security-Policy",policy);
