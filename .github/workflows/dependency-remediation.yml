@@ -1,0 +1,36 @@
+name: Dependency remediation (feature branch only)
+on:
+  push:
+    branches: [feat/premium-site-redesign-brochure-2026]
+    paths: ['.github/workflows/dependency-remediation.yml']
+permissions:
+  contents: write
+jobs:
+  remediate:
+    if: github.repository == 'BalajiKoushik01/GVB_Tech_web'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Apply nonbreaking advisory fixes to lockfile
+        run: npm audit fix --package-lock-only || true
+      - name: Update installed dependency tree and verify
+        run: npm ci
+      - name: Commit lockfile remediation to feature branch
+        run: |
+          if git diff --quiet -- package-lock.json; then
+            echo "No compatible dependency changes found"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          git commit -m "security: refresh vulnerable transitive dependency lockfile"
+          git push origin HEAD:feat/premium-site-redesign-brochure-2026
