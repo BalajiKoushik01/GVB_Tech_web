@@ -147,8 +147,7 @@ export function CustomCursor() {
     };
   }, [x, y]);
 
-  if (!enabled) return <div ref={lensRef} className="gvb-cursor-inactive" aria-hidden="true" />;
-  return <div className={`gvb-cursor-v3 ${visible ? "is-visible" : ""} mode-${mode}`} aria-hidden="true">
+  return <div className={`gvb-cursor-v3 ${enabled && visible ? "is-visible" : ""} mode-${mode}`} aria-hidden="true">
     <motion.span className="gvb-cursor-satellite" style={{ x: followerX, y: followerY }}
       animate={{ scale: mode === "action" ? 1.25 : speed > .4 ? 1.3 : 1, opacity: visible ? .8 : 0 }} />
     <motion.div className="gvb-cursor-core" style={{ x, y }}
