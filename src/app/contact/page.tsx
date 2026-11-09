@@ -15,6 +15,7 @@ const schema = z.object({
     phone: z.string().optional(),
     service: z.string().min(1, "Please select a service"),
     message: z.string().min(10, "Message must be at least 10 characters"),
+    website: z.string().max(0).optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -22,6 +23,7 @@ type FormData = z.infer<typeof schema>;
 export default function ContactPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
+    const [submissionError, setSubmissionError] = useState("");
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
         resolver: zodResolver(schema),
@@ -29,6 +31,7 @@ export default function ContactPage() {
 
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
+        setSubmissionError("");
 
         try {
             const response = await fetch('/api/contact', {
@@ -49,9 +52,8 @@ export default function ContactPage() {
             const text = `Hello GVB Tech Solutions,\n\nI am ${data.name}.\nEmail: ${data.email}\n${data.phone ? `Phone: ${data.phone}` : ''}\nInterested Service: ${data.service}\n\nMessage:\n${data.message}`;
             const encodedText = encodeURIComponent(text);
             const whatsappUrl = `https://wa.me/919381958045?text=${encodedText}`;
-            window.open(whatsappUrl, "_blank");
-            setSuccessMessage("WhatsApp opened. Please send the prepared message to contact us.");
-            reset();
+            setSubmissionError("We could not submit your enquiry. Your message is still here. You can retry or use WhatsApp.");
+            window.open(whatsappUrl, "_blank", "noopener,noreferrer");
         } finally {
             setIsSubmitting(false);
         }
@@ -109,12 +111,14 @@ export default function ContactPage() {
                         <GlassCard hoverEffect={false} className="p-6 md:p-10 !bg-white/5 backdrop-blur-3xl border-white/10">
                             <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8">Send us a message</h3>
 
+                            {submissionError && <p role="alert" className="mb-5 text-amber-300">{submissionError}</p>}
                             {successMessage ? (
                                 <div className="p-6 bg-green-500/10 border border-green-500/20 rounded-2xl text-green-600 dark:text-green-400 font-medium text-lg text-center">
                                     {successMessage}
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                                    <div className="absolute -left-[10000px]" aria-hidden="true"><label htmlFor="website">Leave this field empty</label><input id="website" tabIndex={-1} autoComplete="off" {...register("website")} /></div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <label htmlFor="name" className="text-[10px] font-black text-white/40 uppercase tracking-widest block">Full Name *</label>
