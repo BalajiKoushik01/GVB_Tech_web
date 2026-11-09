@@ -2,9 +2,11 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import {z} from "zod";
 export const maxDuration=30;
 export const dynamic="force-dynamic";
-const schema=z.object({messages:z.array(z.object({role:z.enum(["user","assistant"]),content:z.string().trim().min(1).max(2000)})).min(1).max(12)});
+const schema=z.object({messages:z.array(z.object({role:z.enum(["user","assistant"]),content:z.string().trim().min(1).max(2000)}).strict()).min(1).max(12)}).strict();
 export async function POST(req:Request){
  try{
+ const origin=req.headers.get("origin");
+ if(origin && new URL(origin).host!==new URL(req.url).host)return Response.json({error:"Cross-origin request denied"},{status:403});
  const size=Number(req.headers.get("content-length")||0);if(size>12000)return Response.json({error:"Request too large"},{status:413});
  const raw=await req.text();if(raw.length>12000)return Response.json({error:"Request too large"},{status:413});
  let data:unknown;try{data=JSON.parse(raw)}catch{return Response.json({error:"Invalid JSON"},{status:400})}
