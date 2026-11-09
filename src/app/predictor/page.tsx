@@ -145,7 +145,7 @@ export default function Dashboard() {
         "Caching preprocessed registers to DuckDB database storage...",
         "Finalizing market dataset serialization..."
       ];
-      setProgressLog(steps[0]);
+      queueMicrotask(() => setProgressLog(steps[0]));
       interval = setInterval(() => {
         timer += 1;
         const idx = Math.min(steps.length - 1, Math.floor(timer / 1.5));
@@ -161,7 +161,7 @@ export default function Dashboard() {
         "Calibrating out-of-sample MAPIE conformal risk intervals...",
         "Assembling dynamic prediction target envelope..."
       ];
-      setProgressLog(steps[0]);
+      queueMicrotask(() => setProgressLog(steps[0]));
       interval = setInterval(() => {
         timer += 1;
         const idx = Math.min(steps.length - 1, Math.floor(timer / 2.0));
@@ -176,7 +176,7 @@ export default function Dashboard() {
         "Computing directional forecasting accuracy...",
         "Saving backtest simulation results..."
       ];
-      setProgressLog(steps[0]);
+      queueMicrotask(() => setProgressLog(steps[0]));
       interval = setInterval(() => {
         timer += 1;
         const idx = Math.min(steps.length - 1, Math.floor(timer / 2.5));
@@ -300,8 +300,7 @@ export default function Dashboard() {
   // Fetch search suggestions from local NSE DB (instant) with Yahoo Finance fallback
   useEffect(() => {
     if (searchQuery.trim().length < 1) {
-      setSuggestions([]);
-      setShowSuggestions(false);
+      queueMicrotask(() => { setSuggestions([]); setShowSuggestions(false); });
       return;
     }
     const timer = setTimeout(async () => {
