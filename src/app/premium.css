@@ -229,3 +229,18 @@ html{scroll-behavior:smooth;scroll-padding-top:96px}
  .gvb-cursor-layer{display:none!important}
  .gvb-site-header a,.gvb-site-header button,.gvb-btn,.gvb-service-card,.gvb-article-card{translate:none!important}
 }
+
+/* A tactile interface: subtle light response, direct affordance, and clear focus. */
+.gvb-btn,.gvb-header-cta{position:relative;isolation:isolate;overflow:hidden}
+.gvb-btn::before,.gvb-header-cta::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(113deg,transparent 20%,rgba(255,255,255,.22) 49%,transparent 70%);transform:translateX(-145%);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.gvb-btn:hover::before,.gvb-header-cta:hover::before{transform:translateX(145%)}
+.gvb-btn svg,.gvb-header-cta svg,.gvb-text-link svg,.gvb-site-footer a svg{transition:transform .3s cubic-bezier(.2,.85,.3,1.2)}
+.gvb-btn:hover svg,.gvb-header-cta:hover svg,.gvb-text-link:hover svg,.gvb-site-footer a:hover svg{transform:translate(3px,-2px)}
+.gvb-service-card,.gvb-article-card{position:relative;isolation:isolate}
+.gvb-service-card:after,.gvb-article-card:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;background:radial-gradient(240px circle at 50% 20%,rgba(131,211,255,.14),transparent 80%);transition:opacity .3s ease}
+.gvb-service-card:hover:after,.gvb-article-card:hover:after{opacity:1}
+.gvb-desktop-nav a{position:relative;padding-block:8px}
+.gvb-desktop-nav a:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:#8bdcff;transform:scaleX(0);transform-origin:left;transition:transform .27s ease}
+.gvb-desktop-nav a:hover:after,.gvb-desktop-nav a.active:after{transform:scaleX(1)}
+.gvb-premium a,.gvb-site-header a,.gvb-site-footer a{-webkit-tap-highlight-color:rgba(84,184,255,.17)}
+@media(prefers-reduced-motion:reduce){.gvb-btn::before,.gvb-header-cta::before{display:none}.gvb-btn svg,.gvb-header-cta svg,.gvb-service-card,.gvb-article-card{transition:none!important}}
