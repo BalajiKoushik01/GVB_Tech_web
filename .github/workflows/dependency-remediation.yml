@@ -1,4 +1,4 @@
-name: Dependency remediation (feature branch only)
+name: Dependency security upgrade (feature branch only)
 on:
   push:
     branches: [feat/premium-site-redesign-brochure-2026]
@@ -9,7 +9,7 @@ jobs:
   remediate:
     if: github.repository == 'BalajiKoushik01/GVB_Tech_web'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,19 +18,28 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - run: npm ci
-      - name: Apply nonbreaking advisory fixes to lockfile
-        run: npm audit fix --package-lock-only || true
-      - name: Update installed dependency tree and verify
-        run: npm ci
-      - name: Commit lockfile remediation to feature branch
+      - name: Upgrade Next.js security patches and matching ESLint config
+        run: npm install next@^16.4.5 eslint-config-next@^16.4.5
+      - name: Update vulnerable transitive dependencies
+        run: npm audit fix
+      - name: Verify security advisories
+        run: npm audit --audit-level=high
+      - name: Verify TypeScript
+        run: npx tsc --noEmit
+      - name: Verify ESLint
+        run: npm run lint
+      - name: Verify production build
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+      - name: Commit only fully verified upgrade
         run: |
-          if git diff --quiet -- package-lock.json; then
-            echo "No compatible dependency changes found"
+          if git diff --quiet -- package.json package-lock.json; then
+            echo "No dependency changes"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json
-          git commit -m "security: refresh vulnerable transitive dependency lockfile"
+          git add package.json package-lock.json
+          git commit -m "security: upgrade Next.js and dependencies after passing full checks"
           git push origin HEAD:feat/premium-site-redesign-brochure-2026
