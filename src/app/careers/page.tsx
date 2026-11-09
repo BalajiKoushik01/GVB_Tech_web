@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Rocket, Brain, Code2, Shield, ArrowRight, Zap, Target, Star } from "lucide-react";
 import Link from "next/link";
 
-const openPositions = [
+const areasOfInterest = [
     {
         title: "Automation & Systems Engineer",
         dept: "Software & Automation",
@@ -102,7 +102,7 @@ export default function CareersPage() {
                     </div>
                 </section>
 
-                {/* Hiring Process */}
+                {/* How we get to know people */}
                 <section className="mb-32 py-24 border-y border-white/5">
                     <h2 className="text-4xl font-black mb-16 text-white text-center uppercase tracking-tighter">How We <span className="text-gradient">Select</span></h2>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -113,9 +113,9 @@ export default function CareersPage() {
                     </div>
                 </section>
 
-                {/* Open Positions */}
+                {/* Disciplines we work in; not advertised vacancies */}
                 <div className="grid md:grid-cols-3 gap-8 mb-24">
-                    {openPositions.map((pos, i) => (
+                    {areasOfInterest.map((pos, i) => (
                         <motion.div
                             key={pos.title}
                             initial={{ opacity: 0, y: 20 }}
@@ -131,7 +131,7 @@ export default function CareersPage() {
                                 <p className="text-gvb-cyan/80 text-xs font-black mb-4 uppercase tracking-widest">{pos.dept} • {pos.type}</p>
                                 <p className="text-white/60 font-bold mb-8 flex-grow">{pos.desc}</p>
                                 <Link href="/contact" className="group flex items-center gap-2 text-white font-black uppercase text-sm tracking-widest hover:text-gvb-cyan transition-colors">
-                                    Apply Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                    Share your interest <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                             </GlassCard>
                         </motion.div>
