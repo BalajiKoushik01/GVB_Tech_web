@@ -17,7 +17,7 @@ const openPositions = [
     {
         title: "Full Stack Engineer",
         dept: "Web & App Platforms",
-        type: "Full-time",
+        type: "Area of interest",
         icon: Code2,
         desc: "Build modern web applications with Next.js, React, and real-time data visualization consoles."
     },
@@ -49,7 +49,7 @@ export default function CareersPage() {
                         transition={{ delay: 0.1 }}
                         className="text-5xl md:text-6xl lg:text-7xl font-black mb-8 tracking-tighter text-white uppercase"
                     >
-                        Engineer the <span className="text-gradient">Future</span>
+                        Build useful <span className="text-gradient">Technology</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -74,17 +74,17 @@ export default function CareersPage() {
                                 <CultureItem 
                                     icon={Zap} 
                                     title="Technical Rigor" 
-                                    desc="Grounded in aerospace testing standards and decision-science experience." 
+                                    desc="We value clear reasoning, reproducible results and systems that can be understood and maintained." 
                                 />
                                 <CultureItem 
                                     icon={Shield} 
                                     title="Radical Ownership" 
-                                    desc="Every developer owns their software features end-to-end, from architecture to production deployment." 
+                                    desc="We believe in taking responsibility for decisions, documenting trade-offs and learning from how software performs in use." 
                                 />
                                 <CultureItem 
                                     icon={Star} 
                                     title="Constant Evolution" 
-                                    desc="We invest heavily in R&D, ensuring our team is always working with the latest neural architectures." 
+                                    desc="We make room for reading, prototyping and testing ideas. The right tool matters more than the newest tool." 
                                 />
                             </div>
                         </motion.div>
@@ -106,10 +106,10 @@ export default function CareersPage() {
                 <section className="mb-32 py-24 border-y border-white/5">
                     <h2 className="text-4xl font-black mb-16 text-white text-center uppercase tracking-tighter">How We <span className="text-gradient">Select</span></h2>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <ProcessNode step="01" title="Portfolio Review" desc="Resume and GitHub review to evaluate hands-on technical depth." />
-                        <ProcessNode step="02" title="Technical Deep-Dive" desc="Systems architecture discussion and real-world coding assessment." />
+                        <ProcessNode step="01" title="Portfolio Review" desc="We review relevant projects, experience and examples of your work." />
+                        <ProcessNode step="02" title="Technical Deep-Dive" desc="We may discuss how you approach a problem, the choices you made and what you learned." />
                         <ProcessNode step="03" title="Values Alignment" desc="Direct conversation on engineering rigor, ownership, and mindset." />
-                        <ProcessNode step="04" title="Offer & Onboarding" desc="Final offer and integration into active software development." />
+                        <ProcessNode step="04" title="Offer & Onboarding" desc="If an appropriate opportunity exists, we discuss scope, expectations and next steps." />
                     </div>
                 </section>
 
@@ -143,7 +143,7 @@ export default function CareersPage() {
                     <div className="absolute inset-0 bg-gradient-to-r from-gvb-blue/10 to-gvb-cyan/10 opacity-50" />
                     <div className="relative z-10">
                         <h2 className="text-3xl md:text-5xl font-black mb-8 text-white uppercase tracking-tighter">Don&apos;t see your role?</h2>
-                        <p className="text-xl text-white/60 mb-10 max-w-2xl mx-auto font-bold">We&apos;re always looking for extraordinary talent. Reach out and tell us how you can help GVB Tech scale.</p>
+                        <p className="text-xl text-white/60 mb-10 max-w-2xl mx-auto font-bold">Interested in working on practical engineering problems? Share what you have built and the kind of work you would like to pursue. This is an expression of interest, not a confirmed vacancy.</p>
                         <Link href="/contact">
                             <Button size="lg" className="px-16 h-16 rounded-3xl">General Application</Button>
                         </Link>
