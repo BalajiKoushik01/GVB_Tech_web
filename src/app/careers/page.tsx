@@ -6,25 +6,25 @@ import { Button } from "@/components/ui/Button";
 import { Rocket, Brain, Code2, Shield, ArrowRight, Zap, Target, Star } from "lucide-react";
 import Link from "next/link";
 
-const openPositions = [
+const areasOfInterest = [
     {
         title: "Automation & Systems Engineer",
         dept: "Software & Automation",
-        type: "Full-time",
+        type: "Area of interest",
         icon: Target,
         desc: "Design and implement workflow automation engines, background task processors, and API integrations."
     },
     {
         title: "Full Stack Engineer",
         dept: "Web & App Platforms",
-        type: "Full-time",
+        type: "Area of interest",
         icon: Code2,
         desc: "Build modern web applications with Next.js, React, and real-time data visualization consoles."
     },
     {
         title: "Applied AI Engineer",
         dept: "Data & AI Systems",
-        type: "Hybrid",
+        type: "Area of interest",
         icon: Brain,
         desc: "Develop machine learning models, computer vision pipelines, and predictive analytics integrations."
     }
@@ -41,7 +41,7 @@ export default function CareersPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="inline-block px-4 py-1.5 rounded-full bg-gvb-cyan/10 border border-gvb-cyan/20 text-gvb-cyan text-xs font-black uppercase tracking-[0.2em] mb-6"
                     >
-                        Join the Engineering Team
+                        BUILD WITH GVB TECH
                     </motion.div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -49,7 +49,7 @@ export default function CareersPage() {
                         transition={{ delay: 0.1 }}
                         className="text-5xl md:text-6xl lg:text-7xl font-black mb-8 tracking-tighter text-white uppercase"
                     >
-                        Engineer the <span className="text-gradient">Future</span>
+                        Build useful <span className="text-gradient">Technology</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -57,7 +57,7 @@ export default function CareersPage() {
                         transition={{ delay: 0.2 }}
                         className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto font-bold tracking-tight"
                     >
-                        We are looking for passionate engineers and researchers to help build clean, scalable systems.
+                        Explore our engineering culture and share your interest in future opportunities. Specific openings are confirmed directly by our team.
                     </motion.p>
                 </div>
 
@@ -74,17 +74,17 @@ export default function CareersPage() {
                                 <CultureItem 
                                     icon={Zap} 
                                     title="Technical Rigor" 
-                                    desc="Grounded in aerospace testing standards and decision-science experience." 
+                                    desc="We value clear reasoning, reproducible results and systems that can be understood and maintained." 
                                 />
                                 <CultureItem 
                                     icon={Shield} 
                                     title="Radical Ownership" 
-                                    desc="Every developer owns their software features end-to-end, from architecture to production deployment." 
+                                    desc="We believe in taking responsibility for decisions, documenting trade-offs and learning from how software performs in use." 
                                 />
                                 <CultureItem 
                                     icon={Star} 
                                     title="Constant Evolution" 
-                                    desc="We invest heavily in R&D, ensuring our team is always working with the latest neural architectures." 
+                                    desc="We make room for reading, prototyping and testing ideas. The right tool matters more than the newest tool." 
                                 />
                             </div>
                         </motion.div>
@@ -102,20 +102,20 @@ export default function CareersPage() {
                     </div>
                 </section>
 
-                {/* Hiring Process */}
+                {/* How we get to know people */}
                 <section className="mb-32 py-24 border-y border-white/5">
                     <h2 className="text-4xl font-black mb-16 text-white text-center uppercase tracking-tighter">How We <span className="text-gradient">Select</span></h2>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <ProcessNode step="01" title="Portfolio Review" desc="Resume and GitHub review to evaluate hands-on technical depth." />
-                        <ProcessNode step="02" title="Technical Deep-Dive" desc="Systems architecture discussion and real-world coding assessment." />
+                        <ProcessNode step="01" title="Portfolio Review" desc="We review relevant projects, experience and examples of your work." />
+                        <ProcessNode step="02" title="Technical Deep-Dive" desc="We may discuss how you approach a problem, the choices you made and what you learned." />
                         <ProcessNode step="03" title="Values Alignment" desc="Direct conversation on engineering rigor, ownership, and mindset." />
-                        <ProcessNode step="04" title="Offer & Onboarding" desc="Final offer and integration into active software development." />
+                        <ProcessNode step="04" title="Offer & Onboarding" desc="If an appropriate opportunity exists, we discuss scope, expectations and next steps." />
                     </div>
                 </section>
 
-                {/* Open Positions */}
+                {/* Disciplines we work in; not advertised vacancies */}
                 <div className="grid md:grid-cols-3 gap-8 mb-24">
-                    {openPositions.map((pos, i) => (
+                    {areasOfInterest.map((pos, i) => (
                         <motion.div
                             key={pos.title}
                             initial={{ opacity: 0, y: 20 }}
@@ -131,7 +131,7 @@ export default function CareersPage() {
                                 <p className="text-gvb-cyan/80 text-xs font-black mb-4 uppercase tracking-widest">{pos.dept} • {pos.type}</p>
                                 <p className="text-white/60 font-bold mb-8 flex-grow">{pos.desc}</p>
                                 <Link href="/contact" className="group flex items-center gap-2 text-white font-black uppercase text-sm tracking-widest hover:text-gvb-cyan transition-colors">
-                                    Apply Now <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                    Share your interest <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                             </GlassCard>
                         </motion.div>
@@ -143,7 +143,7 @@ export default function CareersPage() {
                     <div className="absolute inset-0 bg-gradient-to-r from-gvb-blue/10 to-gvb-cyan/10 opacity-50" />
                     <div className="relative z-10">
                         <h2 className="text-3xl md:text-5xl font-black mb-8 text-white uppercase tracking-tighter">Don&apos;t see your role?</h2>
-                        <p className="text-xl text-white/60 mb-10 max-w-2xl mx-auto font-bold">We&apos;re always looking for extraordinary talent. Reach out and tell us how you can help GVB Tech scale.</p>
+                        <p className="text-xl text-white/60 mb-10 max-w-2xl mx-auto font-bold">Interested in working on practical engineering problems? Share what you have built and the kind of work you would like to pursue. This is an expression of interest, not a confirmed vacancy.</p>
                         <Link href="/contact">
                             <Button size="lg" className="px-16 h-16 rounded-3xl">General Application</Button>
                         </Link>

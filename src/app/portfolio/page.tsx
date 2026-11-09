@@ -29,7 +29,7 @@ const projects: Project[] = [
         category: "Live Demo",
         badge: "Featured Live Work",
         tech: ["Next.js", "Python", "FastAPI", "TSA Modeling", "Lightweight Charts"],
-        desc: "Interactive quantitative forecasting engine utilizing empirical mode decomposition and statistical time-series algorithms for financial market modeling.",
+        desc: "An interactive environment for exploring time-series forecasts, comparing assumptions and examining uncertainty. Forecasts are demonstrations, not investment advice.",
         isLiveDemo: true,
         demoUrl: "/predictor",
         icon: LineChart,
@@ -41,7 +41,7 @@ const projects: Project[] = [
         category: "Automated Tools",
         badge: "Active R&D",
         tech: ["TypeScript", "Python", "IoT Telemetry", "Real-Time Systems"],
-        desc: "Automated data ingestion and real-time monitoring infrastructure built for high-reliability hardware testing environments.",
+        desc: "A research-oriented approach to collecting device signals, checking test conditions and presenting results where engineers can act on them.",
         githubUrl: "https://github.com/BalajiKoushik01/RangeReady",
         icon: Activity,
         color: "from-gvb-blue to-gvb-deep"
@@ -52,7 +52,7 @@ const projects: Project[] = [
         category: "Systems",
         badge: "Active R&D",
         tech: ["Python", "Computer Vision", "Celery Tasks", "FastAPI"],
-        desc: "Backend task orchestration and computer-vision processing pipeline engineered for industrial textile production automation.",
+        desc: "An exploration of how image processing and workflow software can reduce repetitive preparation in textile-design production.",
         githubUrl: "https://github.com/BalajiKoushik01/WeaveCore",
         icon: Cpu,
         color: "from-emerald-500/20 to-gvb-cyan/20"
@@ -63,7 +63,7 @@ const projects: Project[] = [
         category: "AI Research",
         badge: "Active AI R&D",
         tech: ["Python", "PyTorch", "Computer Vision", "Medical Imaging"],
-        desc: "Bespoke deep learning research framework for high-precision medical imaging analysis and feature extraction (active R&D).",
+        desc: "Experimental computer-vision research for analysing medical imagery, with emphasis on evaluation, interpretability and limitations.",
         githubUrl: "https://github.com/BalajiKoushik01/CerviSense-AI",
         icon: Code2,
         color: "from-purple-500/20 to-gvb-blue/20"
@@ -74,7 +74,7 @@ const projects: Project[] = [
         category: "Systems",
         badge: "Active R&D",
         tech: ["Go", "Python", "System Security", "Telemetry"],
-        desc: "Lightweight monitoring tool for automated background telemetry, threat detection, and system integrity verification.",
+        desc: "A monitoring concept that focuses on collecting system events and making unusual activity easier to investigate.",
         githubUrl: "https://github.com/BalajiKoushik01/InvisibleGuardian",
         icon: Shield,
         color: "from-amber-500/20 to-orange-500/20"
@@ -104,7 +104,7 @@ export default function PortfolioPage() {
                     Technical <span className="text-gradient">Proof & Projects</span>
                 </h1>
                 <p className="text-base md:text-xl text-white/70 max-w-2xl mx-auto mb-10 md:mb-12 font-bold leading-relaxed px-2">
-                    Explore an interactive showcase of our software work, live side-projects, and active open-source R&D repositories on GitHub.
+                    Selected prototypes, demonstrations and research projects. Each explores a practical engineering question; availability and maturity vary by project.
                 </p>
 
                 {/* Filter Tabs */}

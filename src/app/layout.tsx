@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./premium.css";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@vercel/analytics/react";
@@ -15,4 +16,4 @@ export const metadata:Metadata={
  twitter:{card:"summary_large_image",title:"GVB Tech Solutions",description:"Better systems. Better decisions. Better business.",images:["/GVB_tech_logo.png"]},
  robots:{index:true,follow:true}
 };
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body className="antialiased min-h-screen flex flex-col bg-[#081323] text-white"><a className="gvb-skip-link" href="#main-content">Skip to content</a><Header/><main id="main-content" className="flex-1">{children}</main><Footer/><Analytics/><SpeedInsights/></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body className="antialiased min-h-screen flex flex-col bg-[#081323] text-white"><a className="gvb-skip-link" href="#main-content">Skip to content</a><Header/><CustomCursor/><main id="main-content" className="flex-1">{children}</main><Footer/><Analytics/><SpeedInsights/></body></html>}

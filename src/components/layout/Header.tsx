@@ -4,7 +4,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-const nav=[{label:"Home",href:"/"},{label:"Expertise",href:"/services"},{label:"Work",href:"/portfolio"},{label:"About",href:"/about"},{label:"Brochure",href:"/brochure"}];
+const nav=[{label:"Home",href:"/"},{label:"Expertise",href:"/services"},{label:"Work",href:"/portfolio"},{label:"About",href:"/about"},{label:"Insights",href:"/blog"},{label:"Careers",href:"/careers"},{label:"Brochure",href:"/brochure"}];
 export function Header(){
  const [open,setOpen]=useState(false);
  const pathname=usePathname();

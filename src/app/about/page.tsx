@@ -33,7 +33,7 @@ export default function AboutPage() {
                         transition={{ delay: 0.1 }}
                         className="text-base md:text-2xl text-white/70 max-w-3xl mx-auto font-bold tracking-tight leading-relaxed px-2"
                     >
-                        GVB Tech Solutions is a specialized software and AI consultancy founded by Balaji Koushik. We combine aerospace testing discipline and decision-science experience to build clean, high-performance technology tools for modern operations.
+                        GVB Tech Solutions builds software, automation and analytics tools for organisations that need more reliable operations. Our approach combines hands-on engineering with an understanding of the decisions people make using the systems we deliver.
                     </motion.p>
                 </section>
 
@@ -75,7 +75,7 @@ export default function AboutPage() {
                                 </div>
                                 <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Purpose</h2>
                                 <p className="text-base md:text-xl text-white/70 font-bold leading-relaxed">
-                                    To solve complex operational challenges by building high-reliability automated tools, bespoke software architecture, and decision-support dashboards backed by verifiable engineering principles.
+                                    To reduce the friction between people, information and processes. That means software which is understandable, maintainable and measured against real operational needs.
                                 </p>
                             </GlassCard>
                         </motion.div>
@@ -92,7 +92,7 @@ export default function AboutPage() {
                                 </div>
                                 <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Approach</h2>
                                 <p className="text-base md:text-xl text-white/70 font-bold leading-relaxed">
-                                    &ldquo;Convergence of academia and industry&rdquo; — maintaining active R&D into machine learning, medical AI, industrial data pipelines, and quantitative modeling while delivering lean, production-grade solutions.
+                                    Our work draws on research and practical engineering experience. We test assumptions early, document important decisions and favour solutions that can be maintained after launch.
                                 </p>
                             </GlassCard>
                         </motion.div>
@@ -104,7 +104,7 @@ export default function AboutPage() {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-20">
                             <h2 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tighter uppercase">Our <span className="text-gradient">Methodology</span></h2>
-                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">The engineering cycle that delivers reliable software solutions.</p>
+                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">A clear way to move from a business problem to working software.</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
                             <ProcessStep number="01" title="Analysis" desc="Deep-dive into operational workflows and architectural requirements." />
@@ -120,19 +120,19 @@ export default function AboutPage() {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-20">
                             <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white tracking-tighter uppercase">Core Values</h2>
-                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">Principles that guide every strategic decision.</p>
+                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">How we approach trade-offs, quality and accountability.</p>
                         </div>
                         <div className="grid md:grid-cols-3 gap-8">
                             <ValueCard
                                 icon={Shield}
                                 title="Integrity First"
-                                desc="We build transparent, secure, and resilient systems you can trust implicitly."
+                                desc="We build with explicit assumptions, considered security controls and clear maintenance responsibilities."
                                 delay={0.1}
                             />
                             <ValueCard
                                 icon={Trophy}
                                 title="Excellence"
-                                desc="We pursue technical perfection and elite performance in everything we create."
+                                desc="We review the details that affect reliability, performance and day-to-day usability."
                                 delay={0.2}
                             />
                             <ValueCard

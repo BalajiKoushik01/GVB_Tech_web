@@ -22,13 +22,13 @@ export default function Home() {
      <div className="gvb-shell gvb-hero-grid">
        <div className="gvb-hero-copy">
          <p className="gvb-eyebrow"><span className="gvb-dot"/>Technology & consulting · India</p>
-         <h1>Better systems.<br/><span>Better decisions.</span><br/>Better business.</h1>
-         <p className="gvb-lede">We design and build thoughtful software, AI-enabled workflows and digital experiences that help ambitious businesses move forward.</p>
+         <h1>Engineering what’s<br/><span>next for business.</span><br/>Built to perform.</h1>
+         <p className="gvb-lede">From intelligent automation to decision-ready platforms, we turn operational complexity into reliable digital products that people genuinely enjoy using.</p>
          <div className="gvb-actions">
            <Link href="/contact" className="gvb-btn gvb-btn-primary">Start a conversation <ArrowUpRight size={18}/></Link>
            <Link href="/brochure" className="gvb-btn gvb-btn-quiet">Explore our profile <ArrowRight size={18}/></Link>
          </div>
-         <div className="gvb-hero-note"><span className="gvb-note-line"/>Convergence of academia and industry.</div>
+         <div className="gvb-hero-note"><span className="gvb-note-line"/>Where research-led thinking meets real-world execution.</div>
        </div>
        <div className="gvb-hero-visual" aria-label="Interactive GVB technology capabilities"><AdaptiveGlobe/><div className="gvb-legacy-visual" aria-hidden="true">
          <div className="gvb-orbit orbit-one"/><div className="gvb-orbit orbit-two"/>
@@ -43,19 +43,19 @@ export default function Home() {
    </section>
    <section className="gvb-section gvb-intro" id="approach">
      <div className="gvb-shell gvb-split">
-       <div><p className="gvb-label">OUR POINT OF VIEW</p><h2>Technology should make the complex <em>feel simple.</em></h2></div>
-       <div className="gvb-intro-right"><p>Good digital products do more than look impressive. They make work easier, information clearer and decisions more confident.</p><p>At GVB Tech Solutions, we combine analytical thinking with careful engineering to create technology that solves the right problem.</p><Link href="/about" className="gvb-text-link">Meet GVB Tech <ArrowUpRight size={17}/></Link></div>
+       <div><p className="gvb-label">OUR POINT OF VIEW</p><h2>The best technology makes <em>progress tangible.</em></h2></div>
+       <div className="gvb-intro-right"><p>A great interface is only the beginning. We focus on the systems underneath: dependable data, connected workflows, thoughtful architecture and experiences that make the next action obvious.</p><p>We bring together engineering, analytical thinking and product strategy to shape solutions around the people and processes that matter.</p><Link href="/about" className="gvb-text-link">Meet GVB Tech <ArrowUpRight size={17}/></Link></div>
      </div>
    </section>
    <section className="gvb-section gvb-capabilities" id="capabilities">
     <div className="gvb-shell">
-      <div className="gvb-section-heading"><div><p className="gvb-label">WHAT WE DO</p><h2>One partner.<br/>Connected capabilities.</h2></div><p>From the first question to a working solution, we bring strategy, design and technology together.</p></div>
+      <div className="gvb-section-heading"><div><p className="gvb-label">WHAT WE DO</p><h2>From ambition<br/>to working systems.</h2></div><p>Explore the capabilities that help organisations replace fragmented processes with connected, scalable technology.</p></div>
       <div className="gvb-service-grid">{capabilities.map(item=><Link href="/services" key={item.number} className="gvb-service-card"><div className="gvb-service-top"><span>{item.number} / 06</span><item.icon size={24} strokeWidth={1.6}/></div><h3>{item.title}</h3><p>{item.description}</p><span className="gvb-service-arrow"><ArrowUpRight size={20}/></span></Link>)}</div>
     </div>
    </section>
    <section className="gvb-section gvb-method">
     <div className="gvb-shell">
-     <div className="gvb-section-heading"><div><p className="gvb-label">HOW WE WORK</p><h2>Thoughtful at every step.</h2></div><p>A straightforward process that keeps the focus on your goals and the people who use the solution.</p></div>
+     <div className="gvb-section-heading"><div><p className="gvb-label">HOW WE WORK</p><h2>Clarity from day one.</h2></div><p>We make decisions visible, build in manageable increments and validate the experience with real users before scaling.</p></div>
      <div className="gvb-steps">{process.map(x=><div key={x.n} className="gvb-step"><span>{x.n}</span><h3>{x.t}</h3><p>{x.d}</p></div>)}</div>
     </div>
    </section>

@@ -12,7 +12,7 @@ const allServices = [
     {
         id: "automated-tools",
         title: "Automated Tools & AI Workflow Systems",
-        description: "Custom background automation, intelligent task processing, neural network integrations, and API workflow pipelines built for precision and reliability.",
+        description: "We map the hand-offs slowing your team down, then connect the systems, APIs and approval steps into workflows with clear error handling and accountability.",
         image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
         features: ["Workflow Automation Engines", "Background Task Orchestration", "Applied AI & ML Models", "Custom API Integrations"],
         color: "from-gvb-deep to-gvb-cyan"
@@ -20,7 +20,7 @@ const allServices = [
     {
         id: "dashboards",
         title: "Dashboards & Data Analytics",
-        description: "Interactive metric dashboards, real-time data visualizers, and customized reporting suites for clear operational oversight.",
+        description: "Bring information from scattered sources into a consistent view. We define the metrics, highlight exceptions and design dashboards around the decisions people make each day.",
         image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
         features: ["Real-Time Telemetry Consoles", "Financial & Operational Dashboards", "Interactive Data Filtering", "Custom Analytics Pipelines"],
         color: "from-gvb-blue to-gvb-cyan"
@@ -28,7 +28,7 @@ const allServices = [
     {
         id: "web-app",
         title: "Web & App Development",
-        description: "End-to-end full-stack development crafting high-performance web applications, responsive client interfaces, and cloud architectures.",
+        description: "From a customer-facing portal to an internal operations tool, we design software around the real tasks your team needs to complete, then build for accessibility and maintainability.",
         image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
         features: ["Full-Stack React & Next.js", "Responsive Mobile & Web UI", "Scalable REST & GraphQL APIs", "Performance & SEO Optimization"],
         color: "from-gvb-cyan to-gvb-blue"
@@ -36,7 +36,7 @@ const allServices = [
     {
         id: "strategy",
         title: "Strategy Consultation",
-        description: "Data-backed technical consulting guiding digital transformation, software architecture choices, and operational efficiency.",
+        description: "Before recommending a platform or starting a build, we examine the workflow, constraints and total cost of ownership. The result is a practical plan with clear priorities.",
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
         features: ["Software Architecture Audits", "Technology Selection & Strategy", "Operational Workflow Optimization", "R&D Feasibility Studies"],
         color: "from-amber-500 to-orange-500"
@@ -69,7 +69,7 @@ export default function ServicesPage() {
                             transition={{ delay: 0.1 }}
                             className="text-lg md:text-xl text-white/60 font-bold tracking-tight leading-relaxed max-w-2xl mx-auto"
                         >
-                            Empowering operational workflows with bespoke automation, clean analytics dashboards, modern web systems, and strategic technology direction.
+                            A useful technology investment solves a specific problem. We help you define it, design the right approach and build systems your team can operate with confidence.
                         </motion.p>
                     </div>
                 </section>
@@ -103,7 +103,7 @@ export default function ServicesPage() {
                                 <div className="flex-1">
                                     <div className="inline-flex items-center space-x-3 px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-gvb-cyan font-black text-[10px] uppercase tracking-[0.25em] mb-10">
                                         <span className="w-1.5 h-1.5 bg-gvb-cyan rounded-full animate-pulse" />
-                                        <span>Operational Protocol 0{idx + 1}</span>
+                                        <span>SERVICE 0{idx + 1}</span>
                                     </div>
                                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 text-white tracking-tighter uppercase leading-none">{service.title}</h2>
                                     <p className="text-xl md:text-2xl text-white/60 mb-10 leading-relaxed font-bold">
@@ -119,7 +119,7 @@ export default function ServicesPage() {
                                     </div>
                                     <Link href="/contact">
                                         <Button size="lg" className="h-16 px-12 rounded-2xl shadow-[0_0_30px_rgba(34,211,238,0.2)]">
-                                            Integrate System
+                                            Discuss this service
                                         </Button>
                                     </Link>
                                 </div>
@@ -138,8 +138,8 @@ export default function ServicesPage() {
                     <div className="max-w-5xl mx-auto text-center liquid-glass p-6 sm:p-12 md:p-24 !bg-white/5 shadow-2xl relative overflow-hidden rounded-3xl sm:rounded-[4rem] border border-white/10">
                         <div className="absolute inset-0 bg-gradient-to-br from-gvb-blue/20 to-transparent opacity-50" />
                         <div className="relative z-10">
-                            <h2 className="text-4xl md:text-7xl font-black mb-8 text-white uppercase tracking-tighter">Custom Infrastructure?</h2>
-                            <p className="text-xl md:text-3xl text-white/60 mb-12 font-bold max-w-3xl mx-auto">Our engineering team is ready to build tailored approaches for your unique operational scale.</p>
+                            <h2 className="text-4xl md:text-7xl font-black mb-8 text-white uppercase tracking-tighter">A process worth improving?</h2>
+                            <p className="text-xl md:text-3xl text-white/60 mb-12 font-bold max-w-3xl mx-auto">Tell us what is slowing your team down. We can review the current process and identify where software, data or automation would make the greatest difference.</p>
                             <Link href="/contact" className="w-full flex justify-center">
                                 <Button size="lg" className="h-20 px-20 text-xl rounded-3xl bg-white text-black border-none shadow-[0_0_60px_rgba(255,255,255,0.3)]">
                                     Schedule Consultation

@@ -1,139 +1,178 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
-import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
-export const CustomCursor = () => {
-    const [cursorState, setCursorState] = useState<"default" | "hover" | "click">("default");
-    const [isVisible, setIsVisible] = useState(false);
+const ZOOM = 1.7;
+const magnifiable = "h1,h2,h3,h4,p,span,strong,small,a,button,img,svg,li,[data-magnify]";
 
-    const cursorX = useMotionValue(-200);
-    const cursorY = useMotionValue(-200);
+export function CustomCursor() {
+  const [visible, setVisible] = useState(false);
+  const [interactive, setInteractive] = useState(false);
+  const [hasSubject, setHasSubject] = useState(false);
+  const [pressing, setPressing] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const lastSubject = useRef<Element | null>(null);
+  const position = useRef({ x: 0, y: 0 });
+  const pointX = useMotionValue(-100);
+  const pointY = useMotionValue(-100);
+  const trailX = useSpring(pointX, { stiffness: 290, damping: 27, mass: 0.35 });
+  const trailY = useSpring(pointY, { stiffness: 290, damping: 27, mass: 0.35 });
 
-    // Two separate springs: dot tracks fast, ring trails slightly
-    const dotConfig = { damping: 40, stiffness: 600, mass: 0.3 };
-    const ringConfig = { damping: 28, stiffness: 180, mass: 0.6 };
+  useEffect(() => {
+    const pointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!pointer.matches || reduced.matches) return;
 
-    const dotX = useSpring(cursorX, dotConfig);
-    const dotY = useSpring(cursorY, dotConfig);
-    const ringX = useSpring(cursorX, ringConfig);
-    const ringY = useSpring(cursorY, ringConfig);
+    document.documentElement.classList.add("gvb-pointer-enabled");
 
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-        cursorX.set(e.clientX);
-        cursorY.set(e.clientY);
-        if (!isVisible) setIsVisible(true);
-    }, [cursorX, cursorY, isVisible]);
+    const lensContent = contentRef.current;
+    let lastInteractive = false;
+    let lastHasSubject = false;
+    let frame = 0;
+    let clone: HTMLElement | null = null;
+    let current: Element | null = null;
+    let magnet: HTMLElement | null = null;
+    const resetMagnet = () => { if (magnet) { magnet.style.removeProperty("--gvb-mx"); magnet.style.removeProperty("--gvb-my"); magnet = null; } };
 
-    const handleMouseOver = useCallback((e: MouseEvent) => {
-        const target = e.target as HTMLElement;
-        // Only detect immediate interactive ancestors — not the whole page
-        const interactive = target.closest('a:not([data-no-cursor]), button:not([data-no-cursor]), [data-cursor="magnetic"]');
+    const update = () => {
+      frame = 0;
+      if (!lensContent || !current) return;
+      const rect = current.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const x = position.current.x;
+      const y = position.current.y;
+      // The lens is centered on the actual pointer. Matching the target
+      // element's rect preserves the magnified position beneath the lens.
+      if (clone) {
+        clone.style.left = `${36 - (x - rect.left) * ZOOM}px`;
+        clone.style.top = `${36 - (y - rect.top) * ZOOM}px`;
+      }
+    };
 
-        if (interactive) {
-            setCursorState("hover");
-        } else {
-            setCursorState("default");
+    const renderSubject = (subject: Element | null) => {
+      if (!lensContent) return;
+      lensContent.replaceChildren();
+      clone = null;
+      current = subject;
+      lastSubject.current = subject;
+      if (!subject) return;
+
+      const rect = subject.getBoundingClientRect();
+      if (!rect.width || !rect.height || rect.width > 1300) return;
+      const source = subject instanceof HTMLImageElement ? subject : subject;
+      const copy = source.cloneNode(true);
+      if (!(copy instanceof HTMLElement || copy instanceof SVGElement)) return;
+      // A visual clone is inert, excluded from accessibility, and never inserted
+      // into the interactive document flow.
+      const wrapper = document.createElement("div");
+      wrapper.setAttribute("aria-hidden", "true");
+      wrapper.className = "gvb-lens-duplicate";
+      wrapper.style.width = `${rect.width}px`;
+      wrapper.style.height = `${rect.height}px`;
+      const computed = getComputedStyle(subject);
+      wrapper.style.color = computed.color;
+      wrapper.style.font = computed.font;
+      wrapper.style.lineHeight = computed.lineHeight;
+      wrapper.style.letterSpacing = computed.letterSpacing;
+      wrapper.style.textAlign = computed.textAlign;
+      wrapper.style.whiteSpace = computed.whiteSpace;
+      wrapper.style.backgroundColor = computed.backgroundColor;
+      wrapper.style.borderRadius = computed.borderRadius;
+      wrapper.style.padding = computed.padding;
+      wrapper.style.boxSizing = "border-box";
+      wrapper.style.transform = `scale(${ZOOM})`;
+      wrapper.style.transformOrigin = "top left";
+      if (copy instanceof HTMLElement) {
+        copy.removeAttribute("id");
+        copy.style.pointerEvents = "none";
+        copy.style.margin = "0";
+        copy.style.width = "100%";
+        copy.style.height = "100%";
+        if (copy instanceof HTMLImageElement) {
+          copy.style.objectFit = computed.objectFit;
         }
-    }, []);
+      } else {
+        copy.removeAttribute("id");
+        copy.style.pointerEvents = "none";
+        copy.style.width = "100%";
+        copy.style.height = "100%";
+      }
+      wrapper.appendChild(copy);
+      lensContent.appendChild(wrapper);
+      clone = wrapper;
+    };
 
-    const handleMouseDown = useCallback(() => setCursorState("click"), []);
-    const handleMouseUp = useCallback((e: MouseEvent) => {
-        // Re-check what's under cursor on release
-        const target = e.target as HTMLElement;
-        const interactive = target.closest('a, button, [data-cursor="magnetic"]');
-        setCursorState(interactive ? "hover" : "default");
-    }, []);
+    const onMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+      pointX.set(event.clientX);
+      pointY.set(event.clientY);
+      position.current = { x: event.clientX, y: event.clientY };
+      setVisible(true);
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const nextMagnet = target.closest<HTMLElement>("a,button,[role=button],.gvb-service-card,.gvb-article-card");
+      if (nextMagnet !== magnet) resetMagnet();
+      if (nextMagnet && !nextMagnet.hasAttribute("data-no-magnetic")) {
+        magnet = nextMagnet;
+        const rect = magnet.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0 && rect.width < 450 && rect.height < 220) {
+          const px = (event.clientX - (rect.left + rect.width / 2)) / rect.width;
+          const py = (event.clientY - (rect.top + rect.height / 2)) / rect.height;
+          magnet.style.setProperty("--gvb-mx", `${Math.max(-1,Math.min(1,px))*8}px`);
+          magnet.style.setProperty("--gvb-my", `${Math.max(-1,Math.min(1,py))*6}px`);
+        }
+      }
+      const clickable = Boolean(target.closest("a,button,[role='button'],input,select,textarea,summary,[data-cursor]"));
+      if (clickable !== lastInteractive) {
+        lastInteractive = clickable;
+        setInteractive(clickable);
+      }
+      // Avoid cloning controls, giant containers, or embedded documents.
+      const excluded = target.closest("input,textarea,select,iframe,[contenteditable='true'],[data-no-magnify]");
+      const subject = excluded ? null : target.closest(magnifiable);
+      const valid = Boolean(subject && subject.getBoundingClientRect().width < 750);
+      const next = valid ? subject : null;
+      if (next !== lastSubject.current) renderSubject(next);
+      if (valid !== lastHasSubject) {
+        lastHasSubject = valid;
+        setHasSubject(valid);
+      }
+      if (!frame) frame = requestAnimationFrame(update);
+    };
 
-    const handleMouseLeave = useCallback(() => setIsVisible(false), []);
-    const handleMouseEnter = useCallback(() => setIsVisible(true), []);
+    const down = () => setPressing(true);
+    const up = () => setPressing(false);
+    const hide = () => { setVisible(false); resetMagnet(); };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerdown", down);
+    window.addEventListener("pointerup", up);
+    window.addEventListener("blur", hide);
+    document.addEventListener("mouseleave", hide);
 
-    useEffect(() => {
-        document.documentElement.classList.add("hide-native-cursor");
+    return () => {
+      document.documentElement.classList.remove("gvb-pointer-enabled");
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerdown", down);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("blur", hide);
+      document.removeEventListener("mouseleave", hide);
+      resetMagnet();
+      if (frame) cancelAnimationFrame(frame);
+      if (lensContent) lensContent.replaceChildren();
+    };
+  }, [pointX, pointY]);
 
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseover", handleMouseOver);
-        window.addEventListener("mousedown", handleMouseDown);
-        window.addEventListener("mouseup", handleMouseUp);
-        document.documentElement.addEventListener("mouseleave", handleMouseLeave);
-        document.documentElement.addEventListener("mouseenter", handleMouseEnter);
-
-        return () => {
-            document.documentElement.classList.remove("hide-native-cursor");
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseover", handleMouseOver);
-            window.removeEventListener("mousedown", handleMouseDown);
-            window.removeEventListener("mouseup", handleMouseUp);
-            document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
-            document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
-        };
-    }, [handleMouseMove, handleMouseOver, handleMouseDown, handleMouseUp, handleMouseLeave, handleMouseEnter]);
-
-    const isHover = cursorState === "hover";
-    const isClick = cursorState === "click";
-
-    return (
-        <AnimatePresence>
-            {isVisible && (
-                <div className="fixed inset-0 pointer-events-none z-[9999] hidden md:block" aria-hidden>
-                    {/* ── Precise DOT: tracks cursor exactly, no lag ── */}
-                    <motion.div
-                        style={{
-                            x: dotX,
-                            y: dotY,
-                            translateX: "-50%",
-                            translateY: "-50%",
-                        }}
-                        animate={{
-                            width: isClick ? 6 : 8,
-                            height: isClick ? 6 : 8,
-                            backgroundColor: isHover ? "#00d1ff" : "#ffffff",
-                            opacity: isHover ? 0 : 1,  // hide dot when ring expands so it doesn't show through
-                        }}
-                        transition={{ duration: 0.15 }}
-                        className="absolute rounded-full"
-                    />
-
-                    {/* ── RING: trails behind with spring lag, subtle hover expand ── */}
-                    <motion.div
-                        style={{
-                            x: ringX,
-                            y: ringY,
-                            translateX: "-50%",
-                            translateY: "-50%",
-                        }}
-                        animate={{
-                            width: isClick ? 28 : isHover ? 44 : 32,
-                            height: isClick ? 28 : isHover ? 44 : 32,
-                            borderColor: isHover ? "rgba(0,209,255,0.9)" : "rgba(255,255,255,0.5)",
-                            borderWidth: isHover ? "1.5px" : "1.5px",
-                            backgroundColor: isHover ? "rgba(0,209,255,0.06)" : "transparent",
-                            scale: isClick ? 0.85 : 1,
-                        }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute rounded-full border"
-                    />
-
-                    {/* ── GLOW: large soft ambient blob, only on hover ── */}
-                    <AnimatePresence>
-                        {isHover && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.5 }}
-                                animate={{ opacity: 0.2, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.5 }}
-                                style={{
-                                    x: ringX,
-                                    y: ringY,
-                                    translateX: "-50%",
-                                    translateY: "-50%",
-                                }}
-                                transition={{ duration: 0.3 }}
-                                className="absolute w-20 h-20 rounded-full bg-gvb-cyan blur-xl pointer-events-none"
-                            />
-                        )}
-                    </AnimatePresence>
-                </div>
-            )}
-        </AnimatePresence>
-    );
-};
+  return <div className={`gvb-cursor-layer ${visible ? "is-visible" : ""}`} aria-hidden="true">
+    <motion.div className="gvb-cursor-aura" style={{ x: trailX, y: trailY }}
+      animate={{ scale: pressing ? .7 : interactive ? 1.15 : 1, opacity: visible ? .65 : 0 }} />
+    <motion.div className={`gvb-cursor-glass ${hasSubject ? "has-subject" : ""}`}
+      style={{ x: pointX, y: pointY }}
+      animate={{ scale: pressing ? .86 : interactive ? 1.06 : 1 }}
+      transition={{ type: "spring", stiffness: 430, damping: 24 }}>
+      <div className="gvb-cursor-magnified" ref={contentRef} />
+      <span className="gvb-cursor-reflection" />
+    </motion.div>
+    <motion.span className="gvb-cursor-pin" style={{ x: pointX, y: pointY }} />
+  </div>;
+}
