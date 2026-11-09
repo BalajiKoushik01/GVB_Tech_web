@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Download, FileText, ShieldCheck } from "lucide-react";
-export const metadata: Metadata={title:"Company Brochure | GVB Tech Solutions",description:"View or download GVB Tech Solutions' eight-page corporate profile, with services, company overview and delivery methodology."};
+export const metadata: Metadata={title:"Company Brochure | GVB Tech Solutions",description:"View or download GVB Tech Solutions eight-page corporate profile, with services, company overview and delivery methodology."};
 const viewUrl="https://drive.google.com/file/d/139HAqHJck3BBY9ShZZQOoPLYjjSOi8LH/view";
 const downloadUrl="https://drive.google.com/uc?export=download&id=139HAqHJck3BBY9ShZZQOoPLYjjSOi8LH";
 export default function BrochurePage(){return <div className="gvb-premium gvb-brochure-page">
