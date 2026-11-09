@@ -35,13 +35,13 @@ function Orb({selected}:{selected:number}) {
   </group>;
 }
 
-export default function ServiceGlobe(){
+export default function ServiceGlobe({staticOnly=false}:{staticOnly?:boolean}){
   const [selected,setSelected]=useState(0);
   const [failed,setFailed]=useState(false);
   const current=capabilities[selected];
   return <div className="gvb-experience" aria-label="Explore GVB Tech's services">
     <div className="gvb-experience-visual" aria-hidden="true">
-      {!failed && <Canvas camera={{position:[0,0,6.2],fov:41}} dpr={[1,1.5]} gl={{antialias:true,powerPreference:"default"}} onCreated={({gl})=>gl.domElement.addEventListener("webglcontextlost",()=>setFailed(true),{once:true})}>
+      {!failed && !staticOnly && <Canvas camera={{position:[0,0,6.2],fov:41}} dpr={[1,1.5]} gl={{antialias:true,powerPreference:"default"}} onCreated={({gl})=>gl.domElement.addEventListener("webglcontextlost",()=>setFailed(true),{once:true})}>
         <ambientLight intensity={1.05}/>
         <pointLight position={[3,4,5]} intensity={40} color="#65cfff"/>
         <directionalLight position={[-4,-2,3]} intensity={2.1} color="#b7bcff"/>
@@ -49,7 +49,7 @@ export default function ServiceGlobe(){
         <Suspense fallback={null}><Orb selected={selected}/></Suspense>
         <OrbitControls enablePan={false} enableZoom={false} rotateSpeed={.45} enableDamping dampingFactor={.08}/>
       </Canvas>}
-      {failed && <div className="gvb-experience-orb-fallback" />}
+      {(failed || staticOnly) && <div className="gvb-experience-orb-fallback" />}
     </div>
     <div className="gvb-experience-copy" aria-live="polite">
       <div className="gvb-experience-overline"><span className="gvb-live-dot"/>EXPLORE OUR CAPABILITIES</div>
