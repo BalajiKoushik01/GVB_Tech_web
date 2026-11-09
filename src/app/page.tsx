@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AdaptiveGlobe } from "@/components/experience/AdaptiveGlobe";
 import Image from "next/image";
 import { ArrowUpRight, ArrowRight, Download, Layers3, Workflow, BrainCircuit, ChartNoAxesCombined, MonitorSmartphone, Compass, Check, FileText } from "lucide-react";
 const capabilities = [
@@ -29,13 +30,13 @@ export default function Home() {
          </div>
          <div className="gvb-hero-note"><span className="gvb-note-line"/>Convergence of academia and industry.</div>
        </div>
-       <div className="gvb-hero-visual" role="img" aria-label="Abstract visualization of connected business systems and insights">
+       <div className="gvb-hero-visual" aria-label="Interactive GVB technology capabilities"><AdaptiveGlobe/><div className="gvb-legacy-visual" aria-hidden="true">
          <div className="gvb-orbit orbit-one"/><div className="gvb-orbit orbit-two"/>
          <div className="gvb-visual-glow"/>
          <div className="gvb-data-panel gvb-data-panel-top"><span>INTELLIGENCE LAYER</span><strong>Signals to insight</strong><div className="gvb-panel-bars"><i/><i/><i/><i/><i/><i/><i/></div></div>
          <div className="gvb-system-core"><Image src="/logo_icon.png" alt="" width={104} height={104} priority/><span>GVB / SYSTEMS</span></div>
          <div className="gvb-data-panel gvb-data-panel-bottom"><span>CONNECTED OPERATIONS</span><strong>Designed for clarity</strong><div className="gvb-flow-mini"><b/> <em/> <b/> <em/> <b/></div></div>
-         <span className="gvb-coordinate coordinate-a">01 / DISCOVER</span><span className="gvb-coordinate coordinate-b">02 / BUILD</span>
+         <span className="gvb-coordinate coordinate-a">01 / DISCOVER</span><span className="gvb-coordinate coordinate-b">02 / BUILD</span></div>
        </div>
      </div>
      <div className="gvb-shell gvb-hero-bottom"><span>Software engineering</span><span>Applied AI</span><span>Business automation</span><span>Decision intelligence</span></div>
