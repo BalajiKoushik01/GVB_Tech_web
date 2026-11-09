@@ -38,7 +38,7 @@ export default function ContactPage() {
             });
 
             if (response.ok) {
-                setSuccessMessage("Thank you! Your application has been received and saved.");
+                setSuccessMessage("Thank you! Your message has been received.");
                 reset();
             } else {
                 throw new Error("Failed to submit");
@@ -50,7 +50,7 @@ export default function ContactPage() {
             const encodedText = encodeURIComponent(text);
             const whatsappUrl = `https://wa.me/919381958045?text=${encodedText}`;
             window.open(whatsappUrl, "_blank");
-            setSuccessMessage("Successfully redirected to WhatsApp!");
+            setSuccessMessage("WhatsApp opened. Please send the prepared message to contact us.");
             reset();
         } finally {
             setIsSubmitting(false);
@@ -91,7 +91,7 @@ export default function ContactPage() {
                             <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8">Contact Information</h3>
 
                             <div className="space-y-6">
-                                <InfoRow icon={MapPin} title="Headquarters" detail="Sullurpeta, Andhra Pradesh 524121, IN" />
+                                <InfoRow icon={MapPin} title="Headquarters" detail="Madanapalle, Andhra Pradesh" />
                                 <InfoRow icon={Mail} title="Email Address" detail="info@gvbtech.in" />
                                 <InfoRow icon={Phone} title="Phone" detail="+91 9381958045" />
                                 <InfoRow icon={Clock} title="Business Hours" detail="Mon-Fri: 9:00 AM - 6:00 PM (IST)" />
