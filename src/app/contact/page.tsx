@@ -60,7 +60,7 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="pt-20 md:pt-24 pb-16 min-h-screen bg-transparent relative overflow-hidden">
+        <div className="gvb-contact-editorial pt-20 md:pt-24 pb-16 min-h-screen relative overflow-hidden">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gvb-blue/5 rounded-full blur-[150px] pointer-events-none" />
 
             <section className="px-6 py-12 md:py-16 text-center">
@@ -94,8 +94,8 @@ export default function ContactPage() {
 
                             <div className="space-y-6">
                                 <InfoRow icon={MapPin} title="Headquarters" detail="Madanapalle, Andhra Pradesh" />
-                                <InfoRow icon={Mail} title="Email Address" detail="info@gvbtech.in" />
-                                <InfoRow icon={Phone} title="Phone" detail="+91 9381958045" />
+                                <InfoRow icon={Mail} title="Email Address" detail="info@gvbtech.in" href="mailto:info@gvbtech.in" />
+                                <InfoRow icon={Phone} title="Phone" detail="+91 9381958045" href="tel:+919381958045" />
                                 <div className="gvb-contact-context"><Clock size={18}/><p>Email is the best way to share project context. Include what is happening today and what needs to change.</p></div>
                             </div>
                         </GlassCard>
@@ -196,7 +196,7 @@ export default function ContactPage() {
     );
 }
 
-function InfoRow({ icon: Icon, title, detail }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>, title: string, detail: string }) {
+function InfoRow({ icon: Icon, title, detail, href }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>, title: string, detail: string, href?: string }) {
     return (
         <div className="flex items-start space-x-4">
             <div className="w-10 h-10 rounded-full bg-gvb-cyan/10 text-gvb-cyan flex items-center justify-center flex-shrink-0 border border-gvb-cyan/20">
@@ -204,7 +204,7 @@ function InfoRow({ icon: Icon, title, detail }: { icon: React.ComponentType<Reac
             </div>
             <div>
                 <h4 className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-1">{title}</h4>
-                <p className="text-white font-bold text-base md:text-lg break-words">{detail}</p>
+                {href ? <a href={href} className="text-white font-semibold text-base md:text-lg break-words underline underline-offset-4 hover:text-sky-200">{detail}</a> : <p className="text-white font-semibold text-base md:text-lg break-words">{detail}</p>}
             </div>
         </div>
     );
