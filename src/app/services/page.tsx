@@ -84,6 +84,7 @@ export default function ServicesPage() {
       </div>
     </section>)}
    </div>
+   <section className="gvb-practice-tool"><div><p className="gvb-label">MAKE THE ASSUMPTIONS VISIBLE</p><h2>Before you invest in automation, test the numbers.</h2><p>Our planning calculator lets you set the time, likely reduction and costs yourself. It deliberately avoids promising a fixed return.</p></div><Link href="/tools/workflow-estimator" className="gvb-btn gvb-btn-primary">Explore the workflow calculator <ArrowUpRight size={17}/></Link></section>
    <section className="gvb-practice-questions" aria-labelledby="practice-questions"><div><p className="gvb-label">BEFORE YOU BEGIN</p><h2 id="practice-questions">Questions worth asking early.</h2><p>Clear expectations are part of good engineering. These are the questions we would want answered before anyone commits to a build.</p></div>
     <div className="gvb-practice-faq">{questions.map((item,i)=><details key={item.q}><summary><span>{String(i+1).padStart(2,"0")}</span>{item.q}<span className="gvb-faq-mark" aria-hidden="true">+</span></summary><p>{item.a}</p></details>)}</div>
    </section>

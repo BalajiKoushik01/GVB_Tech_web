@@ -13,7 +13,7 @@ export function MagneticInteractions() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (!fine.matches || reduced.matches) return;
 
-    const selector = "a, button, [role='button'], [data-magnetic]";
+    const selector = "a.gvb-btn, a.gvb-header-cta, button[data-magnetic], [data-magnetic]";
     let active: HTMLElement | null = null;
     const reset = () => {
       if (active) {
