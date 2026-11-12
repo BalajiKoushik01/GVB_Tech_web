@@ -1,11 +1,23 @@
-import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowUpRight, BookOpen, Clock3 } from "lucide-react";
-export const metadata:Metadata={title:"Insights | GVB Tech Solutions",description:"Practical insights on software engineering, applied AI, automation, analytics and digital transformation."};
-const articles=[
-{slug:"automation-that-actually-saves-time",category:"AUTOMATION",title:"Automation that actually saves time: start with the workflow, not the tool",minutes:6,summary:"How to find high-value processes, avoid brittle scripts and measure results.",sections:[["Map the work before automating","Start with a process map: trigger, owner, inputs, decisions, exceptions and output. Record how often the process runs and where people re-enter information."],["Prioritise predictable tasks","A useful first automation has clear rules, stable data and a measurable result. Repetitive reconciliation, notifications and report preparation often qualify."],["Design for exceptions","Include retries, audit logs, human approval where needed and an easy way to recover from failed runs. Reliability matters more than a flashy demonstration."],["Measure the improvement","Compare time saved, error rates and turnaround time against a baseline. Revisit the workflow after launch."]]},
-{slug:"practical-ai-for-business",category:"APPLIED AI",title:"Where applied AI creates business value — and where it doesn't",minutes:7,summary:"A practical framework for evaluating AI use cases before investing in models.",sections:[["Define a decision","Start with the decision a person or system needs to make. Predicting a score is useful only if it changes an action."],["Audit data readiness","Check coverage, missing values, permissions and whether historical labels represent the outcomes you want."],["Choose the simplest viable approach","A rules engine or searchable knowledge base may solve the problem better than a complex model. Compare alternatives on cost, quality and maintenance."],["Keep people accountable","Test on representative cases, monitor drift and provide a clear route for human review of consequential outputs."]]},
-{slug:"dashboards-that-drive-decisions",category:"DATA & ANALYTICS",title:"Dashboards that drive decisions, not just display numbers",minutes:5,summary:"Designing decision-ready metrics, alerts and operational views.",sections:[["Start with the audience","An executive needs trends and trade-offs; an operator needs timely exceptions and next actions. Avoid one dashboard for every role."],["Define each metric","Document the source, calculation, refresh interval and owner. A shared definition prevents teams from debating numbers instead of acting."],["Make exceptions visible","Highlight deviations from a meaningful baseline and explain what changed. Include drill-down paths for investigation."],["Test decisions, not aesthetics alone","Ask users to complete realistic tasks and measure how quickly they identify a problem and choose a response."]]},
-{slug:"building-reliable-digital-products",category:"ENGINEERING",title:"Building reliable digital products: five choices that matter early",minutes:6,summary:"Architecture, accessibility, observability and security fundamentals for growing teams.",sections:[["Keep the architecture understandable","Choose clear boundaries and avoid adding services before there is a real scaling or ownership need."],["Design for real users","Make key actions keyboard-accessible, readable on mobile and usable on slower devices."],["Treat failures as normal","Add structured logs, meaningful error messages and health checks. Test how the system behaves when dependencies are unavailable."],["Secure the basics","Validate inputs, protect secrets, minimise permissions and patch dependencies."],["Ship in measurable increments","Small releases and feedback loops reveal product risks before they become expensive."]]}
-];
-export default function BlogPage(){return <div className="gvb-premium gvb-editorial"><div className="gvb-shell"><div className="gvb-editorial-head"><p className="gvb-label">THE GVB JOURNAL / IDEAS INTO PRACTICE</p><h1>Ideas worth<br/><span>building on.</span></h1><p>Useful, actionable perspectives on engineering, AI and smarter business operations.</p></div><div className="gvb-editorial-grid">{articles.map((a,i)=><Link key={a.slug} href={`/blog/${a.slug}`} className="gvb-article-card"><div className="gvb-article-art"><span>GVB / INSIGHTS</span><strong>0{i+1}</strong><div className="gvb-article-orbit"/></div><div className="gvb-article-content"><span className="gvb-article-meta">{a.category} · <Clock3 size={13}/> {a.minutes} MIN READ</span><h2>{a.title}</h2><p>{a.summary}</p><span className="gvb-article-read">Read article <ArrowUpRight size={17}/></span></div></Link>)}</div><div className="gvb-editorial-end"><BookOpen size={24}/><p>Written to help teams make clearer technology decisions.</p><Link href="/contact">Discuss a challenge <ArrowUpRight size={17}/></Link></div></div></div>}
+import Link from "next/link";
+import { ArrowUpRight, BookOpen } from "lucide-react";
+import { InsightsExplorer } from "@/components/content/InsightsExplorer";
+
+export const metadata:Metadata={
+  title:"Insights | GVB Tech Solutions",
+  description:"Practical explanations of automation, AI evaluation, operational dashboards and reliable software, with decisions and limitations made clear."
+};
+
+export default function BlogPage() {
+  return <main className="gvb-journal">
+    <div className="gvb-shell">
+      <header className="gvb-journal-intro">
+        <p className="gvb-label">THE JOURNAL / FIELD NOTES</p>
+        <h1>Useful thinking.<br/><span>Without the jargon.</span></h1>
+        <p>Working notes on software, automation and analytics: what to ask before investing, where projects go wrong and how to judge whether an approach is worth pursuing.</p>
+      </header>
+      <InsightsExplorer />
+      <footer className="gvb-journal-footer"><BookOpen size={23}/><p>Questions about a workflow or a technical decision? We welcome conversations grounded in a real problem.</p><Link href="/contact">Discuss a problem <ArrowUpRight size={17}/></Link></footer>
+    </div>
+  </main>;
+}

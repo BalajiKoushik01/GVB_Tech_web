@@ -1,154 +1,93 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Button } from "@/components/ui/Button";
-import { CheckCircle2 } from "lucide-react";
-import { ROICalculator } from "@/components/ui/ROICalculator";
+import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import { ArrowUpRight, Check, ArrowRight, Mail } from "lucide-react";
 
-const allServices = [
-    {
-        id: "automated-tools",
-        title: "Automated Tools & AI Workflow Systems",
-        description: "We map the hand-offs slowing your team down, then connect the systems, APIs and approval steps into workflows with clear error handling and accountability.",
-        image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
-        features: ["Workflow Automation Engines", "Background Task Orchestration", "Applied AI & ML Models", "Custom API Integrations"],
-        color: "from-gvb-deep to-gvb-cyan"
-    },
-    {
-        id: "dashboards",
-        title: "Dashboards & Data Analytics",
-        description: "Bring information from scattered sources into a consistent view. We define the metrics, highlight exceptions and design dashboards around the decisions people make each day.",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-        features: ["Real-Time Telemetry Consoles", "Financial & Operational Dashboards", "Interactive Data Filtering", "Custom Analytics Pipelines"],
-        color: "from-gvb-blue to-gvb-cyan"
-    },
-    {
-        id: "web-app",
-        title: "Web & App Development",
-        description: "From a customer-facing portal to an internal operations tool, we design software around the real tasks your team needs to complete, then build for accessibility and maintainability.",
-        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
-        features: ["Full-Stack React & Next.js", "Responsive Mobile & Web UI", "Scalable REST & GraphQL APIs", "Performance & SEO Optimization"],
-        color: "from-gvb-cyan to-gvb-blue"
-    },
-    {
-        id: "strategy",
-        title: "Strategy Consultation",
-        description: "Before recommending a platform or starting a build, we examine the workflow, constraints and total cost of ownership. The result is a practical plan with clear priorities.",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-        features: ["Software Architecture Audits", "Technology Selection & Strategy", "Operational Workflow Optimization", "R&D Feasibility Studies"],
-        color: "from-amber-500 to-orange-500"
-    }
+export const metadata: Metadata = {
+  title: "Services | Software, Automation and Analytics",
+  description: "Understand what GVB Tech Solutions builds, how an engagement starts and the decisions we resolve before development."
+};
+
+const services = [
+  {
+    id: "software", name: "Custom software", index: "01",
+    lead: "Your process is distinctive. The software should accommodate it without becoming difficult to maintain.",
+    fit: "Internal applications, customer or partner portals, workflow management and tools that replace fragile spreadsheets.",
+    work: "We map the tasks, permissions, exceptions and hand-offs before choosing the interface and architecture.",
+    outputs: ["Requirements and priority map", "Prototype of key user journeys", "Build plan with acceptance criteria"]
+  },
+  {
+    id: "automation", name: "Workflow automation", index: "02",
+    lead: "Reduce repeat entry and follow-up work without losing control of the exceptions.",
+    fit: "Reconciliations, notifications, approvals, data transfers and repetitive processes across existing tools.",
+    work: "We identify reliable triggers, document failure paths and decide where a person should remain in the loop.",
+    outputs: ["Current-process and exception map", "Integration and ownership plan", "Small, measurable pilot"]
+  },
+  {
+    id: "analytics", name: "Data and dashboards", index: "03",
+    lead: "Put consistent numbers in front of the people who can act on them.",
+    fit: "Operational reporting, KPI definitions, monitoring views, data consolidation and exception alerts.",
+    work: "We start with decisions and data definitions, not chart types. Source quality and refresh needs shape the design.",
+    outputs: ["Metric dictionary and source review", "Decision-focused dashboard prototype", "Data quality and refresh plan"]
+  },
+  {
+    id: "applied-ai", name: "Applied AI", index: "04",
+    lead: "Use AI where it demonstrably helps; keep the decision and its risks understandable.",
+    fit: "Document extraction, structured assistance, classification, computer vision and bounded decision-support tasks.",
+    work: "We check whether a simpler rule or search system would be enough, then evaluate model quality and oversight needs.",
+    outputs: ["Feasibility and risk review", "Baseline and evaluation criteria", "Human-reviewed proof of concept"]
+  },
+  {
+    id: "web-products", name: "Web and digital products", index: "05",
+    lead: "Give customers and teams a fast, accessible interface that makes the next action obvious.",
+    fit: "Business websites, product interfaces, interactive tools and connected web applications.",
+    work: "We work through content structure, tasks, responsiveness, performance, security and maintainability together.",
+    outputs: ["Information architecture and content plan", "Responsive interaction prototype", "Delivery and maintenance checklist"]
+  },
+  {
+    id: "advisory", name: "Technology advisory", index: "06",
+    lead: "Find out what is worth building before making a large commitment.",
+    fit: "Technical discovery, product feasibility, architecture review and decisions between platforms or vendors.",
+    work: "We weigh constraints, operating cost, expected benefits and delivery risks. The recommendation may be to simplify.",
+    outputs: ["Problem and constraints brief", "Options and trade-offs", "Prioritised next-step roadmap"]
+  }
+] as const;
+
+const questions = [
+  { q: "Do we need a complete specification before contacting you?", a: "No. A description of the current process, what is going wrong and who is affected is enough to begin a useful conversation. Discovery is where we work out the missing detail." },
+  { q: "Can you work with systems we already use?", a: "Often, yes. The first step is to review the existing software, available integrations and permission constraints. We will identify where a connection is practical and where it creates unnecessary risk." },
+  { q: "Does every project need AI?", a: "No. A clear workflow, a database query or a well-designed dashboard may be a better answer. We compare the simplest workable options before recommending a model." },
+  { q: "How are scope, cost and delivery dates decided?", a: "They depend on the requirements, integrations, constraints and level of support involved. We discuss those factors before offering a project-specific estimate; there is no honest universal price or timeline." },
+  { q: "What happens after the first conversation?", a: "We clarify the problem and decide whether there is a sensible next step, such as a short discovery exercise, a prototype or a technical review. Any proposed scope and deliverables should be agreed before work starts." }
 ];
 
 export default function ServicesPage() {
-    return (
-        <div className="relative min-h-screen pb-20">
-            {/* Background Effects */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-1/4 left-0 w-[800px] h-[800px] bg-gvb-blue/5 rounded-full blur-[150px] mix-blend-screen opacity-30" />
-            </div>
-
-            <div className="pt-20 md:pt-32 relative z-10">
-                {/* Page Hero */}
-                <section className="px-6 py-12 md:py-20 text-center relative overflow-hidden">
-                    <div className="max-w-4xl mx-auto relative z-10">
-                        <motion.h1
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 text-white tracking-tighter uppercase leading-[0.95]"
-                        >
-                            Tailored Software & <br />
-                            <span className="text-gradient">Automated Solutions</span>
-                        </motion.h1>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            className="text-lg md:text-xl text-white/60 font-bold tracking-tight leading-relaxed max-w-2xl mx-auto"
-                        >
-                            A useful technology investment solves a specific problem. We help you define it, design the right approach and build systems your team can operate with confidence.
-                        </motion.p>
-                    </div>
-                </section>
-
-                {/* Services List */}
-                <section className="px-4 py-8 md:py-16">
-                    <div className="max-w-7xl mx-auto space-y-24 md:space-y-48">
-                        {allServices.map((service, idx) => (
-                            <motion.div
-                                key={service.id}
-                                initial={{ opacity: 0, y: 40 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.8 }}
-                                 className={`flex flex-col ${idx % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-12 md:gap-24`}
-                            >
-                                {/* Visual Side */}
-                                <div className="flex-1 w-full relative group">
-                                    <GlassCard hoverEffect={true} className="aspect-square lg:aspect-[4/3] overflow-hidden relative !p-0 border-white/10 shadow-2xl rounded-2xl sm:rounded-[3rem]">
-                                        <Image 
-                                            src={service.image} 
-                                            alt={service.title}
-                                            fill
-                                            className="object-cover md:grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                                        />
-                                        <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-20 group-hover:opacity-10 transition-opacity`} />
-                                    </GlassCard>
-                                </div>
-
-                                {/* Text Side */}
-                                <div className="flex-1">
-                                    <div className="inline-flex items-center space-x-3 px-6 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 text-gvb-cyan font-black text-[10px] uppercase tracking-[0.25em] mb-10">
-                                        <span className="w-1.5 h-1.5 bg-gvb-cyan rounded-full animate-pulse" />
-                                        <span>SERVICE 0{idx + 1}</span>
-                                    </div>
-                                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 text-white tracking-tighter uppercase leading-none">{service.title}</h2>
-                                    <p className="text-xl md:text-2xl text-white/60 mb-10 leading-relaxed font-bold">
-                                        {service.description}
-                                    </p>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
-                                        {service.features.map((feat, i) => (
-                                            <div key={i} className="flex items-center text-white">
-                                                <CheckCircle2 className={`w-6 h-6 mr-4 flex-shrink-0 text-gvb-cyan`} />
-                                                <span className="font-black text-xs uppercase tracking-widest">{feat}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <Link href="/contact">
-                                        <Button size="lg" className="h-16 px-12 rounded-2xl shadow-[0_0_30px_rgba(34,211,238,0.2)]">
-                                            Discuss this service
-                                        </Button>
-                                    </Link>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* ROI Calculator */}
-                <div className="border-t border-white/5 mx-4 sm:mx-8">
-                    <ROICalculator />
-                </div>
-
-                {/* CTA */}
-                <section className="py-32 px-4">
-                    <div className="max-w-5xl mx-auto text-center liquid-glass p-6 sm:p-12 md:p-24 !bg-white/5 shadow-2xl relative overflow-hidden rounded-3xl sm:rounded-[4rem] border border-white/10">
-                        <div className="absolute inset-0 bg-gradient-to-br from-gvb-blue/20 to-transparent opacity-50" />
-                        <div className="relative z-10">
-                            <h2 className="text-4xl md:text-7xl font-black mb-8 text-white uppercase tracking-tighter">A process worth improving?</h2>
-                            <p className="text-xl md:text-3xl text-white/60 mb-12 font-bold max-w-3xl mx-auto">Tell us what is slowing your team down. We can review the current process and identify where software, data or automation would make the greatest difference.</p>
-                            <Link href="/contact" className="w-full flex justify-center">
-                                <Button size="lg" className="h-20 px-20 text-xl rounded-3xl bg-white text-black border-none shadow-[0_0_60px_rgba(255,255,255,0.3)]">
-                                    Schedule Consultation
-                                </Button>
-                            </Link>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-    );
+ return <main className="gvb-practice">
+  <div className="gvb-shell">
+   <header className="gvb-practice-hero">
+    <p className="gvb-label">SERVICES / WHAT WE CAN HELP WITH</p>
+    <h1>Start with the work.<br/><span>Choose the right technology.</span></h1>
+    <p>Software is useful when it improves a real task. Here are the areas we work in, when they make sense, and the first things worth getting clear before development.</p>
+    <div className="gvb-practice-actions"><Link href="/#project-guide" className="gvb-btn gvb-btn-primary">Find your starting point <ArrowUpRight size={17}/></Link><Link href="/contact" className="gvb-btn gvb-btn-quiet">Discuss a project <ArrowRight size={17}/></Link></div>
+   </header>
+   <nav className="gvb-practice-nav" aria-label="Jump to a service">
+    {services.map(s=><a key={s.id} href={"#"+s.id}><span>{s.index}</span>{s.name}</a>)}
+   </nav>
+   <div className="gvb-practice-list">
+    {services.map(s=><section className="gvb-practice-entry" id={s.id} key={s.id} aria-labelledby={"title-"+s.id}>
+      <div className="gvb-practice-side"><span>{s.index} / 06</span><p>{s.name}</p></div>
+      <div className="gvb-practice-body">
+       <h2 id={"title-"+s.id}>{s.lead}</h2>
+       <div className="gvb-practice-cols"><div><h3>Where it fits</h3><p>{s.fit}</p><h3>How we approach it</h3><p>{s.work}</p></div>
+        <div className="gvb-practice-outputs"><h3>Useful early outputs</h3><ul>{s.outputs.map(output=><li key={output}><Check size={16}/>{output}</li>)}</ul><p>The precise scope depends on discovery; this is not a fixed package.</p></div>
+       </div>
+       <Link className="gvb-practice-inline" href="/contact">Ask about {s.name.toLowerCase()} <ArrowUpRight size={16}/></Link>
+      </div>
+    </section>)}
+   </div>
+   <section className="gvb-practice-questions" aria-labelledby="practice-questions"><div><p className="gvb-label">BEFORE YOU BEGIN</p><h2 id="practice-questions">Questions worth asking early.</h2><p>Clear expectations are part of good engineering. These are the questions we would want answered before anyone commits to a build.</p></div>
+    <div className="gvb-practice-faq">{questions.map((item,i)=><details key={item.q}><summary><span>{String(i+1).padStart(2,"0")}</span>{item.q}<span className="gvb-faq-mark" aria-hidden="true">+</span></summary><p>{item.a}</p></details>)}</div>
+   </section>
+   <section className="gvb-practice-end"><div><p className="gvb-label">THE NEXT STEP</p><h2>Tell us what is getting in the way.</h2><p>Describe the work as it happens today, where the friction is and what you would like to change. We'll begin with the problem, not a sales pitch.</p></div><a href="mailto:info@gvbtech.in?subject=Project%20discussion%20with%20GVB%20Tech" className="gvb-btn gvb-btn-primary"><Mail size={17}/> Write to us</a></section>
+  </div>
+ </main>;
 }
