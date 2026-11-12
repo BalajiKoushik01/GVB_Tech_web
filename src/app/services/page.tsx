@@ -87,7 +87,7 @@ export default function ServicesPage() {
    <section className="gvb-practice-questions" aria-labelledby="practice-questions"><div><p className="gvb-label">BEFORE YOU BEGIN</p><h2 id="practice-questions">Questions worth asking early.</h2><p>Clear expectations are part of good engineering. These are the questions we would want answered before anyone commits to a build.</p></div>
     <div className="gvb-practice-faq">{questions.map((item,i)=><details key={item.q}><summary><span>{String(i+1).padStart(2,"0")}</span>{item.q}<span className="gvb-faq-mark" aria-hidden="true">+</span></summary><p>{item.a}</p></details>)}</div>
    </section>
-   <section className="gvb-practice-end"><div><p className="gvb-label">THE NEXT STEP</p><h2>Tell us what is getting in the way.</h2><p>Describe the work as it happens today, where the friction is and what you would like to change. We'll begin with the problem, not a sales pitch.</p></div><a href="mailto:info@gvbtech.in?subject=Project%20discussion%20with%20GVB%20Tech" className="gvb-btn gvb-btn-primary"><Mail size={17}/> Write to us</a></section>
+   <section className="gvb-practice-end"><div><p className="gvb-label">THE NEXT STEP</p><h2>Tell us what is getting in the way.</h2><p>Describe the work as it happens today, where the friction is and what you would like to change. We’ll begin with the problem, not a sales pitch.</p></div><a href="mailto:info@gvbtech.in?subject=Project%20discussion%20with%20GVB%20Tech" className="gvb-btn gvb-btn-primary"><Mail size={17}/> Write to us</a></section>
   </div>
  </div>;
 }
