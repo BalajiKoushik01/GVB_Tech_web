@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./premium.css";
+import "./refinement.css";
+import { BackToTop } from "@/components/ui/BackToTop";
 import { MagneticInteractions } from "@/components/ui/MagneticInteractions";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -13,7 +15,7 @@ export const metadata:Metadata={
  icons:{icon:[{url:"/GVB_tech_logo.png",type:"image/png"}],shortcut:"/GVB_tech_logo.png",apple:"/GVB_tech_logo.png"},
  alternates:{canonical:"/"},
  openGraph:{title:"GVB Tech Solutions | Technology, built around your business",description:"Software engineering, applied AI, automation and analytics. Thoughtfully built for your business.",url:"https://gvbtech.in",siteName:"GVB Tech Solutions",type:"website",locale:"en_IN",images:[{url:"/GVB_tech_logo.png",width:1200,height:630,alt:"GVB Tech Solutions"}]},
- twitter:{card:"summary_large_image",title:"GVB Tech Solutions",description:"Better systems. Better decisions. Better business.",images:["/GVB_tech_logo.png"]},
+ twitter:{card:"summary_large_image",title:"GVB Tech Solutions",description:"Software, automation and analytics designed around real operational work.",images:["/GVB_tech_logo.png"]},
  robots:{index:true,follow:true}
 };
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body className="antialiased min-h-screen flex flex-col bg-[#081323] text-white"><a className="gvb-skip-link" href="#main-content">Skip to content</a><Header/><MagneticInteractions/><main id="main-content" className="flex-1">{children}</main><Footer/><Analytics/><SpeedInsights/></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body className="antialiased min-h-screen flex flex-col bg-[#081323] text-white"><a className="gvb-skip-link" href="#main-content">Skip to content</a><Header/><MagneticInteractions/><main id="main-content" className="flex-1">{children}</main><Footer/><BackToTop/><Analytics/><SpeedInsights/></body></html>}

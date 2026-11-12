@@ -32,7 +32,7 @@ const areasOfInterest = [
 
 export default function CareersPage() {
     return (
-        <div className="min-h-[100dvh] pt-32 pb-20 relative">
+        <div className="gvb-careers-editorial min-h-[100dvh] pt-32 pb-20 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Hero */}
                 <div className="text-center mb-24">
@@ -49,7 +49,7 @@ export default function CareersPage() {
                         transition={{ delay: 0.1 }}
                         className="text-5xl md:text-6xl lg:text-7xl font-black mb-8 tracking-tighter text-white uppercase"
                     >
-                        Build useful <span className="text-gradient">Technology</span>
+                        Work on <span className="text-gradient">practical problems</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -57,7 +57,7 @@ export default function CareersPage() {
                         transition={{ delay: 0.2 }}
                         className="text-xl md:text-2xl text-white/60 max-w-3xl mx-auto font-bold tracking-tight"
                     >
-                        Explore our engineering culture and share your interest in future opportunities. Specific openings are confirmed directly by our team.
+                        We welcome thoughtful expressions of interest from people who like untangling real technical problems. The areas below describe the work we are interested in, not confirmed vacancies.
                     </motion.p>
                 </div>
 
@@ -73,17 +73,17 @@ export default function CareersPage() {
                             <div className="space-y-6">
                                 <CultureItem 
                                     icon={Zap} 
-                                    title="Technical Rigor" 
+                                    title="Thoughtful engineering" 
                                     desc="We value clear reasoning, reproducible results and systems that can be understood and maintained." 
                                 />
                                 <CultureItem 
                                     icon={Shield} 
-                                    title="Radical Ownership" 
+                                    title="Clear responsibility" 
                                     desc="We believe in taking responsibility for decisions, documenting trade-offs and learning from how software performs in use." 
                                 />
                                 <CultureItem 
                                     icon={Star} 
-                                    title="Constant Evolution" 
+                                    title="Continual learning" 
                                     desc="We make room for reading, prototyping and testing ideas. The right tool matters more than the newest tool." 
                                 />
                             </div>
@@ -104,12 +104,12 @@ export default function CareersPage() {
 
                 {/* How we get to know people */}
                 <section className="mb-32 py-24 border-y border-white/5">
-                    <h2 className="text-4xl font-black mb-16 text-white text-center uppercase tracking-tighter">How We <span className="text-gradient">Select</span></h2>
+                    <h2 className="text-4xl font-black mb-16 text-white text-center uppercase tracking-tighter">How we <span className="text-gradient">review interest</span></h2>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                         <ProcessNode step="01" title="Portfolio Review" desc="We review relevant projects, experience and examples of your work." />
                         <ProcessNode step="02" title="Technical Deep-Dive" desc="We may discuss how you approach a problem, the choices you made and what you learned." />
                         <ProcessNode step="03" title="Values Alignment" desc="Direct conversation on engineering rigor, ownership, and mindset." />
-                        <ProcessNode step="04" title="Offer & Onboarding" desc="If an appropriate opportunity exists, we discuss scope, expectations and next steps." />
+                        <ProcessNode step="04" title="Opportunity discussion" desc="If an appropriate opportunity exists, we discuss scope, expectations and next steps." />
                     </div>
                 </section>
 
@@ -131,7 +131,7 @@ export default function CareersPage() {
                                 <p className="text-gvb-cyan/80 text-xs font-black mb-4 uppercase tracking-widest">{pos.dept} • {pos.type}</p>
                                 <p className="text-white/60 font-bold mb-8 flex-grow">{pos.desc}</p>
                                 <Link href="/contact" className="group flex items-center gap-2 text-white font-black uppercase text-sm tracking-widest hover:text-gvb-cyan transition-colors">
-                                    Share your interest <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                    Introduce yourself <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                             </GlassCard>
                         </motion.div>
@@ -142,10 +142,10 @@ export default function CareersPage() {
                 <div className="liquid-glass p-12 md:p-20 text-center rounded-[4rem] relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-gvb-blue/10 to-gvb-cyan/10 opacity-50" />
                     <div className="relative z-10">
-                        <h2 className="text-3xl md:text-5xl font-black mb-8 text-white uppercase tracking-tighter">Don&apos;t see your role?</h2>
+                        <h2 className="text-3xl md:text-5xl font-black mb-8 text-white uppercase tracking-tighter">Have relevant work to share?</h2>
                         <p className="text-xl text-white/60 mb-10 max-w-2xl mx-auto font-bold">Interested in working on practical engineering problems? Share what you have built and the kind of work you would like to pursue. This is an expression of interest, not a confirmed vacancy.</p>
                         <Link href="/contact">
-                            <Button size="lg" className="px-16 h-16 rounded-3xl">General Application</Button>
+                            <Button size="lg" className="px-16 h-16 rounded-3xl">Share an introduction</Button>
                         </Link>
                     </div>
                 </div>

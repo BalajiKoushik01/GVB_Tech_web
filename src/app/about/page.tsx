@@ -1,180 +1,37 @@
-"use client";
-
-import React from 'react';
-import { motion } from "framer-motion";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Target, Eye, Shield, Users, Trophy } from "lucide-react";
-
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowUpRight, ArrowRight, Mail, MapPin } from "lucide-react";
+export const metadata: Metadata = { title: "About | GVB Tech Solutions", description: "How GVB Tech Solutions approaches software, automation, applied AI and analytics work, and what you can expect from a project." };
+const process = [
+ {n:"01",name:"Understand the problem",what:"Talk to the people doing the work. Map the tasks, the information they need and what currently goes wrong.",result:"An agreed problem statement and measures that matter."},
+ {n:"02",name:"Decide what to build",what:"Compare workable options. Define the users, dependencies and the smallest useful scope before adding complexity.",result:"Priorities, trade-offs and a reviewable plan."},
+ {n:"03",name:"Test with the people who use it",what:"Make a prototype or limited version where the main assumptions can be checked before wider rollout.",result:"Feedback, evidence and a clearer delivery decision."},
+ {n:"04",name:"Make it dependable",what:"Consider performance, access controls, failure handling, documentation and the people responsible for support.",result:"A system that can be operated and improved after launch."}
+];
 export default function AboutPage() {
-    return (
-        <div className="relative min-h-screen">
-            
-            <div className="pt-20 md:pt-32 pb-16 relative z-10">
-                <section className="px-6 py-12 md:py-20 max-w-7xl mx-auto text-center relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="inline-flex items-center space-x-3 px-5 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-6 md:mb-8"
-                    >
-                        <span className="w-1.5 h-1.5 bg-gvb-cyan rounded-full animate-pulse" />
-                        <span className="text-[9px] md:text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Engineering Leadership</span>
-                    </motion.div>
-                    
-                    <motion.h1
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 text-white tracking-tighter uppercase leading-none"
-                    >
-                        Engineering <span className="text-gradient">Rigor</span> & Focus
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-base md:text-2xl text-white/70 max-w-3xl mx-auto font-bold tracking-tight leading-relaxed px-2"
-                    >
-                        GVB Tech Solutions builds software, automation and analytics tools for organisations that need more reliable operations. Our approach combines hands-on engineering with an understanding of the decisions people make using the systems we deliver.
-                    </motion.p>
-                </section>
-
-                {/* Founder Credentials & Origin */}
-                <section className="px-4 py-12 relative z-10 max-w-6xl mx-auto">
-                    <GlassCard className="p-8 md:p-14 !bg-white/5 backdrop-blur-3xl border-white/10">
-                        <div className="inline-block px-4 py-1.5 rounded-full bg-gvb-cyan/10 border border-gvb-cyan/20 text-gvb-cyan text-xs font-black uppercase tracking-widest mb-6">
-                            Founding Backstory & Credentials
-                        </div>
-                        <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tight mb-6">
-                            Bridging Technical Rigor with Applied Analytics
-                        </h2>
-                        <div className="space-y-6 text-white/70 text-base md:text-lg font-bold leading-relaxed">
-                            <p>
-                                Grounded in an engineering internship at <strong className="text-white">ISRO SDSC SHAR</strong> (Satish Dhawan Space Centre), founder Balaji Koushik developed a foundational commitment to high-reliability systems and testing protocols.
-                            </p>
-                            <p>
-                                Further honed by consulting experience at <strong className="text-white">Mu Sigma</strong> in decision science and quantitative modeling, GVB Tech Solutions was established to deliver that same level of analytical precision to custom software, automated tools, and interactive dashboards.
-                            </p>
-                            <p>
-                                Operating as an agile, family-supported technology firm based in Sullurpeta, Andhra Pradesh, we focus on building robust R&D projects and delivering tailored technical systems for our clients with total transparency and engineering integrity.
-                            </p>
-                        </div>
-                    </GlassCard>
-                </section>
-
-                {/* Mission & Vision */}
-                <section className="px-4 py-16 relative z-10">
-                    <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <GlassCard className="h-full p-6 md:p-10 !bg-white/5 backdrop-blur-3xl border-white/10 group">
-                                <div className="w-14 h-14 rounded-2xl bg-gvb-blue/10 flex items-center justify-center mb-6 transform group-hover:scale-110 transition-transform">
-                                    <Target className="w-7 h-7 text-gvb-blue" />
-                                </div>
-                                <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Purpose</h2>
-                                <p className="text-base md:text-xl text-white/70 font-bold leading-relaxed">
-                                    To reduce the friction between people, information and processes. That means software which is understandable, maintainable and measured against real operational needs.
-                                </p>
-                            </GlassCard>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <GlassCard className="h-full p-6 md:p-10 !bg-white/5 backdrop-blur-3xl border-white/10 group">
-                                <div className="w-14 h-14 rounded-2xl bg-gvb-accent/10 flex items-center justify-center mb-6 transform group-hover:scale-110 transition-transform">
-                                    <Eye className="w-7 h-7 text-gvb-accent" />
-                                </div>
-                                <h2 className="text-2xl md:text-4xl font-black mb-4 text-white tracking-tight uppercase">Our Approach</h2>
-                                <p className="text-base md:text-xl text-white/70 font-bold leading-relaxed">
-                                    Our work draws on research and practical engineering experience. We test assumptions early, document important decisions and favour solutions that can be maintained after launch.
-                                </p>
-                            </GlassCard>
-                        </motion.div>
-                    </div>
-                </section>
-
-                {/* Methodology / Process */}
-                <section className="py-24 px-4 relative z-10">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="text-center mb-20">
-                            <h2 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tighter uppercase">Our <span className="text-gradient">Methodology</span></h2>
-                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">A clear way to move from a business problem to working software.</p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8">
-                            <ProcessStep number="01" title="Analysis" desc="Deep-dive into operational workflows and architectural requirements." />
-                            <ProcessStep number="02" title="Blueprint" desc="Designing modular, high-reliability software frameworks." />
-                            <ProcessStep number="03" title="Execution" desc="Iterative development backed by rigorous testing protocols." />
-                            <ProcessStep number="04" title="Deployment" desc="Seamless rollout with continuous telemetry and monitoring." />
-                        </div>
-                    </div>
-                </section>
-
-                {/* Core Values */}
-                <section className="py-24 px-4 relative z-10 mt-16">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="text-center mb-20">
-                            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white tracking-tighter uppercase">Core Values</h2>
-                            <p className="text-xl md:text-2xl text-white/70 font-bold tracking-tight">How we approach trade-offs, quality and accountability.</p>
-                        </div>
-                        <div className="grid md:grid-cols-3 gap-8">
-                            <ValueCard
-                                icon={Shield}
-                                title="Integrity First"
-                                desc="We build with explicit assumptions, considered security controls and clear maintenance responsibilities."
-                                delay={0.1}
-                            />
-                            <ValueCard
-                                icon={Trophy}
-                                title="Excellence"
-                                desc="We review the details that affect reliability, performance and day-to-day usability."
-                                delay={0.2}
-                            />
-                            <ValueCard
-                                icon={Users}
-                                title="Partnership"
-                                desc="Your success is our success. We integrate as an extension of your own team."
-                                delay={0.3}
-                            />
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-    );
-}
-
-function ValueCard({ icon: Icon, title, desc, delay }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>, title: string, desc: string, delay: number }) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay }}
-        >
-            <GlassCard hoverEffect={true} className="text-center p-8 md:p-12 !bg-white/5 backdrop-blur-3xl border-white/10">
-                <div className="w-16 h-16 mx-auto rounded-full bg-gvb-accent/10 text-gvb-accent flex items-center justify-center mb-8">
-                    <Icon className="w-8 h-8" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-white uppercase tracking-tight">{title}</h3>
-                <p className="text-lg text-white/70 font-bold">{desc}</p>
-            </GlassCard>
-        </motion.div>
-    );
-}
-
-function ProcessStep({ number, title, desc }: { number: string, title: string, desc: string }) {
-    return (
-        <GlassCard hoverEffect={true} className="p-8 !bg-white/5 backdrop-blur-3xl border-white/10 relative overflow-hidden">
-            <span className="absolute -top-4 -right-2 text-7xl font-black text-white/5 pointer-events-none select-none">{number}</span>
-            <div className="text-gvb-cyan font-black mb-4 tracking-widest uppercase text-sm">Phase {number}</div>
-            <h3 className="text-2xl font-bold mb-4 text-white uppercase tracking-tight">{title}</h3>
-            <p className="text-white/60 font-bold leading-relaxed">{desc}</p>
-        </GlassCard>
-    );
+ return <div className="gvb-about-editorial">
+  <div className="gvb-shell">
+   <header className="gvb-about-hero">
+    <p className="gvb-label">ABOUT GVB TECH SOLUTIONS</p>
+    <h1>Good technology begins with <em>good judgement.</em></h1>
+    <p>GVB Tech Solutions is a technology services firm based in Madanapalle, Andhra Pradesh. We work across software, automation, analytics and applied AI, with a simple starting principle: understand the work before proposing the system.</p>
+    <div className="gvb-about-hero-links"><Link href="/services">Explore our services <ArrowUpRight size={17}/></Link><Link href="/portfolio">See projects and research <ArrowRight size={17}/></Link></div>
+   </header>
+   <section className="gvb-about-editorial-split"><div><p className="gvb-label">OUR POINT OF VIEW</p><h2>Build for the hand-off, the exception and the ordinary working day.</h2></div><div><p>Most operational problems do not arrive as neat product requirements. They appear as repeated data entry, reports that disagree, approvals that stall or workarounds everyone has accepted.</p><p>We look at those details first. The aim is not to add another layer of software, but to make a task clearer, faster to complete or easier to check.</p><p>Sometimes that means an application. Sometimes it is a better integration, a simpler process or a focused dashboard. Technology is the means, not the conclusion.</p></div></section>
+   <section className="gvb-about-approach" aria-labelledby="about-process-title">
+    <div className="gvb-about-section-heading"><p className="gvb-label">HOW WE APPROACH AN ENGAGEMENT</p><h2 id="about-process-title">A process clients can follow.</h2><p>These are the decisions worth making together. Actual stages and deliverables depend on the scope of work.</p></div>
+    <div className="gvb-about-process">{process.map(item=><article key={item.n}><span>{item.n}</span><h3>{item.name}</h3><p>{item.what}</p><div><strong>What this establishes</strong><p>{item.result}</p></div></article>)}</div>
+   </section>
+   <section className="gvb-about-standards" aria-labelledby="about-standards-title">
+    <div><p className="gvb-label">OUR WORKING PRINCIPLES</p><h2 id="about-standards-title">The details that decide whether a system lasts.</h2></div>
+    <div className="gvb-about-principles">
+     <article><h3>Explain the trade-offs</h3><p>A choice of tools or architecture should come with a reason, a limitation and an understanding of its running cost.</p></article>
+     <article><h3>Keep ownership clear</h3><p>Someone must know who approves changes, who can access data and what happens when a process fails.</p></article>
+     <article><h3>Measure against the actual task</h3><p>Time saved, fewer corrections and more reliable decisions matter more than an impressive demonstration.</p></article>
+    </div>
+   </section>
+   <section className="gvb-about-disclosure"><div><p className="gvb-label">WORK AND RESEARCH</p><h2>Evidence matters. So do its limits.</h2><p>Our portfolio includes prototypes, demonstrations and research work. We distinguish these from commissioned client engagements rather than treating every experiment as a customer result.</p><Link href="/portfolio">Explore selected work <ArrowUpRight size={16}/></Link></div><div className="gvb-about-location"><MapPin size={22}/><span>OPERATING FROM</span><strong>Madanapalle, Andhra Pradesh, India</strong><span>CONTACT</span><a href="mailto:info@gvbtech.in">info@gvbtech.in</a></div></section>
+   <section className="gvb-about-cta"><div><h2>Have a process that needs a better way of working?</h2><p>Share what is happening today and what a useful change would look like. We can start from there.</p></div><Link href="/contact" className="gvb-btn gvb-btn-primary"><Mail size={17}/> Start a conversation</Link></section>
+  </div>
+ </div>;
 }
