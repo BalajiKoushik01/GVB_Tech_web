@@ -9,7 +9,7 @@ const process = [
  {n:"04",name:"Make it dependable",what:"Consider performance, access controls, failure handling, documentation and the people responsible for support.",result:"A system that can be operated and improved after launch."}
 ];
 export default function AboutPage() {
- return <main className="gvb-about-editorial">
+ return <div className="gvb-about-editorial">
   <div className="gvb-shell">
    <header className="gvb-about-hero">
     <p className="gvb-label">ABOUT GVB TECH SOLUTIONS</p>
@@ -33,5 +33,5 @@ export default function AboutPage() {
    <section className="gvb-about-disclosure"><div><p className="gvb-label">WORK AND RESEARCH</p><h2>Evidence matters. So do its limits.</h2><p>Our portfolio includes prototypes, demonstrations and research work. We distinguish these from commissioned client engagements rather than treating every experiment as a customer result.</p><Link href="/portfolio">Explore selected work <ArrowUpRight size={16}/></Link></div><div className="gvb-about-location"><MapPin size={22}/><span>OPERATING FROM</span><strong>Madanapalle, Andhra Pradesh, India</strong><span>CONTACT</span><a href="mailto:info@gvbtech.in">info@gvbtech.in</a></div></section>
    <section className="gvb-about-cta"><div><h2>Have a process that needs a better way of working?</h2><p>Share what is happening today and what a useful change would look like. We can start from there.</p></div><Link href="/contact" className="gvb-btn gvb-btn-primary"><Mail size={17}/> Start a conversation</Link></section>
   </div>
- </main>;
+ </div>;
 }
