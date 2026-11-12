@@ -9,7 +9,7 @@ export const metadata:Metadata={
 };
 
 export default function BlogPage() {
-  return <main className="gvb-journal">
+  return <div className="gvb-journal">
     <div className="gvb-shell">
       <header className="gvb-journal-intro">
         <p className="gvb-label">THE JOURNAL / FIELD NOTES</p>
@@ -19,5 +19,5 @@ export default function BlogPage() {
       <InsightsExplorer />
       <footer className="gvb-journal-footer"><BookOpen size={23}/><p>Questions about a workflow or a technical decision? We welcome conversations grounded in a real problem.</p><Link href="/contact">Discuss a problem <ArrowUpRight size={17}/></Link></footer>
     </div>
-  </main>;
+  </div>;
 }
