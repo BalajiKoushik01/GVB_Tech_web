@@ -32,7 +32,7 @@ const areasOfInterest = [
 
 export default function CareersPage() {
     return (
-        <div className="min-h-[100dvh] pt-32 pb-20 relative">
+        <div className="gvb-careers-editorial min-h-[100dvh] pt-32 pb-20 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Hero */}
                 <div className="text-center mb-24">
