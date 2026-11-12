@@ -27,7 +27,7 @@ const projects: Project[] = [
         id: "predictor",
         title: "Stock Market Predictor (Apex Engine)",
         category: "Live Demo",
-        badge: "Featured Live Work",
+        badge: "Interactive demonstration",
         tech: ["Next.js", "Python", "FastAPI", "TSA Modeling", "Lightweight Charts"],
         desc: "An interactive environment for exploring time-series forecasts, comparing assumptions and examining uncertainty. Forecasts are demonstrations, not investment advice.",
         isLiveDemo: true,
@@ -39,7 +39,7 @@ const projects: Project[] = [
         id: "rangeready",
         title: "RangeReady",
         category: "Automated Tools",
-        badge: "Active R&D",
+        badge: "Research prototype",
         tech: ["TypeScript", "Python", "IoT Telemetry", "Real-Time Systems"],
         desc: "A research-oriented approach to collecting device signals, checking test conditions and presenting results where engineers can act on them.",
         githubUrl: "https://github.com/BalajiKoushik01/RangeReady",
@@ -53,7 +53,7 @@ const projects: Project[] = [
         badge: "Active R&D",
         tech: ["Python", "Computer Vision", "Celery Tasks", "FastAPI"],
         desc: "An exploration of how image processing and workflow software can reduce repetitive preparation in textile-design production.",
-        githubUrl: "https://github.com/BalajiKoushik01/WeaveCore",
+        // No verified public repository link for this project.
         icon: Cpu,
         color: "from-emerald-500/20 to-gvb-cyan/20"
     },
@@ -61,7 +61,7 @@ const projects: Project[] = [
         id: "cervisense",
         title: "CerviSense-AI",
         category: "AI Research",
-        badge: "Active AI R&D",
+        badge: "Experimental research",
         tech: ["Python", "PyTorch", "Computer Vision", "Medical Imaging"],
         desc: "Experimental computer-vision research for analysing medical imagery, with emphasis on evaluation, interpretability and limitations.",
         githubUrl: "https://github.com/BalajiKoushik01/CerviSense-AI",
@@ -75,7 +75,7 @@ const projects: Project[] = [
         badge: "Active R&D",
         tech: ["Go", "Python", "System Security", "Telemetry"],
         desc: "A monitoring concept that focuses on collecting system events and making unusual activity easier to investigate.",
-        githubUrl: "https://github.com/BalajiKoushik01/InvisibleGuardian",
+        // No verified public repository link for this project.
         icon: Shield,
         color: "from-amber-500/20 to-orange-500/20"
     }
@@ -97,14 +97,14 @@ export default function PortfolioPage() {
             <section className="px-6 py-12 md:py-16 text-center relative z-10">
                 <div className="inline-flex items-center space-x-3 px-5 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-6">
                     <span className="w-1.5 h-1.5 bg-gvb-cyan rounded-full animate-pulse" />
-                    <span className="text-[9px] md:text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">Engineering Showcase & R&D</span>
+                    <span className="text-[9px] md:text-[10px] font-black tracking-[0.3em] text-gvb-cyan uppercase">PROTOTYPES / RESEARCH / DEMONSTRATIONS</span>
                 </div>
 
                 <h1 className="text-4xl md:text-6xl font-black mb-4 md:mb-6 text-white uppercase tracking-tighter leading-none">
                     Technical <span className="text-gradient">Proof & Projects</span>
                 </h1>
                 <p className="text-base md:text-xl text-white/70 max-w-2xl mx-auto mb-10 md:mb-12 font-bold leading-relaxed px-2">
-                    Selected prototypes, demonstrations and research projects. Each explores a practical engineering question; availability and maturity vary by project.
+                    A selection of experimental work and technical demonstrations. These are not presented as commissioned client results. Links are shown only where a public source or working demo is available.
                 </p>
 
                 {/* Filter Tabs */}
@@ -193,7 +193,7 @@ export default function PortfolioPage() {
                                                             <ArrowUpRight className="w-4 h-4 text-gvb-cyan group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                                                         </div>
                                                     </a>
-                                                ) : null}
+                                                ) : <span className="text-xs text-white/60 border border-white/15 rounded-lg px-3 py-2 inline-flex">Public repository not available — project overview only</span>}
                                             </div>
                                         </GlassCard>
                                     </motion.div>

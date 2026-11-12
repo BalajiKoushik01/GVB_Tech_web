@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./premium.css";
 import "./refinement.css";
+import "./improvements.css";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { MagneticInteractions } from "@/components/ui/MagneticInteractions";
 import { Header } from "@/components/layout/Header";

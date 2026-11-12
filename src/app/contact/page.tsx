@@ -24,6 +24,7 @@ export default function ContactPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [submissionError, setSubmissionError] = useState("");
+    const [fallbackUrl, setFallbackUrl] = useState("");
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
         resolver: zodResolver(schema),
@@ -32,6 +33,7 @@ export default function ContactPage() {
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
         setSubmissionError("");
+        setFallbackUrl("");
 
         try {
             const response = await fetch('/api/contact', {
@@ -52,8 +54,8 @@ export default function ContactPage() {
             const text = `Hello GVB Tech Solutions,\n\nI am ${data.name}.\nEmail: ${data.email}\n${data.phone ? `Phone: ${data.phone}` : ''}\nInterested Service: ${data.service}\n\nMessage:\n${data.message}`;
             const encodedText = encodeURIComponent(text);
             const whatsappUrl = `https://wa.me/919381958045?text=${encodedText}`;
-            setSubmissionError("The form did not send. Your draft is still here; retry or contact us directly using the details alongside.");
-            window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+            setSubmissionError("The form did not send. Your draft is still here. You can retry, or choose another contact method below.");
+            setFallbackUrl(whatsappUrl);
         } finally {
             setIsSubmitting(false);
         }
@@ -111,7 +113,7 @@ export default function ContactPage() {
                         <GlassCard hoverEffect={false} className="p-6 md:p-10 !bg-white/5 backdrop-blur-3xl border-white/10">
                             <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8">Describe your project</h3>
 
-                            {submissionError && <p role="alert" className="mb-5 text-amber-300">{submissionError}</p>}
+                            {submissionError && <div role="alert" className="mb-5 text-amber-200 border border-amber-400/30 rounded-md p-4"><p>{submissionError}</p>{fallbackUrl && <a href={fallbackUrl} target="_blank" rel="noopener noreferrer" className="inline-flex mt-3 text-white underline underline-offset-4">Open WhatsApp with your draft (optional)</a>}<a href="mailto:info@gvbtech.in" className="inline-flex mt-3 ml-4 text-white underline underline-offset-4">Email us directly</a></div>}
                             {successMessage ? (
                                 <div className="p-6 bg-green-500/10 border border-green-500/20 rounded-2xl text-green-600 dark:text-green-400 font-medium text-lg text-center">
                                     {successMessage}
