@@ -167,3 +167,19 @@
 @media(prefers-reduced-motion:reduce){
  .gvb-back-to-top,.gvb-insights-article,.gvb-practice-nav a,.gvb-insights-filters button{transition:none!important;animation:none!important}
 }
+
+/* Bring enquiry and careers pages into the same visual language. */
+.gvb-contact-editorial,.gvb-careers-editorial{background:radial-gradient(ellipse at 80% 0%,rgba(58,100,132,.15),transparent 54%),#0b1928}
+.gvb-contact-editorial h1,.gvb-careers-editorial h1{font-size:clamp(44px,6vw,85px);text-transform:none;font-weight:640;letter-spacing:-.055em;line-height:1.08}
+.gvb-contact-editorial h1 .text-gradient,.gvb-careers-editorial h1 .text-gradient{background-image:linear-gradient(105deg,#a4d4e8,#8dbacc);font-weight:640}
+.gvb-contact-editorial>section>p,.gvb-careers-editorial>div>div:first-child>p{max-width:790px;font-weight:400;line-height:1.75}
+.gvb-contact-editorial h3,.gvb-careers-editorial h2,.gvb-careers-editorial h3{font-weight:650;letter-spacing:-.035em;text-transform:none}
+.gvb-contact-editorial .liquid-glass,.gvb-contact-editorial [class*="backdrop-blur-3xl"],.gvb-careers-editorial .liquid-glass{box-shadow:0 12px 35px #0003}
+.gvb-contact-editorial input,.gvb-contact-editorial textarea,.gvb-contact-editorial select{font-size:14px;line-height:1.55}
+.gvb-contact-editorial label{font-weight:650;letter-spacing:.055em}
+.gvb-contact-editorial [type="submit"]{font-size:14px;text-transform:none;font-weight:700;letter-spacing:normal;min-height:54px;border-radius:6px;box-shadow:none}
+.gvb-careers-editorial .font-black{font-weight:650}
+.gvb-careers-editorial .uppercase{text-transform:none}
+.gvb-careers-editorial .tracking-widest{letter-spacing:.065em}
+.gvb-careers-editorial .rounded-\[4rem\]{border-radius:18px}
+.gvb-contact-editorial a:focus-visible,.gvb-careers-editorial a:focus-visible{outline:2px solid #a0def2;outline-offset:3px}
