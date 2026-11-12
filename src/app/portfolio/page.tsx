@@ -1,5 +1,5 @@
-import "./portfolio.css";
 "use client";
+import "./portfolio.css";
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, ArrowRight, Github } from "lucide-react";
