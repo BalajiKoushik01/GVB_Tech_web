@@ -1,36 +1,30 @@
-# Deploying GVB Tech Solutions to Vercel
+# Deploying the GVB Tech website
 
-This repository is built with the **Next.js App Router** and is fully optimized for production deployment on **Vercel**—the creators of Next.js. Deploying on Vercel guarantees zero-configuration setup, global Content Delivery Networks (CDNs), and automatic Image optimization.
+The site is a Next.js application hosted on Vercel, with the custom domain `gvbtech.in`. Cloudflare handles DNS and, where enabled and configured, edge/CDN and security controls.
 
-## Step-by-Step Vercel Deployment
+**Do not use a second Cloudflare Workers Build as the origin for this repository.** It is not a Workers application.
 
-1. **Commit and Push to GitHub**
-   Ensure all your latest code is committed and pushed to your primary repository on GitHub (or GitLab/Bitbucket).
+## Production checklist
 
-   ```bash
-   git add .
-   git commit -m "chore: production ready for Vercel release"
-   git push origin main
-   ```
+1. Open a pull request; confirm that TypeScript, ESLint, `npm audit --audit-level=high` and `npm run build` pass.
+2. Inspect the Vercel preview on desktop and mobile. Check keyboard navigation, the mobile menu, service links, the Project Guide, portfolio details, journal and brochure.
+3. Verify the contact form with an authorised test enquiry **only when `MONGODB_URI` is configured**. Check the database record and the UI response. Do not submit real personal or confidential data as a smoke test.
+4. Confirm that optional chat behaviour fails clearly if `GEMINI_API_KEY` is absent or the provider is unavailable.
+5. Merge the reviewed PR to `main`. Verify that the **production** Vercel deployment matches the merge commit and has status `READY`.
+6. Visit `https://gvbtech.in` and confirm the updated routes, sitemap, canonical behaviour and critical user interactions; inspect actual runtime logs if a feature fails.
 
-2. **Create a Vercel Account**
-   If you do not have one, navigate to [Vercel's Website](https://vercel.com/) and sign up using your GitHub account.
+## Environment variables
 
-3. **Import the Project**
-   - Click the **"Add New..."** button and select **"Project"**.
-   - Under the "Import Git Repository" section, locate your `gvb-tech-website` repository and click **Import**.
+- `MONGODB_URI` — required for contact submissions. The API writes to the `gvb-tech` database's `enquiries` collection.
+- `GEMINI_API_KEY` — used by the optional chat endpoint.
 
-4. **Configure the Deployment**
-   - **Project Name:** `gvb-tech-solutions` (or your preferred live name).
-   - **Framework Preset:** Vercel will automatically detect **Next.js**. Leave this exactly as is.
-   - **Root Directory:** If your `package.json` is at the root of the repository, leave this blank (default `./`).
-   - **Build and Output Settings:** Leave default. Vercel automatically runs `npm run build` and `npm run start`.
-   - **Environment Variables:** If you add a backend or an API later on, you can input your secure `.env.local` keys here. For now, leave this blank.
+Configure secrets only in Vercel's environment settings or local `.env.local`; never expose them as `NEXT_PUBLIC_*`.
 
-5. **Deploy!**
-   Click the **Deploy** button. Vercel will spend ~30-60 seconds checking out your code, running the turbo-build compiler, generating the static HTML, and assigning you a live SSL-secured URL.
+## Troubleshooting
 
-## Post-Deployment Settings
+- **Deployment stays queued or is blocked:** inspect the Vercel project dashboard and deployment limits. GitHub merge success does not imply deployment success.
+- **Contact request returns 500:** inspect runtime logs, MongoDB reachability and `MONGODB_URI`. A WhatsApp or email fallback is a visitor-controlled action, not automatic submission.
+- **Unexpected Cloudflare build errors:** check for an obsolete Workers Builds integration; Next.js production should build on Vercel.
+- **Outdated content after READY:** compare deployed commit SHA, alias and Cloudflare cache settings. Avoid blanket HTML caching.
 
-- **Custom Domains**: Once successfully deployed, click "Continue to Dashboard". Go to the **Settings > Domains** tab to attach your custom domain name (e.g., `gvbtechsolutions.com`).
-- **Analytics**: Turn on **Vercel Web Analytics** in your project dashboard for deep, privacy-friendly insights into your website traffic and performance metrics without the overhead of Google Analytics.
+More details: [Cloudflare + Vercel architecture](docs/deployment-cloudflare-vercel.md), [manual quality review](docs/quality-review.md).
