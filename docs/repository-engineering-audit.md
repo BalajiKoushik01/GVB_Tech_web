@@ -16,11 +16,11 @@ This is a source-and-CI audit of GitHub repositories available under [BalajiKous
 | [rangeready](https://github.com/BalajiKoushik01/rangeready) | GitHub Actions backend syntax checks and frontend production build | [PR #2](https://github.com/BalajiKoushik01/rangeready/pull/2) passed. Driver compatibility, hardware safety and portable packaging require instrument-specific tests. |
 | [whilter_ai_project_vscode](https://github.com/BalajiKoushik01/whilter_ai_project_vscode) | Corrected source-aware README, supported CI runtime and stale detector test | [PR #2](https://github.com/BalajiKoushik01/whilter_ai_project_vscode/pull/2) and CI passed. Accuracy under varied lighting and hardware remains unmeasured. |
 
-## In progress / not independently verified
+## Further validation required
 
 | Repository | State / next evidence needed |
 | --- | --- |
-| [SJDAS](https://github.com/BalajiKoushik01/SJDAS) | [PR #1](https://github.com/BalajiKoushik01/SJDAS/pull/1) includes licensing-bypass removal, image-validation and cache fixes, AI/menu compatibility and headless CI. An earlier complete backend run had 11 failures and only 15% measured coverage. Keep PR gated until the latest full run finishes successfully. A configured licence-signing secret, real loom-controller verification and image/output fidelity tests are still required. |
+| [SJDAS](https://github.com/BalajiKoushik01/SJDAS) | [PR #1](https://github.com/BalajiKoushik01/SJDAS/pull/1) merged after 132 backend tests passed (six warnings), with web lint/build also passing. Coverage is only 15%; a configured production licence-signing secret, real loom-controller verification, image/output fidelity checks and wider tests remain outstanding. |
 | [cervisense-ai](https://github.com/BalajiKoushik01/cervisense-ai) | Research code. Needs data provenance, patient-level train/test splitting, externally validated metrics and reproducible model training. Not a clinical diagnostic tool. |
 | [Multimodal](https://github.com/BalajiKoushik01/Multimodal) | Research code with unverified training/evaluation claims; no independent clinical assessment. |
 | [multimodel](https://github.com/BalajiKoushik01/multimodel) | Experimental research; independent model evaluation and code-level reproducibility checks remain to be established. |
