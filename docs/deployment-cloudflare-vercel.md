@@ -15,7 +15,7 @@
 4. Cloudflare SSL/TLS: **Full (strict)**. Do not use Flexible. Enable Always Use HTTPS after confirming no redirect loop.
 5. Cloudflare cache rules: **bypass cache** for `/api/*`, authenticated/dynamic responses, and all non-GET requests. Do not use blanket “Cache Everything” for Next.js HTML. Allow immutable Next.js static assets (`/_next/static/*`) to use their origin cache headers. Do not cache contact/chat responses.
 6. Cloudflare WAF: enable managed rules and bot protections carefully; use rate limiting for `/api/contact` and `/api/chat` (start with monitored/challenge mode, tune to real traffic). Avoid challenging ordinary visitors and legitimate form submissions.
-7. Do not expose `MONGODB_URI` or `GEMINI_API_KEY` as `NEXT_PUBLIC_*`. Configure secrets in Vercel project environment settings. Confirm API endpoints fail safely if secrets are absent.
+7. Do not expose `MONGODB_URI` or `GOOGLE_GENERATIVE_AI_API_KEY` as `NEXT_PUBLIC_*`. Configure secrets in Vercel project environment settings. Confirm API endpoints fail safely if secrets are absent.
 8. Run smoke tests from a browser: home, services, about, contact, brochure, privacy, mobile navigation, form submission, chat error handling, PDF link, sitemap.xml and robots.txt.
 9. Verify security response headers, HTTPS, canonical redirects, Cloudflare DNS resolution, and Vercel runtime logs. Test Cloudflare proxy behavior separately from direct Vercel preview.
 10. Only merge and promote production after passing GitHub checks, Vercel preview, vulnerability review, accessibility/performance smoke tests, and explicit owner approval.
