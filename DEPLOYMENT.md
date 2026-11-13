@@ -9,7 +9,7 @@ The site is a Next.js application hosted on Vercel, with the custom domain `gvbt
 1. Open a pull request; confirm that TypeScript, ESLint, `npm audit --audit-level=high` and `npm run build` pass.
 2. Inspect the Vercel preview on desktop and mobile. Check keyboard navigation, the mobile menu, service links, the Project Guide, portfolio details, journal and brochure.
 3. Verify the contact form with an authorised test enquiry **only when `MONGODB_URI` is configured**. Check the database record and the UI response. Do not submit real personal or confidential data as a smoke test.
-4. Confirm that optional chat behaviour fails clearly if `GEMINI_API_KEY` is absent or the provider is unavailable.
+4. Confirm that optional chat behaviour fails clearly if `GOOGLE_GENERATIVE_AI_API_KEY` is absent or the provider is unavailable.
 5. Merge the reviewed PR to `main`. Verify that the **production** Vercel deployment matches the merge commit and has status `READY`.
 6. Visit `https://gvbtech.in` and confirm the updated routes, sitemap, canonical behaviour and critical user interactions; inspect actual runtime logs if a feature fails.
 

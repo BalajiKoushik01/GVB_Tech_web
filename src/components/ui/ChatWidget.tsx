@@ -40,10 +40,11 @@ export function ChatWidget() {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ messages: [...messages, userMessage] })
+                body: JSON.stringify({ messages: [{ role: "user", content: userMessage.content }] })
             });
 
             const data = await response.json();
+            if (!response.ok) throw new Error("Chat API unavailable");
 
             if (data.text) {
                 setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: data.text }]);
@@ -81,12 +82,14 @@ export function ChatWidget() {
                                         <h3 className="text-white font-semibold">GVB Assistant</h3>
                                         <p className="text-white/70 text-xs flex items-center font-medium">
                                             <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse" />
-                                            Online 24/7
+                                            Automated assistance
                                         </p>
                                     </div>
                                 </div>
                                 <button
                                     onClick={() => setIsOpen(false)}
+                                    type="button"
+                                    aria-label="Close assistant"
                                     className="text-white/80 hover:text-white transition-colors"
                                 >
                                     <X className="w-5 h-5" />
@@ -94,7 +97,7 @@ export function ChatWidget() {
                             </div>
 
                             {/* Messages Area */}
-                            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                            <div className="flex-1 overflow-y-auto p-4 space-y-4" role="log" aria-live="polite" aria-relevant="additions">
                                 {messages.map((msg) => (
                                     <motion.div
                                         initial={{ opacity: 0, y: 10 }}
@@ -145,6 +148,8 @@ export function ChatWidget() {
                                 >
                                     <input
                                         type="text"
+                                        aria-label="Message to GVB assistant"
+                                        maxLength={2000}
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
                                         disabled={isLoading}
@@ -153,6 +158,7 @@ export function ChatWidget() {
                                     />
                                     <button
                                         type="submit"
+                                        aria-label="Send message"
                                         disabled={!input.trim() || isLoading}
                                         className="absolute right-2 p-2 rounded-full bg-accent-start text-white hover:bg-accent-end disabled:opacity-50 disabled:hover:bg-accent-start transition-colors"
                                     >
@@ -169,6 +175,8 @@ export function ChatWidget() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? "Close assistant" : "Open assistant"}
+                aria-expanded={isOpen}
                 className="w-12 h-12 rounded-full bg-gradient-to-br from-gvb-deep to-gvb-cyan flex items-center justify-center shadow-[0_0_30px_rgba(0,163,255,0.4)] border border-white/20 transition-shadow hover:shadow-[0_0_40px_rgba(0,163,255,0.6)] relative overflow-hidden"
             >
                 {isOpen ? <X className="w-5 h-5 text-white relative z-10" /> : <MessageSquare className="w-5 h-5 text-white relative z-10" />}

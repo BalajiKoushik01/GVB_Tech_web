@@ -37,7 +37,7 @@ export const studies:Study[]=[
  context:"Recreating a textile pattern from an image involves geometry, colour and repetition, not only cropping. This prototype separates extraction services from a browser-based editing interface.",
  approach:["FastAPI application with versioned image-processing endpoints.","React/Vite frontend with Fabric-based editing dependencies.","Image-processing modules for segmentation, restoration, vectorisation and export experiments."],
  technicalWork:["API routes implement image upload and asynchronous job/status handling.","The repository contains workflow specifications and a textile motif asset library.","The container build assembles the frontend and Python service."],
- constraints:["Output quality depends on image quality, alignment and the source pattern; an exact reconstruction is not guaranteed.","The repository's development CORS and exception-handling settings need hardening before any public deployment.","Loom-controller conversion and factory qualification are not demonstrated by this entry."],
+ constraints:["Output quality depends on image quality, alignment and the source pattern; an exact reconstruction is not guaranteed.","Origin checks, file-size restrictions and safer API error handling were improved in the November 2026 review; authentication, job isolation and output verification still need work.","Loom-controller conversion and factory qualification are not demonstrated by this entry."],
  repository:"https://github.com/BalajiKoushik01/screenshot_to_design",stack:["React","Vite","Fabric.js","FastAPI","OpenCV"]
 },
 {
@@ -55,7 +55,7 @@ export const studies:Study[]=[
  context:"Forecasting work is most useful when its assumptions, backtests and uncertainty are exposed. This repository explores alternative analytical techniques in one prototype rather than presenting a trading product.",
  approach:["Python/FastAPI backend with data ingestion and mathematical feature modules.","Next.js frontend for a chart-led interaction.","Container configuration for the backend and frontend."],
  technicalWork:["The backend includes technical indicators and statistical transformations.","Model and risk modules cover forecasting and retrospective evaluation experiments.","The frontend provides a separate interface for exploring the results."],
- constraints:["The backend currently disables HTTPS certificate verification in some requests; that requires remediation before a public production deployment.","Historical fit and backtests do not establish future forecast accuracy or financial returns.","For education and research, not investment advice."],
+ constraints:["A blanket HTTPS certificate verification bypass was removed in the November 2026 repository security pass; operational security still needs a deployment review.","Historical fit and backtests do not establish future forecast accuracy or financial returns.","For education and research, not investment advice."],
  repository:"https://github.com/BalajiKoushik01/stock_predictor",stack:["Python","FastAPI","Next.js","Time-series analysis"]
 },
 {
@@ -64,7 +64,7 @@ export const studies:Study[]=[
  context:"Producing a short video requires assets, editorial decisions and repeatable steps. This codebase brings several processing stages under one Python-driven workflow.",
  approach:["Agent modules for script development, footage selection, editing and sound.","Configuration for local and hosted model providers.","GUI and command-line entry points plus optional ComfyUI workflows."],
  technicalWork:["studio.py coordinates specialist modules.","config.py centralises provider and asset settings.","Run scripts, agents and requirement files document the intended local workflow."],
- constraints:["External APIs, model weights and FFmpeg may be required; outcomes depend on the configured providers.","The current configuration includes machine-specific paths and requires adaptation to another computer.","This is a workflow experiment, not a guaranteed one-prompt commercial production service."],
+ constraints:["External APIs, model weights and FFmpeg may be required; outcomes depend on the configured providers.","Some external-model, asset and FFmpeg dependencies still require suitable local configuration and license checks.","This is a workflow experiment, not a guaranteed one-prompt commercial production service."],
  repository:"https://github.com/BalajiKoushik01/video_generation_model",stack:["Python","FFmpeg","LLM APIs","Video tools"]
 }
 ];

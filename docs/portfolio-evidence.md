@@ -9,7 +9,7 @@ This document records the source basis for GVB Tech's **selected technical work*
 | SJDAS | [SJDAS](https://github.com/BalajiKoushik01/SJDAS) | PyQt6 launcher and designer modules, FastAPI endpoints, tests and design documentation | Do not claim universal loom compatibility or 100% production readiness. |
 | WeaveCore | [screenshot_to_design](https://github.com/BalajiKoushik01/screenshot_to_design) | FastAPI, React/Vite/Fabric frontend, image-processing modules and output endpoints | Image-to-design fidelity remains dependent on source quality; production hardening is still necessary. |
 | CerviSense-AI | [cervisense-ai](https://github.com/BalajiKoushik01/cervisense-ai) | Training, checkpointing, dataset and evaluation code for cervical-image research | Research only, not a diagnostic system or evidence of clinical approval. |
-| Project Apex | [stock_predictor](https://github.com/BalajiKoushik01/stock_predictor) | FastAPI, Next.js, forecast and risk modules | Educational research; TLS certificate verification is disabled in parts of the backend and must be fixed before deployment. |
+| Project Apex | [stock_predictor](https://github.com/BalajiKoushik01/stock_predictor) | FastAPI, Next.js, forecast and risk modules | Educational research; An earlier TLS verification bypass was removed in the November 2026 security pass; deployment and forecast reliability still require independent verification. |
 | Video Generation Studio | [video_generation_model](https://github.com/BalajiKoushik01/video_generation_model) | Python orchestration, editing, narration and media-provider modules | Local paths and external-provider dependencies need configuration; no guarantee of end-to-end output. |
 
 ## Rules for writing project notes
