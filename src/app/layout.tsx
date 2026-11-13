@@ -14,7 +14,6 @@ export const metadata:Metadata={
  description:"GVB Tech Solutions builds custom software, AI-enabled workflows, analytics dashboards and digital experiences for modern businesses.",
  metadataBase:new URL("https://gvbtech.in"),
  icons:{icon:[{url:"/GVB_tech_logo.png",type:"image/png"}],shortcut:"/GVB_tech_logo.png",apple:"/GVB_tech_logo.png"},
- alternates:{canonical:"/"},
  openGraph:{title:"GVB Tech Solutions | Technology, built around your business",description:"Software engineering, applied AI, automation and analytics. Thoughtfully built for your business.",url:"https://gvbtech.in",siteName:"GVB Tech Solutions",type:"website",locale:"en_IN",images:[{url:"/GVB_tech_logo.png",width:1200,height:630,alt:"GVB Tech Solutions"}]},
  twitter:{card:"summary_large_image",title:"GVB Tech Solutions",description:"Software, automation and analytics designed around real operational work.",images:["/GVB_tech_logo.png"]},
  robots:{index:true,follow:true}
