@@ -40,3 +40,9 @@ Cloudflare handles traffic and edge controls when configured. Vercel is the only
 ## Editing rules
 
 Keep page responsibilities clear, avoid adding duplicate systems for the same interaction, and prefer native accessible controls over animated controls with no semantic purpose. For changes to a runtime endpoint, add a repeatable test and update [API docs](api.md). For any public copy about a project, update the evidence register with its actual status.
+
+### WeaveCore public trial
+
+`/tools/weavecore` contains a browser-only adaptation of the indexed artwork editor from `BalajiKoushik01/screenshot_to_design`. The site has no runtime dependency on that repository's Python API. The trial decodes compatible artwork locally and reads uncompressed Windows 8-bit BMP palette indices directly. Other supported browser image imports are sampled as RGB. Photo color reduction in the trial uses a regular RGB grid, so results can differ from the standalone studio's adaptive quantization. Project files are compatible with the indexed project schema.
+
+Editor changes shared by the standalone studio and the trial should be applied with their tests in both places until the shared editor is extracted into a package. Trial-specific routing and image decoding live in the GVB site.

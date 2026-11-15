@@ -41,3 +41,7 @@ desktop.ini
 # Python helpers
 __pycache__/
 *.pyc
+
+# Playwright artifacts
+/test-results/
+/playwright-report/
