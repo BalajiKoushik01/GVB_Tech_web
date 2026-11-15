@@ -1,10 +1,12 @@
+import { detectRepeat } from './repeat-detection';
 import { readIndexedBmp } from './indexed-bmp';
 import { sizeOK, type Design, type RGB } from './model';
 
-type Options = { width: number; height: number; colors: number; mode: string; corners: number[][] };
+type Options = { width: number; height: number; colors: number; mode: string; corners: number[][]; photo?: "repeat" | "motif" };
 
-export async function extractLocally(file: File, { width, height, colors, mode, corners }: Options): Promise<Design> {
+export async function extractLocally(file: File, { width, height, colors, mode, corners, photo }: Options): Promise<Design> {
   if (!sizeOK(width, height)) throw Error('Choose valid output dimensions, up to four million cells.');
+  if (photo && corners.length !== 4) throw Error('Mark four corners around the fabric only.');
   const bmp = mode === 'preserve' ? readIndexedBmp(await file.arrayBuffer()) : null;
   if (bmp) {
     const pixels = sampleGrid(width, height, bmp.width, bmp.height, corners, bmp.indexAt);
@@ -27,6 +29,27 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
     if (!ctx) throw Error('Image editing is unavailable in this browser.');
     ctx.drawImage(image, 0, 0);
     const source = ctx.getImageData(0, 0, image.width, image.height).data;
+    let right = 1, bottom = 1;
+    const notes: string[] = [];
+    if (photo === 'repeat') {
+      const gridWidth = Math.min(256, width);
+      const gridHeight = Math.min(256, height);
+      const light = sampleGrid(gridWidth, gridHeight, image.width, image.height, corners, (x, y) => {
+        const offset = (y * image.width + x) * 4;
+        return Math.round(.299 * source[offset] + .587 * source[offset + 1] + .114 * source[offset + 2]);
+      });
+      const repeat = detectRepeat(light, gridWidth, gridHeight);
+      if (!repeat.columns && !repeat.rows) {
+        throw Error('No reliable repeat found. Select a flatter patch with at least two copies, or switch to Extract one motif.');
+      }
+      right = repeat.columns ? repeat.columns / (gridWidth - 1) : 1;
+      bottom = repeat.rows ? repeat.rows / (gridHeight - 1) : 1;
+      width = Math.max(1, Math.round(width * right));
+      height = Math.max(1, Math.round(height * bottom));
+      notes.push(`Repeat found on ${repeat.columns && repeat.rows ? 'both axes' : repeat.columns ? 'the horizontal axis' : 'the vertical axis'}. Inspect the extracted unit before tiling.`);
+    } else if (photo) {
+      notes.push('Extracted the visible fabric patch marked in the photo.');
+    }
     const map = new Map<number, number>();
     const palette: RGB[] = [];
     const levels = Math.max(2, Math.min(6, Math.floor(Math.cbrt(colors))));
@@ -47,13 +70,13 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
           palette.push(color);
         }
         return index;
-    });
+    }, right, bottom);
     return {
       schema: 'weavecore.indexed.v1', width, height, pixels, palette,
       names: palette.map((_, index) => `Color ${index}`), regions: [], provenance: { source: 'browser trial' },
       report: {
         used_colors: palette.length, rgb_mae: changed / (pixels.length * 3), exact_sampled_rgb: changed === 0,
-        notes: ['Measured against browser-decoded RGB samples. Use an editable project file to preserve original palette indices.'],
+        notes: [...notes, 'Measured against browser-decoded RGB samples. Use an editable project file to preserve original palette indices.'],
       },
     };
   } finally {
@@ -61,13 +84,13 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
   }
 }
 
-function sampleGrid(width: number, height: number, sourceWidth: number, sourceHeight: number, corners: number[][], sample: (x: number, y: number) => number) {
+function sampleGrid(width: number, height: number, sourceWidth: number, sourceHeight: number, corners: number[][], sample: (x: number, y: number) => number, right = 1, bottom = 1) {
   const pixels = new Uint8Array(width * height);
   const transform = corners.length ? perspective(corners) : null;
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const [sx, sy] = transform
-        ? transform(width === 1 ? .5 : x / (width - 1), height === 1 ? .5 : y / (height - 1))
+        ? transform(right < 1 ? x / width * right : width === 1 ? .5 : x / (width - 1), bottom < 1 ? y / height * bottom : height === 1 ? .5 : y / (height - 1))
         : [(x + .5) * sourceWidth / width - .5, (y + .5) * sourceHeight / height - .5];
       const ix = Math.max(0, Math.min(sourceWidth - 1, Math.round(sx)));
       const iy = Math.max(0, Math.min(sourceHeight - 1, Math.round(sy)));
