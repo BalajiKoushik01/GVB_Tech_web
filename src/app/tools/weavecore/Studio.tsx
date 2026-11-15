@@ -21,6 +21,8 @@ export default function Studio() {
   const [sourceURL, setSourceURL] = useState(''), [sourceSize, setSourceSize] = useState([0, 0]);
   const [width, setWidth] = useState(1200), [height, setHeight] = useState(800), [colors, setColors] = useState(16);
   const [mode, setMode] = useState('preserve'), [corners, setCorners] = useState<number[][]>([]), [pin, setPin] = useState(false);
+  const [sourceKind, setSourceKind] = useState<'artwork' | 'photo'>('artwork');
+  const [photoTask, setPhotoTask] = useState<'repeat' | 'motif'>('repeat');
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [notice, setNotice] = useState('');
   const [tool, setTool] = useState<Tool>('pencil'), [paletteIndex, setActive] = useState(0), [brush, setBrush] = useState(1);
   const [zoom, setZoom] = useState(1), [grid, setGrid] = useState(true), [repeat, setRepeat] = useState(false);
@@ -91,8 +93,11 @@ export default function Studio() {
       try { const d = fromJSON(JSON.parse(await f.text())); install(d); setDirty(false); setNotice('Project opened. Palette slots and pixel data restored.'); }
       catch (e) { setError((e as Error).message); } return;
     }
-    setFile(f); setSourceURL(URL.createObjectURL(f)); setCorners([]); setPin(false); setSourceSize([0, 0]);
-    setNotice('Set the output columns and rows, then extract. TIFF/BMP may not preview in every browser.');
+    setFile(f); setSourceURL(URL.createObjectURL(f)); setCorners([]); setSourceSize([0, 0]);
+    const photo = /\.jpe?g$/i.test(f.name);
+    setSourceKind(photo ? 'photo' : 'artwork');
+    setPin(photo);
+    setNotice(photo ? 'Mark four corners around a flat patch of saree fabric.' : 'Choose Saree on a person if the image includes a model or background.');
   }
   async function openMotif(file: File) {
     try {
@@ -115,8 +120,9 @@ export default function Studio() {
     try {
       if (!sizeOK(width, height)) throw Error('Choose valid dimensions, up to four million pixels.');
       if (corners.length !== 0 && corners.length !== 4) throw Error('Finish all four corners or clear the crop.');
-      const extracted = await extractLocally(file, { width, height, colors, mode, corners });
+      const extracted = await extractLocally(file, { width, height, colors, mode: sourceKind === "photo" ? "reduce" : mode, corners, photo: sourceKind === "photo" ? photoTask : undefined });
       install(extracted);
+      if (sourceKind === 'photo' && photoTask === 'repeat') setRepeat(true);
       setNotice('Extraction ready. Compare with the source, then correct individual pixels.');
     } catch (e) { setError((e as Error).message); } finally { setBusy(false); }
   }
@@ -159,14 +165,34 @@ export default function Studio() {
       <aside className="studio-left">
         <section><h2>Reference & extraction</h2><p className="muted">Start with a flat CAD screenshot or the clearest visible repeat. Remove app controls with the four-point crop.</p>
           <button className="upload-area" onClick={() => fileInput.current?.click()}>{file ? file.name : '＋ Choose a saree design'}<small>PNG · JPG · BMP · TIFF · WebP · Project</small></button>
+          {file && <label>Image type
+            <select value={sourceKind} onChange={event => {
+              const photo = event.target.value === 'photo';
+              setSourceKind(photo ? 'photo' : 'artwork');
+              setCorners([]);
+              setPin(photo);
+            }}>
+              <option value="artwork">Flat artwork or CAD screenshot</option>
+              <option value="photo">Saree on a person</option>
+            </select>
+          </label>}
+          {file && sourceKind === 'photo' && <>
+            <p className="muted">Mark a flat fabric patch inside the saree. Leave out skin, background and deep folds. Include two or more copies for repeat detection.</p>
+            <label>Photo extraction
+              <select value={photoTask} onChange={event => setPhotoTask(event.target.value === 'repeat' ? 'repeat' : 'motif')}>
+                <option value="repeat">Find a repeating unit</option>
+                <option value="motif">Extract one motif or panel</option>
+              </select>
+            </label>
+          </>}
           {sourceURL && <><div className="source-scroll"><div className={'source-frame ' + (pin ? 'pinning' : '')}><img ref={sourceRef} src={sourceURL} alt="Original design reference" onLoad={e => { const im = e.currentTarget; setSourceSize([im.naturalWidth, im.naturalHeight]); if (im.naturalWidth * im.naturalHeight <= 4_000_000) { setWidth(im.naturalWidth); setHeight(im.naturalHeight); } }} onClick={e => {
             if (!pin || corners.length >= 4) return; const r = e.currentTarget.getBoundingClientRect();
             setCorners(c => [...c, [Math.min(sourceSize[0] - 1, Math.max(0, Math.round((e.clientX - r.left) * sourceSize[0] / r.width))), Math.min(sourceSize[1] - 1, Math.max(0, Math.round((e.clientY - r.top) * sourceSize[1] / r.height)))]]);
-          }} />{sourceSize[0] > 0 && corners.map((p, i) => <span key={i} className="pin" style={{ left: `${p[0] / sourceSize[0] * 100}%`, top: `${p[1] / sourceSize[1] * 100}%` }}>{i + 1}</span>)}</div></div><div className="button-row"><button onClick={() => { setCorners([]); setPin(true); }}>Pin crop corners</button><button onClick={() => { setCorners([]); setPin(false); }}>Full image</button></div>{pin && <p className="muted">Click top-left → top-right → bottom-right → bottom-left. {corners.length}/4 selected.</p>}</>}
+          }} />{sourceSize[0] > 0 && corners.map((p, i) => <span key={i} className="pin" style={{ left: `${p[0] / sourceSize[0] * 100}%`, top: `${p[1] / sourceSize[1] * 100}%` }}>{i + 1}</span>)}</div></div><div className="button-row"><button onClick={() => { setCorners([]); setPin(true); }}>Pin crop corners</button>{sourceKind === 'artwork' && <button onClick={() => { setCorners([]); setPin(false); }}>Full image</button>}</div>{pin && <p className="muted">Click top-left → top-right → bottom-right → bottom-left. {corners.length}/4 selected.</p>}</>}
           <div className="field-row"><NumberField label="Output columns" value={width} onChange={setWidth} /><NumberField label="Output rows" value={height} onChange={setHeight} /></div>
-          <label>Color handling<select value={mode} onChange={e => setMode(e.target.value)}><option value="preserve">Preserve exact sampled colors</option><option value="reduce">Reduce colors for a photograph</option></select></label>
-          {mode === 'reduce' && <NumberField label="Color budget" min={8} max={256} value={colors} onChange={setColors} />}
-          <button className="primary" disabled={!file || busy} onClick={extract}>{busy ? 'Extracting…' : design ? 'Extract a new design' : 'Extract editable design'}</button>
+          {sourceKind === 'artwork' && <label>Color handling<select value={mode} onChange={e => setMode(e.target.value)}><option value="preserve">Preserve exact sampled colors</option><option value="reduce">Reduce colors for a photograph</option></select></label>}
+          {(sourceKind === 'photo' || mode === 'reduce') && <NumberField label="Color budget" min={8} max={256} value={colors} onChange={setColors} />}
+          <button className="primary" disabled={!file || busy || (sourceKind === 'photo' && corners.length !== 4)} onClick={extract}>{busy ? 'Extracting…' : sourceKind === 'photo' ? (photoTask === 'repeat' ? 'Find and extract repeat' : 'Extract fabric patch') : design ? 'Extract a new design' : 'Extract editable design'}</button>
           <p className="muted">Photos can lose or hide details. Color reduction is an approximation; missing motifs are never silently replaced.</p>
         </section>
         {design && <section><h2>Palette <span>{counts.filter(v => v > 0).length} used</span></h2><div className="palette">{design.palette.map((c, i) => (showAllColors || counts[i] > 0 || i === active) && <button key={i} className={i === active ? 'chosen' : ''} aria-pressed={i === active} style={{ background: hex(c), opacity: counts[i] ? 1 : .45 }} title={`${i} · ${design.names[i]} · ${counts[i]} pixels`} aria-label={`Palette index ${i}`} onClick={() => setActive(i)}>{i === active ? '✓' : ''}</button>)}</div><label className="check"><input type="checkbox" checked={showAllColors} onChange={e => setShowAllColors(e.target.checked)} />Show unused slots</label><label>Index {active} · {counts[active]} pixels<input value={design.names[active]} maxLength={80} onChange={e => { const n = clone(design); n.names[active] = e.target.value; commit(n); }} /></label><label>Display color (keeps index)<input type="color" value={hex(design.palette[active])} onChange={e => { const v = e.target.value; const n = clone(design); n.palette[active] = [1, 3, 5].map(k => parseInt(v.slice(k, k + 2), 16)) as RGB; commit(n); }} /></label><button disabled={design.palette.length >= 256} onClick={() => { const n = clone(design); n.palette.push([255, 255, 255]); n.names.push('New color'); commit(n); setActive(n.palette.length - 1); }}>＋ Add palette slot</button></section>}
