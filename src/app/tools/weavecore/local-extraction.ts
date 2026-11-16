@@ -1,3 +1,4 @@
+import { adaptivePalette } from './photo-palette';
 import { detectRepeat } from './repeat-detection';
 import { readIndexedBmp } from './indexed-bmp';
 import { sizeOK, type Design, type RGB } from './model';
@@ -51,26 +52,33 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
       notes.push('Extracted the visible fabric patch marked in the photo.');
     }
     const map = new Map<number, number>();
-    const palette: RGB[] = [];
-    const levels = Math.max(2, Math.min(6, Math.floor(Math.cbrt(colors))));
-    const reduce = (value: number) => Math.round(Math.round(value * (levels - 1) / 255) * 255 / (levels - 1));
-    let changed = 0;
-    const pixels = sampleGrid(width, height, image.width, image.height, corners, (ix, iy) => {
-        const offset = (iy * image.width + ix) * 4;
-        if (source[offset + 3] !== 255) throw Error('Flatten transparent pixels onto a background before opening the image.');
-        const rgb: RGB = [source[offset], source[offset + 1], source[offset + 2]];
-        const color = mode === 'reduce' ? rgb.map(reduce) as RGB : rgb;
-        changed += color.reduce((difference, channel, index) => difference + Math.abs(channel - rgb[index]), 0);
-        const key = color[0] * 65536 + color[1] * 256 + color[2];
-        let index = map.get(key);
-        if (index === undefined) {
-          if (palette.length === 256) throw Error('This image has more than 256 sampled colors. Choose Reduce colors, or use a flat-color artwork image.');
-          index = palette.length;
-          map.set(key, index);
-          palette.push(color);
-        }
-        return index;
+    let palette: RGB[] = [];
+    const sampled = mode === 'reduce' ? new Uint8Array(width * height * 3) : null;
+    let pixels = sampleGrid(width, height, image.width, image.height, corners, (x, y, cell) => {
+      const offset = (y * image.width + x) * 4;
+      if (source[offset + 3] !== 255) throw Error('Flatten transparent pixels onto a background before opening the image.');
+      const rgb: RGB = [source[offset], source[offset + 1], source[offset + 2]];
+      if (sampled) {
+        sampled.set(rgb, cell * 3);
+        return 0;
+      }
+      const key = rgb[0] * 65536 + rgb[1] * 256 + rgb[2];
+      const existing = map.get(key);
+      if (existing !== undefined) return existing;
+      if (palette.length === 256) throw Error('This image has more than 256 sampled colors. Choose Reduce colors, or use a flat-color artwork image.');
+      const index = palette.length;
+      map.set(key, index);
+      palette.push(rgb);
+      return index;
     }, right, bottom);
+    let changed = 0;
+    if (sampled) {
+      const reduced = adaptivePalette(sampled, colors);
+      palette = reduced.palette;
+      pixels = reduced.pixels;
+      changed = reduced.error;
+      notes.push(`Used ${palette.length} palette slots derived from the selected fabric colors.`);
+    }
     return {
       schema: 'weavecore.indexed.v1', width, height, pixels, palette,
       names: palette.map((_, index) => `Color ${index}`), regions: [], provenance: { source: 'browser trial' },
@@ -84,7 +92,7 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
   }
 }
 
-function sampleGrid(width: number, height: number, sourceWidth: number, sourceHeight: number, corners: number[][], sample: (x: number, y: number) => number, right = 1, bottom = 1) {
+function sampleGrid(width: number, height: number, sourceWidth: number, sourceHeight: number, corners: number[][], sample: (x: number, y: number, cell: number) => number, right = 1, bottom = 1) {
   const pixels = new Uint8Array(width * height);
   const transform = corners.length ? perspective(corners) : null;
   for (let y = 0; y < height; y++) {
@@ -94,7 +102,7 @@ function sampleGrid(width: number, height: number, sourceWidth: number, sourceHe
         : [(x + .5) * sourceWidth / width - .5, (y + .5) * sourceHeight / height - .5];
       const ix = Math.max(0, Math.min(sourceWidth - 1, Math.round(sx)));
       const iy = Math.max(0, Math.min(sourceHeight - 1, Math.round(sy)));
-      pixels[y * width + x] = sample(ix, iy);
+      pixels[y * width + x] = sample(ix, iy, y * width + x);
     }
   }
   return pixels;

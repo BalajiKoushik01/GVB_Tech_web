@@ -24,3 +24,24 @@ test('repeat detection recovers a two-axis fabric period and rejects flat ground
   assert.deepEqual(detectRepeat(signal, width, height), { columns: 10, rows: 6 });
   assert.deepEqual(detectRepeat(new Uint8Array(width * height).fill(100), width, height), { columns: null, rows: null });
 });
+
+test('adaptive palette keeps dark motif distinct from dark ground at eight colors', async () => {
+  const { adaptivePalette } = await import('../src/app/tools/weavecore/photo-palette.ts');
+  const colors = Uint8Array.from({ length: 3072 }, (_, offset) => {
+    const cell = Math.floor(offset / 3);
+    return (cell % 23 === 0 ? 107 : 25) + cell % 11 + offset % 3;
+  });
+  const result = adaptivePalette(colors, 8);
+  assert.ok(result.palette.length <= 8);
+  assert.ok(result.palette[result.pixels[0]][0] > 100);
+  assert.ok(result.palette[result.pixels[1]][0] < 40);
+  assert.notEqual(result.pixels[0], result.pixels[1]);
+});
+
+test('palette reduction keeps exact tones when they fit the selected budget', async () => {
+  const { adaptivePalette } = await import('../src/app/tools/weavecore/photo-palette.ts');
+  const result = adaptivePalette(Uint8Array.of(20, 12, 25, 23, 13, 27, 20, 12, 25), 2);
+  assert.deepEqual(result.palette, [[20, 12, 25], [23, 13, 27]]);
+  assert.deepEqual([...result.pixels], [0, 1, 0]);
+  assert.equal(result.error, 0);
+});
