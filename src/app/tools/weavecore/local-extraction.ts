@@ -32,6 +32,7 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
     const source = ctx.getImageData(0, 0, image.width, image.height).data;
     let right = 1, bottom = 1;
     const notes: string[] = [];
+    let combine: ((x: number, y: number) => RGB) | undefined;
     if (photo === 'repeat') {
       const gridWidth = Math.min(256, width);
       const gridHeight = Math.min(256, height);
@@ -47,6 +48,31 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
       bottom = repeat.rows ? repeat.rows / (gridHeight - 1) : 1;
       width = Math.max(1, Math.round(width * right));
       height = Math.max(1, Math.round(height * bottom));
+      const rectify = perspective(corners);
+      const repeatsX = repeat.columns ? Math.min(3, Math.floor(gridWidth / repeat.columns)) : 1;
+      const repeatsY = repeat.rows ? Math.min(3, Math.floor(gridHeight / repeat.rows)) : 1;
+      if (repeatsX * repeatsY >= 3) {
+        combine = (x, y) => {
+          const u = repeat.columns ? x / width * right : width === 1 ? .5 : x / (width - 1);
+          const v = repeat.rows ? y / height * bottom : height === 1 ? .5 : y / (height - 1);
+          const samples: RGB[] = [];
+          for (let row = 0; row < repeatsY; row++) {
+            for (let column = 0; column < repeatsX; column++) {
+              const copyU = u + column * right;
+              const copyV = v + row * bottom;
+              if (copyU > 1 || copyV > 1) continue;
+              const [px, py] = rectify(copyU, copyV);
+              const offset = (Math.round(py) * image.width + Math.round(px)) * 4;
+              if (source[offset + 3] === 255) samples.push([source[offset], source[offset + 1], source[offset + 2]]);
+            }
+          }
+          if (!samples.length) throw Error('No opaque fabric pixels were available at a repeat position.');
+          // Select an observed RGB triplet, using the middle brightness to resist glare and shadows.
+          samples.sort((a, b) => luminance(a) - luminance(b));
+          return samples[Math.floor((samples.length - 1) / 2)];
+        };
+        notes.push(`Combined ${repeatsX * repeatsY} visible copies to reduce isolated glare and shadows.`);
+      }
       notes.push(`Repeat found on ${repeat.columns && repeat.rows ? 'both axes' : repeat.columns ? 'the horizontal axis' : 'the vertical axis'}. Inspect the extracted unit before tiling.`);
     } else if (photo) {
       notes.push('Extracted the visible fabric patch marked in the photo.');
@@ -56,8 +82,8 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
     const sampled = mode === 'reduce' ? new Uint8Array(width * height * 3) : null;
     let pixels = sampleGrid(width, height, image.width, image.height, corners, (x, y, cell) => {
       const offset = (y * image.width + x) * 4;
-      if (source[offset + 3] !== 255) throw Error('Flatten transparent pixels onto a background before opening the image.');
-      const rgb: RGB = [source[offset], source[offset + 1], source[offset + 2]];
+      if (!combine && source[offset + 3] !== 255) throw Error('Flatten transparent pixels onto a background before opening the image.');
+      const rgb: RGB = combine ? combine(cell % width, Math.floor(cell / width)) : [source[offset], source[offset + 1], source[offset + 2]];
       if (sampled) {
         sampled.set(rgb, cell * 3);
         return 0;
@@ -90,6 +116,10 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
   } finally {
     image.close();
   }
+}
+
+function luminance([r, g, b]: RGB) {
+  return .299 * r + .587 * g + .114 * b;
 }
 
 function sampleGrid(width: number, height: number, sourceWidth: number, sourceHeight: number, corners: number[][], sample: (x: number, y: number, cell: number) => number, right = 1, bottom = 1) {

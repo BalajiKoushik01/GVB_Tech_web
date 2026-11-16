@@ -56,6 +56,7 @@ test('saree photo mode requires a fabric selection and extracts a smaller repeat
   await page.getByLabel('Output rows').fill('48');
   await extract.click();
   await expect(page.getByText('Repeat found on both axes.', { exact: false })).toBeVisible();
+  await expect(page.getByText('Combined 9 visible copies', { exact: false })).toBeVisible();
   const canvas = page.getByLabel('Editable indexed design');
   await expect(canvas).toHaveAttribute('width', '8');
   await expect(canvas).toHaveAttribute('height', '8');
