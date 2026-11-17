@@ -61,3 +61,13 @@ test('masked repeat recovery keeps observations, fills consensus and flags disag
   assert.deepEqual([...result.support], [1, 3, 0, 0, 0]);
   assert.deepEqual([...ref.indices], [0, 8, 8, 8, 8]);
 });
+
+test('repeat detection ignores masked obstruction colors', async () => {
+  const { detectRepeat } = await import('../src/app/tools/weavecore/repeat-detection.ts');
+  const width = 48, height = 24;
+  const observed = Uint8Array.from({ length: width * height }, (_, i) => i % width < 7 && i < width * 6 ? 0 : 1);
+  const signal = Uint8Array.from(observed, (valid, i) => valid
+    ? (i % width % 8 < 3 && Math.floor(i / width) % 8 < 3 ? 210 : 35)
+    : 12 + i % 111);
+  assert.deepEqual(detectRepeat(signal, width, height, observed), { columns: 8, rows: 8 });
+});

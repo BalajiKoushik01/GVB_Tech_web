@@ -22,6 +22,8 @@ export default function Studio() {
   const [width, setWidth] = useState(1200), [height, setHeight] = useState(800), [colors, setColors] = useState(16);
   const [mode, setMode] = useState('preserve'), [corners, setCorners] = useState<number[][]>([]), [pin, setPin] = useState(false);
   const [sourceKind, setSourceKind] = useState<'artwork' | 'photo'>('artwork');
+  const [masking, setMasking] = useState(false);
+  const [occlusion, setOcclusion] = useState<number[][]>([]);
   const [photoTask, setPhotoTask] = useState<'repeat' | 'motif'>('repeat');
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [notice, setNotice] = useState('');
   const [tool, setTool] = useState<Tool>('pencil'), [paletteIndex, setActive] = useState(0), [brush, setBrush] = useState(1);
@@ -93,7 +95,7 @@ export default function Studio() {
       try { const d = fromJSON(JSON.parse(await f.text())); install(d); setDirty(false); setNotice('Project opened. Palette slots and pixel data restored.'); }
       catch (e) { setError((e as Error).message); } return;
     }
-    setFile(f); setSourceURL(URL.createObjectURL(f)); setCorners([]); setSourceSize([0, 0]);
+    setFile(f); setSourceURL(URL.createObjectURL(f)); setCorners([]); setOcclusion([]); setMasking(false); setSourceSize([0, 0]);
     const photo = /\.jpe?g$/i.test(f.name);
     setSourceKind(photo ? 'photo' : 'artwork');
     setPin(photo);
@@ -120,7 +122,8 @@ export default function Studio() {
     try {
       if (!sizeOK(width, height)) throw Error('Choose valid dimensions, up to four million pixels.');
       if (corners.length !== 0 && corners.length !== 4) throw Error('Finish all four corners or clear the crop.');
-      const extracted = await extractLocally(file, { width, height, colors, mode: sourceKind === "photo" ? "reduce" : mode, corners, photo: sourceKind === "photo" ? photoTask : undefined });
+      if (occlusion.length === 1 && sourceKind === 'photo' && photoTask === 'repeat') throw Error('Mark the second corner of the obstruction.');
+      const extracted = await extractLocally(file, { width, height, colors, mode: sourceKind === "photo" ? "reduce" : mode, corners, photo: sourceKind === "photo" ? photoTask : undefined, occlusion: sourceKind === "photo" && photoTask === "repeat" ? occlusion : undefined });
       install(extracted);
       if (sourceKind === 'photo' && photoTask === 'repeat') setRepeat(true);
       setNotice('Extraction ready. Compare with the source, then correct individual pixels.');
@@ -170,6 +173,8 @@ export default function Studio() {
               const photo = event.target.value === 'photo';
               setSourceKind(photo ? 'photo' : 'artwork');
               setCorners([]);
+              setOcclusion([]);
+              setMasking(false);
               setPin(photo);
             }}>
               <option value="artwork">Flat artwork or CAD screenshot</option>
@@ -179,16 +184,39 @@ export default function Studio() {
           {file && sourceKind === 'photo' && <>
             <p className="muted">Mark a flat fabric patch inside the saree. Leave out skin, background and deep folds. Include two or more copies for repeat detection.</p>
             <label>Photo extraction
-              <select value={photoTask} onChange={event => setPhotoTask(event.target.value === 'repeat' ? 'repeat' : 'motif')}>
+              <select value={photoTask} onChange={event => { setMasking(false); setOcclusion([]); setPhotoTask(event.target.value === 'repeat' ? 'repeat' : 'motif'); }}>
                 <option value="repeat">Find a repeating unit</option>
                 <option value="motif">Extract one motif or panel</option>
               </select>
             </label>
           </>}
           {sourceURL && <><div className="source-scroll"><div className={'source-frame ' + (pin ? 'pinning' : '')}><img ref={sourceRef} src={sourceURL} alt="Original design reference" onLoad={e => { const im = e.currentTarget; setSourceSize([im.naturalWidth, im.naturalHeight]); if (im.naturalWidth * im.naturalHeight <= 4_000_000) { setWidth(im.naturalWidth); setHeight(im.naturalHeight); } }} onClick={e => {
-            if (!pin || corners.length >= 4) return; const r = e.currentTarget.getBoundingClientRect();
-            setCorners(c => [...c, [Math.min(sourceSize[0] - 1, Math.max(0, Math.round((e.clientX - r.left) * sourceSize[0] / r.width))), Math.min(sourceSize[1] - 1, Math.max(0, Math.round((e.clientY - r.top) * sourceSize[1] / r.height)))]]);
-          }} />{sourceSize[0] > 0 && corners.map((p, i) => <span key={i} className="pin" style={{ left: `${p[0] / sourceSize[0] * 100}%`, top: `${p[1] / sourceSize[1] * 100}%` }}>{i + 1}</span>)}</div></div><div className="button-row"><button onClick={() => { setCorners([]); setPin(true); }}>Pin crop corners</button>{sourceKind === 'artwork' && <button onClick={() => { setCorners([]); setPin(false); }}>Full image</button>}</div>{pin && <p className="muted">Click top-left → top-right → bottom-right → bottom-left. {corners.length}/4 selected.</p>}</>}
+            if ((!masking && (!pin || corners.length >= 4)) || sourceSize[0] === 0) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const point = [
+              Math.min(sourceSize[0] - 1, Math.max(0, Math.round((e.clientX - rect.left) * sourceSize[0] / rect.width))),
+              Math.min(sourceSize[1] - 1, Math.max(0, Math.round((e.clientY - rect.top) * sourceSize[1] / rect.height))),
+            ];
+            if (masking) {
+              setOcclusion([...occlusion, point]);
+              if (occlusion.length === 1) setMasking(false);
+            } else {
+              setCorners([...corners, point]);
+            }
+          }} />{sourceSize[0] > 0 && corners.map((p, i) => <span key={i} className="pin" style={{ left: `${p[0] / sourceSize[0] * 100}%`, top: `${p[1] / sourceSize[1] * 100}%` }}>{i + 1}</span>)}{occlusion.length === 2 && <span className="occlusion-mark" aria-hidden="true" style={{
+              left: `${Math.min(occlusion[0][0], occlusion[1][0]) / sourceSize[0] * 100}%`,
+              top: `${Math.min(occlusion[0][1], occlusion[1][1]) / sourceSize[1] * 100}%`,
+              width: `${(Math.abs(occlusion[1][0] - occlusion[0][0]) + 1) / sourceSize[0] * 100}%`,
+              height: `${(Math.abs(occlusion[1][1] - occlusion[0][1]) + 1) / sourceSize[1] * 100}%`,
+            }} />}</div></div><div className="button-row"><button onClick={() => { setCorners([]); setOcclusion([]); setMasking(false); setPin(true); }}>Pin crop corners</button>{sourceKind === 'artwork' && <button onClick={() => { setCorners([]); setPin(false); }}>Full image</button>}</div>{pin && <p className="muted">Click top-left → top-right → bottom-right → bottom-left. {corners.length}/4 selected.</p>}</>}
+          {sourceKind === 'photo' && photoTask === 'repeat' && corners.length === 4 && <>
+            <div className="button-row">
+              <button type="button" onClick={() => { setOcclusion([]); setMasking(true); }}>Mark an obstruction</button>
+              {occlusion.length > 0 && <button type="button" onClick={() => { setOcclusion([]); setMasking(false); }}>Clear obstruction</button>}
+            </div>
+            {masking && <p role="status">Click opposite corners around the obstruction ({occlusion.length}/2).</p>}
+            {occlusion.length === 2 && <p className="muted">Obstruction marked. Recovery needs two agreeing copies for each missing cell.</p>}
+          </>}
           <div className="field-row"><NumberField label="Output columns" value={width} onChange={setWidth} /><NumberField label="Output rows" value={height} onChange={setHeight} /></div>
           {sourceKind === 'artwork' && <label>Color handling<select value={mode} onChange={e => setMode(e.target.value)}><option value="preserve">Preserve exact sampled colors</option><option value="reduce">Reduce colors for a photograph</option></select></label>}
           {(sourceKind === 'photo' || mode === 'reduce') && <NumberField label="Maximum palette colors" min={2} max={256} value={colors} onChange={setColors} />}

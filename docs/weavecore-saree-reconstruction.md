@@ -18,9 +18,9 @@ SAM 3 is a candidate for initial mask proposals. Its checkpoints require granted
 
 Use the existing browser editor for indexed edits and approval. Run heavy model inference in a separate, bounded worker behind an opt-in photo upload workflow. Keep a manual local path. Strip image metadata, validate decoded dimensions and file type, restrict artifact access, set retention and job limits, and avoid accepting arbitrary remote URLs. Test the upload and artifact boundaries before enabling server processing.
 
-## Prototype
+## Prototype and trial workflow
 
-`src/lib/weavecore/reconstruct-repeat.ts` accepts already aligned copies from the same panel and palette. It leaves directly observed indices untouched. A missing cell needs at least two supporting observations and 75% agreement. Index zero remains a valid color. The separate source mask distinguishes an unresolved cell from a confirmed zero. This threshold is a starting hypothesis for testing. The prototype has no model checkpoint, automatic alignment, or public UI integration.
+`src/lib/weavecore/reconstruct-repeat.ts` accepts already aligned copies from the same panel and palette. It leaves directly observed indices untouched. A missing cell needs at least two supporting observations and 75% agreement. Index zero remains a valid color. The separate source mask distinguishes an unresolved cell from a confirmed zero. This threshold is a starting hypothesis for testing. The trial branch exposes this through Mark an obstruction after a four-corner fabric crop. The repeat detector ignores masked samples, and the editor refuses to create a complete design if any missing cells remain unresolved. The prototype uses a planar crop and axis-aligned detected repeats. Automatic garment masks and mesh alignment are separate stages.
 
 ## Acceptance
 

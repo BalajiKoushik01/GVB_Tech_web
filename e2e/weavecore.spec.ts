@@ -60,4 +60,12 @@ test('saree photo mode requires a fabric selection and extracts a smaller repeat
   const canvas = page.getByLabel('Editable indexed design');
   await expect(canvas).toHaveAttribute('width', '8');
   await expect(canvas).toHaveAttribute('height', '8');
+  await page.getByRole('button', { name: 'Mark an obstruction' }).click();
+  for (const [x, y] of [[17, 10], [18, 11]]) {
+    await image.click({ position: { x: x * box.width / 96, y: y * box.height / 64 } });
+  }
+  await extract.click();
+  await expect(page.getByText(/Recovered [1-9]\d* masked cells/)).toBeVisible();
+  await expect(canvas).toHaveAttribute('width', '8');
+
 });

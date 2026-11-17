@@ -24,3 +24,10 @@
 }
 .studio button { min-block-size: 32px; }
 .studio .palette button { min-block-size: unset; }
+
+.occlusion-mark {
+  position: absolute;
+  border: 2px dashed #9f1239;
+  background: #fecdd366;
+  pointer-events: none;
+}
