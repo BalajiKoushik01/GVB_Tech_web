@@ -47,3 +47,11 @@ Choose a separate repeat for the body and border when their motifs differ. Extra
 ## Assemble panels
 
 Keep an editable project for each body, border or pallu artwork. Add the selected panel or import project files in **Assemble saree panels**, set their order and choose the join direction. A vertical join requires matching widths; a horizontal join requires matching heights. Tile or crop artwork before assembly when dimensions differ. The output keeps named region boundaries and indexed artwork. The editor builds the combined palette from used slots and preserves distinct indices within each palette. Identical palette tables with matching slot names share a mapping. Review exported indices against factory assignments.
+
+## Automatic photo analysis trial
+
+The optional **Analyze saree photo** action sends a browser-resized JPEG to Gemini. It proposes visible saree polygons, body/border/pallu polygons, and a separate zari overlay. It also proposes a quadrilateral for each visible fabric patch. The app validates the geometry against the proposed masks, runs the existing repeat extraction locally, and can offer a flat patch when no repeat is detected. These are model proposals. A sampled containment test checks the model's own outlines and cannot prove that they exclude the person or recover the original design.
+
+To enable the provider path in a controlled environment, configure a dedicated `WEAVECORE_VISION_API_KEY`, explicitly select an image-capable `WEAVECORE_VISION_MODEL`, set provider quotas and route rate limits, and set `WEAVECORE_VISION_ENABLED=true`. The endpoint only accepts bounded, inline JPEG data and does not cache images or responses. Photos are sent to Google only when the user invokes the optional action. Manual extraction remains local.
+
+The pipeline still needs live model validation on permissioned full photos with annotated parts. Drafts currently reflect visible fabric, not hallucinated or confirmed hidden artwork.

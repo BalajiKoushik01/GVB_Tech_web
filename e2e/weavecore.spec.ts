@@ -111,3 +111,31 @@ test('assemble separate border and body projects and export the joined design', 
   expect([...bmp.subarray(start, start + 3)]).toEqual([1, 2, 1]);
   expect([...bmp.subarray(start + 4, start + 7)]).toEqual([0, 0, 0]);
 });
+
+test('automatic panel proposals prepare an editable draft without crop clicks', async ({ page }) => {
+  const outline = [[100, 100], [900, 100], [900, 900], [100, 900]];
+  await page.route('**/api/weavecore/analyze', route => route.fulfill({ json: {
+    saree: [outline], zari: [outline],
+    panels: [
+      { kind: 'pallu', outline, crop: [[200, 200], [800, 200], [800, 800], [200, 800]] },
+      { kind: 'border', outline, crop: null },
+    ],
+  } }));
+  await page.goto('/tools/weavecore');
+  const png = await page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 96;
+    canvas.height = 96;
+    const ctx = canvas.getContext('2d')!;
+    ctx.fillStyle = '#093f78';
+    ctx.fillRect(0, 0, 96, 96);
+    return canvas.toDataURL().split(',')[1];
+  });
+  await page.locator('.studio-header input[type=file]').setInputFiles({ name: 'saree.png', mimeType: 'image/png', buffer: Buffer.from(png, 'base64') });
+  await page.getByRole('button', { name: 'Analyze saree photo' }).click();
+  await expect(page.getByText('No usable patch was identified.', { exact: false })).toBeVisible();
+  await page.getByLabel('Photo outline overlay').selectOption('zari');
+  await expect(page.locator('.photo-outline-zari')).toHaveCount(1);
+  await page.getByRole('button', { name: 'Open pallu draft' }).click();
+  await expect(page.getByLabel('Editable indexed design')).toHaveAttribute('width', '57');
+});
