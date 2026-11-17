@@ -24,3 +24,20 @@
 }
 .studio button { min-block-size: 32px; }
 .studio .palette button { min-block-size: unset; }
+
+.occlusion-mark {
+  position: absolute;
+  border: 2px dashed #9f1239;
+  background: #fecdd366;
+  pointer-events: none;
+}
+
+.studio .assembly-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.studio .assembly-list li {
+  border-block-end: 1px solid #d7ddd5;
+  padding-block: .4rem;
+}

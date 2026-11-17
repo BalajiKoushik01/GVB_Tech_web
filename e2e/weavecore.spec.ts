@@ -60,4 +60,54 @@ test('saree photo mode requires a fabric selection and extracts a smaller repeat
   const canvas = page.getByLabel('Editable indexed design');
   await expect(canvas).toHaveAttribute('width', '8');
   await expect(canvas).toHaveAttribute('height', '8');
+  await page.getByRole('button', { name: 'Mark an obstruction' }).click();
+  for (const [x, y] of [[17, 10], [18, 11]]) {
+    await image.click({ position: { x: x * box.width / 96, y: y * box.height / 64 } });
+  }
+  await extract.click();
+  await expect(page.getByText(/Recovered [1-9]\d* masked cells/)).toBeVisible();
+  await expect(canvas).toHaveAttribute('width', '8');
+  await page.getByRole('button', { name: 'Clear obstruction' }).click();
+  await page.getByLabel('I know how many copies are in the crop').check();
+  await page.getByLabel('Copies across crop').fill('8');
+  await page.getByLabel('Copies down crop').fill('6');
+  await extract.click();
+  await expect(page.getByText('Extracted one unit from the specified 8 × 6 layout.', { exact: false })).toBeVisible();
+  await expect(canvas).toHaveAttribute('width', '8');
+  await page.getByLabel('Target panel columns').fill('19');
+  await page.getByLabel('Target panel rows').fill('11');
+  await page.getByRole('button', { name: 'Tile to panel size' }).click();
+  await expect(canvas).toHaveAttribute('width', '19');
+  await expect(canvas).toHaveAttribute('height', '11');
+
+
+});
+
+test('assemble separate border and body projects and export the joined design', async ({ page }) => {
+  await page.goto('/tools/weavecore');
+  const makePanel = (name: string, palette: number[][], names: string[], indices: number[]) => ({
+    name: name + '.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({
+      schema: 'weavecore.indexed.v1', width: 3, height: 1, palette, names,
+      regions: [], indices: Buffer.from(indices).toString('base64'),
+    })),
+  });
+  await page.getByLabel('Import panel projects').setInputFiles([
+    makePanel('Border', [[224, 181, 77], [224, 181, 77]], ['Zari A', 'Zari B'], [0, 1, 0]),
+    makePanel('Body', [[10, 80, 55]], ['Ground'], [0, 0, 0]),
+  ]);
+  await expect(page.getByLabel('Panel 2 name')).toHaveValue('Body');
+  await page.getByRole('button', { name: 'Move panel 2 earlier' }).click();
+  await expect(page.getByLabel('Panel 1 name')).toHaveValue('Body');
+  await page.getByRole('button', { name: 'Build assembled saree' }).click();
+  const canvas = page.getByLabel('Editable indexed design');
+  await expect(canvas).toHaveAttribute('width', '3');
+  await expect(canvas).toHaveAttribute('height', '2');
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export indexed BMP', exact: true }).click();
+  const bmp = await readFile(await (await pending).path());
+  const start = bmp.readUInt32LE(10);
+  expect([...bmp.subarray(start, start + 3)]).toEqual([1, 2, 1]);
+  expect([...bmp.subarray(start + 4, start + 7)]).toEqual([0, 0, 0]);
 });

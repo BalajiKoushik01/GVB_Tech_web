@@ -2,8 +2,9 @@
 
 /* eslint-disable @next/next/no-img-element -- local blob previews require original pixel dimensions */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { bmp, clone, crop, Design, fill, flip, fromJSON, pasteMotif, Region, RepeatMode, repeatSource, replaceIndex, RGB, seams, serialize, sizeOK, stroke, tile, validRegion } from './model';
+import { bmp, clone, crop, Design, fill, flip, fromJSON, pasteMotif, Region, RepeatMode, repeatSource, replaceIndex, RGB, seams, serialize, sizeOK, stroke, tile, tileToSize, validRegion } from './model';
 import { extractLocally, sampleDesign } from './local-extraction';
+import { PanelAssembly } from './PanelAssembly';
 import './studio.css';
 
 type Tool = 'pencil' | 'fill' | 'pick' | 'select';
@@ -22,6 +23,13 @@ export default function Studio() {
   const [width, setWidth] = useState(1200), [height, setHeight] = useState(800), [colors, setColors] = useState(16);
   const [mode, setMode] = useState('preserve'), [corners, setCorners] = useState<number[][]>([]), [pin, setPin] = useState(false);
   const [sourceKind, setSourceKind] = useState<'artwork' | 'photo'>('artwork');
+  const [masking, setMasking] = useState(false);
+  const [occlusion, setOcclusion] = useState<number[][]>([]);
+  const [manualRepeats, setManualRepeats] = useState(false);
+  const [copiesAcross, setCopiesAcross] = useState(2);
+  const [copiesDown, setCopiesDown] = useState(1);
+  const [panelWidth, setPanelWidth] = useState(192);
+  const [panelHeight, setPanelHeight] = useState(144);
   const [photoTask, setPhotoTask] = useState<'repeat' | 'motif'>('repeat');
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [notice, setNotice] = useState('');
   const [tool, setTool] = useState<Tool>('pencil'), [paletteIndex, setActive] = useState(0), [brush, setBrush] = useState(1);
@@ -93,7 +101,7 @@ export default function Studio() {
       try { const d = fromJSON(JSON.parse(await f.text())); install(d); setDirty(false); setNotice('Project opened. Palette slots and pixel data restored.'); }
       catch (e) { setError((e as Error).message); } return;
     }
-    setFile(f); setSourceURL(URL.createObjectURL(f)); setCorners([]); setSourceSize([0, 0]);
+    setManualRepeats(false); setFile(f); setSourceURL(URL.createObjectURL(f)); setCorners([]); setOcclusion([]); setMasking(false); setSourceSize([0, 0]);
     const photo = /\.jpe?g$/i.test(f.name);
     setSourceKind(photo ? 'photo' : 'artwork');
     setPin(photo);
@@ -120,9 +128,14 @@ export default function Studio() {
     try {
       if (!sizeOK(width, height)) throw Error('Choose valid dimensions, up to four million pixels.');
       if (corners.length !== 0 && corners.length !== 4) throw Error('Finish all four corners or clear the crop.');
-      const extracted = await extractLocally(file, { width, height, colors, mode: sourceKind === "photo" ? "reduce" : mode, corners, photo: sourceKind === "photo" ? photoTask : undefined });
+      if (occlusion.length === 1 && sourceKind === 'photo' && photoTask === 'repeat') throw Error('Mark the second corner of the obstruction.');
+      const extracted = await extractLocally(file, { width, height, colors, mode: sourceKind === "photo" ? "reduce" : mode, corners, photo: sourceKind === "photo" ? photoTask : undefined, occlusion: sourceKind === "photo" && photoTask === "repeat" ? occlusion : undefined, repeatCounts: sourceKind === "photo" && photoTask === "repeat" && manualRepeats ? { across: copiesAcross, down: copiesDown } : undefined });
       install(extracted);
-      if (sourceKind === 'photo' && photoTask === 'repeat') setRepeat(true);
+      if (sourceKind === 'photo' && photoTask === 'repeat') {
+        setPanelWidth(extracted.width * 2);
+        setPanelHeight(extracted.height * 2);
+        setRepeat(true);
+      }
       setNotice('Extraction ready. Compare with the source, then correct individual pixels.');
     } catch (e) { setError((e as Error).message); } finally { setBusy(false); }
   }
@@ -170,6 +183,8 @@ export default function Studio() {
               const photo = event.target.value === 'photo';
               setSourceKind(photo ? 'photo' : 'artwork');
               setCorners([]);
+              setOcclusion([]);
+              setMasking(false);
               setPin(photo);
             }}>
               <option value="artwork">Flat artwork or CAD screenshot</option>
@@ -179,16 +194,49 @@ export default function Studio() {
           {file && sourceKind === 'photo' && <>
             <p className="muted">Mark a flat fabric patch inside the saree. Leave out skin, background and deep folds. Include two or more copies for repeat detection.</p>
             <label>Photo extraction
-              <select value={photoTask} onChange={event => setPhotoTask(event.target.value === 'repeat' ? 'repeat' : 'motif')}>
+              <select value={photoTask} onChange={event => { setMasking(false); setOcclusion([]); setPhotoTask(event.target.value === 'repeat' ? 'repeat' : 'motif'); }}>
                 <option value="repeat">Find a repeating unit</option>
                 <option value="motif">Extract one motif or panel</option>
               </select>
             </label>
           </>}
           {sourceURL && <><div className="source-scroll"><div className={'source-frame ' + (pin ? 'pinning' : '')}><img ref={sourceRef} src={sourceURL} alt="Original design reference" onLoad={e => { const im = e.currentTarget; setSourceSize([im.naturalWidth, im.naturalHeight]); if (im.naturalWidth * im.naturalHeight <= 4_000_000) { setWidth(im.naturalWidth); setHeight(im.naturalHeight); } }} onClick={e => {
-            if (!pin || corners.length >= 4) return; const r = e.currentTarget.getBoundingClientRect();
-            setCorners(c => [...c, [Math.min(sourceSize[0] - 1, Math.max(0, Math.round((e.clientX - r.left) * sourceSize[0] / r.width))), Math.min(sourceSize[1] - 1, Math.max(0, Math.round((e.clientY - r.top) * sourceSize[1] / r.height)))]]);
-          }} />{sourceSize[0] > 0 && corners.map((p, i) => <span key={i} className="pin" style={{ left: `${p[0] / sourceSize[0] * 100}%`, top: `${p[1] / sourceSize[1] * 100}%` }}>{i + 1}</span>)}</div></div><div className="button-row"><button onClick={() => { setCorners([]); setPin(true); }}>Pin crop corners</button>{sourceKind === 'artwork' && <button onClick={() => { setCorners([]); setPin(false); }}>Full image</button>}</div>{pin && <p className="muted">Click top-left → top-right → bottom-right → bottom-left. {corners.length}/4 selected.</p>}</>}
+            if ((!masking && (!pin || corners.length >= 4)) || sourceSize[0] === 0) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            const point = [
+              Math.min(sourceSize[0] - 1, Math.max(0, Math.round((e.clientX - rect.left) * sourceSize[0] / rect.width))),
+              Math.min(sourceSize[1] - 1, Math.max(0, Math.round((e.clientY - rect.top) * sourceSize[1] / rect.height))),
+            ];
+            if (masking) {
+              setOcclusion([...occlusion, point]);
+              if (occlusion.length === 1) setMasking(false);
+            } else {
+              setCorners([...corners, point]);
+            }
+          }} />{sourceSize[0] > 0 && corners.map((p, i) => <span key={i} className="pin" style={{ left: `${p[0] / sourceSize[0] * 100}%`, top: `${p[1] / sourceSize[1] * 100}%` }}>{i + 1}</span>)}{occlusion.length === 2 && <span className="occlusion-mark" aria-hidden="true" style={{
+              left: `${Math.min(occlusion[0][0], occlusion[1][0]) / sourceSize[0] * 100}%`,
+              top: `${Math.min(occlusion[0][1], occlusion[1][1]) / sourceSize[1] * 100}%`,
+              width: `${(Math.abs(occlusion[1][0] - occlusion[0][0]) + 1) / sourceSize[0] * 100}%`,
+              height: `${(Math.abs(occlusion[1][1] - occlusion[0][1]) + 1) / sourceSize[1] * 100}%`,
+            }} />}</div></div><div className="button-row"><button onClick={() => { setCorners([]); setOcclusion([]); setMasking(false); setPin(true); }}>Pin crop corners</button>{sourceKind === 'artwork' && <button onClick={() => { setCorners([]); setPin(false); }}>Full image</button>}</div>{pin && <p className="muted">Click top-left → top-right → bottom-right → bottom-left. {corners.length}/4 selected.</p>}</>}
+          {file && sourceKind === 'photo' && photoTask === 'repeat' && <>
+            <label className="check"><input type="checkbox" checked={manualRepeats} onChange={event => setManualRepeats(event.target.checked)} />I know how many copies are in the crop</label>
+            {manualRepeats && <>
+              <p className="muted">Outline complete copies. Set the crop grid to a multiple of the copy count on each axis.</p>
+              <div className="field-row">
+                <NumberField label="Copies across crop" max={64} value={copiesAcross} onChange={setCopiesAcross} />
+                <NumberField label="Copies down crop" max={64} value={copiesDown} onChange={setCopiesDown} />
+              </div>
+            </>}
+          </>}
+          {sourceKind === 'photo' && photoTask === 'repeat' && corners.length === 4 && <>
+            <div className="button-row">
+              <button type="button" onClick={() => { setOcclusion([]); setMasking(true); }}>Mark an obstruction</button>
+              {occlusion.length > 0 && <button type="button" onClick={() => { setOcclusion([]); setMasking(false); }}>Clear obstruction</button>}
+            </div>
+            {masking && <p role="status">Click opposite corners around the obstruction ({occlusion.length}/2).</p>}
+            {occlusion.length === 2 && <p className="muted">Obstruction marked. Recovery needs two agreeing copies for each missing cell.</p>}
+          </>}
           <div className="field-row"><NumberField label="Output columns" value={width} onChange={setWidth} /><NumberField label="Output rows" value={height} onChange={setHeight} /></div>
           {sourceKind === 'artwork' && <label>Color handling<select value={mode} onChange={e => setMode(e.target.value)}><option value="preserve">Preserve exact sampled colors</option><option value="reduce">Reduce colors for a photograph</option></select></label>}
           {(sourceKind === 'photo' || mode === 'reduce') && <NumberField label="Maximum palette colors" min={2} max={256} value={colors} onChange={setColors} />}
@@ -207,6 +255,19 @@ export default function Studio() {
         </> : <div className="studio-empty"><div className="woven-art" /><span className="eyebrow">DESIGNED FOR THE DOT WORK</span><h1>Keep every<br />detail intentional.</h1><p>Extract your saree artwork into a real indexed canvas. Refine zari, meena, borders and repeats at the pixel level, then export an editable bitmap.</p><button className="primary" onClick={() => { install(sampleDesign()); setDirty(false); }}>Try the sample design</button><div className="empty-features"><span>Exact palette preservation</span><span>Pixel editing & undo</span><span>8-bit BMP export</span></div></div>}
       </section>
       <aside className="studio-right">
+        <PanelAssembly design={design} selection={selection} onAssemble={assembled => {
+          if (design) {
+            commit(assembled);
+            setSelection(null);
+            setHooks(assembled.width);
+            setZoom(Math.min(2, 700 / assembled.width));
+            setRepeat(false);
+          } else {
+            install(assembled);
+          }
+          setError('');
+          setNotice('Saree panels assembled. Review the palette before exporting.');
+        }} />
         {design ? <><section><h2>Panels & repeats</h2><p className="muted">Drag with Select panel to isolate a body, border, pallu or motif. Rectangles stay editable in the project.</p><label>Panel name<input value={regionName} maxLength={80} onChange={e => setRegionName(e.target.value)} /></label>
           {selection && <><div className="field-row"><NumberField label="X" min={0} value={selection.x} onChange={v => setSelection({ ...selection, x: v })} /><NumberField label="Y" min={0} value={selection.y} onChange={v => setSelection({ ...selection, y: v })} /></div><div className="field-row"><NumberField label="Width" value={selection.width} onChange={v => setSelection({ ...selection, width: v })} /><NumberField label="Height" value={selection.height} onChange={v => setSelection({ ...selection, height: v })} /></div><div className="button-row"><button onClick={() => { if (!validRegion(selection, design.width, design.height) || design.regions.length >= 100) { setError('Invalid selection or panel limit reached.'); return; } const n = clone(design); n.regions.push({ ...selection, name: regionName }); commit(n); }}>Save panel</button><button onClick={() => operation(() => crop(design, selection))}>Crop to panel</button></div></>}
           {design.regions.map((r, i) => <div className="region-row" key={i}><button onClick={() => { setSelection(r); setRegionName(r.name); }}>{r.name} <small>{r.width} × {r.height}</small></button><button aria-label={`Delete ${r.name}`} onClick={() => { const n = clone(design); n.regions.splice(i, 1); commit(n); }}>×</button></div>)}
@@ -217,7 +278,17 @@ export default function Studio() {
               <option value="half-drop">Half-drop columns</option>
               <option value="brick">Half-brick rows</option>
             </select>
-          </label><button onClick={() => operation(() => tile(design, across, down, repeatMode))}>Build repeats</button><p className="muted">Crop to a clean repeat first. Mirroring and tiling happen only when you request them.</p></section>
+          </label><button onClick={() => operation(() => tile(design, across, down, repeatMode))}>Build repeats</button>
+          <div className="field-row">
+            <NumberField label="Target panel columns" value={panelWidth} onChange={setPanelWidth} />
+            <NumberField label="Target panel rows" value={panelHeight} onChange={setPanelHeight} />
+          </div>
+          <button onClick={() => operation(() => {
+            const panel = tileToSize(design, panelWidth, panelHeight, repeatMode);
+            setHooks(panel.width);
+            return panel;
+          })}>Tile to panel size</button>
+          <p className="muted">Tile a clean repeat at its current pixel size. Partial copies end at the panel edge.</p></section>
           <section>
             <h2>Motif and palette edits</h2>
             <button disabled={!selection || !validRegion(selection, design.width, design.height)} onClick={() => {

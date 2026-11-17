@@ -45,3 +45,41 @@ test('palette reduction keeps exact tones when they fit the selected budget', as
   assert.deepEqual([...result.pixels], [0, 1, 0]);
   assert.equal(result.error, 0);
 });
+
+test('masked repeat recovery keeps observations, fills consensus and flags disagreement', async () => {
+  const { reconstructRepeat, CellSource } = await import('../src/lib/weavecore/reconstruct-repeat.ts');
+  const copy = (indices, observed) => ({ indices: Uint8Array.from(indices), observed: Uint8Array.from(observed) });
+  const ref = copy([0, 8, 8, 8, 8], [1, 0, 0, 0, 0]);
+  const result = reconstructRepeat(ref, [
+    copy([9, 0, 1, 1, 2], [1, 1, 1, 1, 0]),
+    copy([9, 0, 2, 2, 2], [1, 1, 1, 1, 1]),
+    copy([9, 0, 2, 3, 2], [1, 1, 1, 1, 0]),
+  ]);
+  const { Observed, MatchingRepeats, Unresolved } = CellSource;
+  assert.deepEqual([...result.indices], [0, 0, 0, 0, 0]);
+  assert.deepEqual([...result.source], [Observed, MatchingRepeats, Unresolved, Unresolved, Unresolved]);
+  assert.deepEqual([...result.support], [1, 3, 0, 0, 0]);
+  assert.deepEqual([...ref.indices], [0, 8, 8, 8, 8]);
+});
+
+test('repeat detection ignores masked obstruction colors', async () => {
+  const { detectRepeat } = await import('../src/app/tools/weavecore/repeat-detection.ts');
+  const width = 48, height = 24;
+  const observed = Uint8Array.from({ length: width * height }, (_, i) => i % width < 7 && i < width * 6 ? 0 : 1);
+  const signal = Uint8Array.from(observed, (valid, i) => valid
+    ? (i % width % 8 < 3 && Math.floor(i / width) % 8 < 3 ? 210 : 35)
+    : 12 + i % 111);
+  assert.deepEqual(detectRepeat(signal, width, height, observed), { columns: 8, rows: 8 });
+});
+
+test('tiling to exact dimensions keeps indexed dots and crops the final copies', async () => {
+  const { tileToSize } = await import('../src/app/tools/weavecore/model.ts');
+  const input = { width: 2, height: 2, pixels: Uint8Array.of(0, 1, 2, 3),
+    palette: [[0, 0, 0], [10, 10, 10], [20, 20, 20], [30, 30, 30]],
+    names: ['A', 'B', 'C', 'D'], regions: [] };
+  const panel = tileToSize(input, 5, 3);
+  assert.deepEqual([panel.width, panel.height], [5, 3]);
+  assert.deepEqual([...panel.pixels], [0, 1, 0, 1, 0, 2, 3, 2, 3, 2, 0, 1, 0, 1, 0]);
+  assert.deepEqual(panel.palette, input.palette);
+  assert.throws(() => tileToSize(input, 5000, 5000));
+});

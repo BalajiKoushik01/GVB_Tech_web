@@ -1,11 +1,12 @@
+import { reconstructRepeat, CellSource } from '../../../lib/weavecore/reconstruct-repeat';
 import { adaptivePalette } from './photo-palette';
 import { detectRepeat } from './repeat-detection';
 import { readIndexedBmp } from './indexed-bmp';
 import { sizeOK, type Design, type RGB } from './model';
 
-type Options = { width: number; height: number; colors: number; mode: string; corners: number[][]; photo?: "repeat" | "motif" };
+type Options = { width: number; height: number; colors: number; mode: string; corners: number[][]; photo?: "repeat" | "motif"; occlusion?: number[][]; repeatCounts?: { across: number; down: number } };
 
-export async function extractLocally(file: File, { width, height, colors, mode, corners, photo }: Options): Promise<Design> {
+export async function extractLocally(file: File, { width, height, colors: paletteBudget, mode, corners, photo, occlusion, repeatCounts }: Options): Promise<Design> {
   if (!sizeOK(width, height)) throw Error('Choose valid output dimensions, up to four million cells.');
   if (photo && corners.length !== 4) throw Error('Mark four corners around the fabric only.');
   const bmp = mode === 'preserve' ? readIndexedBmp(await file.arrayBuffer()) : null;
@@ -30,31 +31,97 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
     if (!ctx) throw Error('Image editing is unavailable in this browser.');
     ctx.drawImage(image, 0, 0);
     const source = ctx.getImageData(0, 0, image.width, image.height).data;
+    const excluded = (x: number, y: number) => {
+      if (!occlusion || occlusion.length !== 2) return false;
+      const [a, b] = occlusion;
+      return x >= Math.min(a[0], b[0]) && x <= Math.max(a[0], b[0]) &&
+             y >= Math.min(a[1], b[1]) && y <= Math.max(a[1], b[1]);
+    };
     let right = 1, bottom = 1;
+    let columns = false, rows = false;
     const notes: string[] = [];
     let combine: ((x: number, y: number) => RGB) | undefined;
     if (photo === 'repeat') {
       const gridWidth = Math.min(256, width);
       const gridHeight = Math.min(256, height);
-      const light = sampleGrid(gridWidth, gridHeight, image.width, image.height, corners, (x, y) => {
+      const observed = new Uint8Array(gridWidth * gridHeight);
+      const light = sampleGrid(gridWidth, gridHeight, image.width, image.height, corners, (x, y, cell) => {
         const offset = (y * image.width + x) * 4;
+        observed[cell] = source[offset + 3] === 255 && !excluded(x, y) ? 1 : 0;
         return Math.round(.299 * source[offset] + .587 * source[offset + 1] + .114 * source[offset + 2]);
       });
-      const repeat = detectRepeat(light, gridWidth, gridHeight);
-      if (!repeat.columns && !repeat.rows) {
-        throw Error('No reliable repeat found. Select a flatter patch with at least two copies, or switch to Extract one motif.');
+      const detected = repeatCounts ? null : detectRepeat(light, gridWidth, gridHeight, observed.every(Boolean) ? undefined : observed);
+      if (!repeatCounts && !detected?.columns && !detected?.rows) {
+        throw Error('No reliable repeat found. Enter the number of complete copies in the crop or extract one motif.');
       }
-      right = repeat.columns ? repeat.columns / (gridWidth - 1) : 1;
-      bottom = repeat.rows ? repeat.rows / (gridHeight - 1) : 1;
-      width = Math.max(1, Math.round(width * right));
-      height = Math.max(1, Math.round(height * bottom));
+      columns = repeatCounts ? repeatCounts.across > 1 : Boolean(detected?.columns);
+      rows = repeatCounts ? repeatCounts.down > 1 : Boolean(detected?.rows);
+      if (repeatCounts) {
+        const fits = (count: number, size: number) => Number.isInteger(count) && count >= 1 && count <= 64 && size % count === 0;
+        if (!fits(repeatCounts.across, width) || !fits(repeatCounts.down, height)) {
+          throw Error('The crop grid dimensions must divide evenly by the number of copies, from 1 to 64 per axis.');
+        }
+        right = columns ? width / repeatCounts.across / (width - 1) : 1;
+        bottom = rows ? height / repeatCounts.down / (height - 1) : 1;
+        width /= repeatCounts.across;
+        height /= repeatCounts.down;
+      } else {
+        right = detected?.columns ? detected.columns / (gridWidth - 1) : 1;
+        bottom = detected?.rows ? detected.rows / (gridHeight - 1) : 1;
+        width = Math.max(1, Math.round(width * right));
+        height = Math.max(1, Math.round(height * bottom));
+      }
       const rectify = perspective(corners);
-      const repeatsX = repeat.columns ? Math.min(3, Math.floor(gridWidth / repeat.columns)) : 1;
-      const repeatsY = repeat.rows ? Math.min(3, Math.floor(gridHeight / repeat.rows)) : 1;
+      const repeatsX = Math.min(3, repeatCounts?.across ?? (detected?.columns ? Math.floor(gridWidth / detected.columns) : 1));
+      const repeatsY = Math.min(3, repeatCounts?.down ?? (detected?.rows ? Math.floor(gridHeight / detected.rows) : 1));
+      if (observed.includes(0) || occlusion?.length === 2) {
+        const cellCount = width * height;
+        const copyCount = repeatsX * repeatsY;
+        if (cellCount > 250_000) throw Error('Use a smaller output grid for masked repeat recovery.');
+        const colors = new Uint8Array(cellCount * copyCount * 3);
+        const copies = Array.from({ length: copyCount }, () => ({
+          observed: new Uint8Array(cellCount), indices: new Uint8Array(cellCount),
+        }));
+        let count = 0;
+        for (let copy = 0; copy < copyCount; copy++) {
+          for (let cell = 0; cell < cellCount; cell++) {
+            const x = cell % width, y = Math.floor(cell / width);
+            const u = (columns ? x / width * right : width === 1 ? .5 : x / (width - 1)) + (copy % repeatsX) * right;
+            const v = (rows ? y / height * bottom : height === 1 ? .5 : y / (height - 1)) + Math.floor(copy / repeatsX) * bottom;
+            if (u > 1 || v > 1) continue;
+            const [px, py] = rectify(u, v);
+            const sx = Math.round(px), sy = Math.round(py);
+            const offset = (sy * image.width + sx) * 4;
+            if (source[offset + 3] !== 255 || excluded(sx, sy)) continue;
+            copies[copy].observed[cell] = 1;
+            colors.set(source.subarray(offset, offset + 3), count++ * 3);
+          }
+        }
+        if (!count) throw Error('No visible fabric remained after masking.');
+        const reduced = adaptivePalette(colors.subarray(0, count * 3), paletteBudget);
+        let cursor = 0;
+        for (const copy of copies) {
+          for (let cell = 0; cell < cellCount; cell++) if (copy.observed[cell]) copy.indices[cell] = reduced.pixels[cursor++];
+        }
+        const recovered = reconstructRepeat(copies[0], copies.slice(1));
+        const unresolved = recovered.source.filter(cell => cell === CellSource.Unresolved).length;
+        if (unresolved) throw Error(`${unresolved} repeat cells lack agreement. Select a patch with more intact copies or a smaller obstruction.`);
+        const repaired = recovered.source.filter(cell => cell === CellSource.MatchingRepeats).length;
+        return {
+          schema: 'weavecore.indexed.v1', width, height, pixels: recovered.indices, palette: reduced.palette,
+          names: reduced.palette.map((_, index) => `Color ${index}`), regions: [],
+          provenance: { source: 'masked repeat recovery', originalRepairedOffsets: recovered.source.reduce<number[]>((out, value, index) => {
+            if (value === CellSource.MatchingRepeats) out.push(index);
+            return out;
+          }, []) },
+          report: { used_colors: new Set(recovered.indices).size, rgb_mae: null, exact_sampled_rgb: null,
+            notes: [`Recovered ${repaired} masked cells from agreeing visible copies.`, 'Palette indices in unmasked cells come from the reference copy.'] },
+        };
+      }
       if (repeatsX * repeatsY >= 3) {
         combine = (x, y) => {
-          const u = repeat.columns ? x / width * right : width === 1 ? .5 : x / (width - 1);
-          const v = repeat.rows ? y / height * bottom : height === 1 ? .5 : y / (height - 1);
+          const u = columns ? x / width * right : width === 1 ? .5 : x / (width - 1);
+          const v = rows ? y / height * bottom : height === 1 ? .5 : y / (height - 1);
           const samples: RGB[] = [];
           for (let row = 0; row < repeatsY; row++) {
             for (let column = 0; column < repeatsX; column++) {
@@ -73,7 +140,9 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
         };
         notes.push(`Combined ${repeatsX * repeatsY} visible copies to reduce isolated glare and shadows.`);
       }
-      notes.push(`Repeat found on ${repeat.columns && repeat.rows ? 'both axes' : repeat.columns ? 'the horizontal axis' : 'the vertical axis'}. Inspect the extracted unit before tiling.`);
+      notes.push(repeatCounts
+        ? `Extracted one unit from the specified ${repeatCounts.across} × ${repeatCounts.down} layout. Inspect the repeat preview before tiling.`
+        : `Repeat found on ${columns && rows ? 'both axes' : columns ? 'the horizontal axis' : 'the vertical axis'}. Inspect the extracted unit before tiling.`);
     } else if (photo) {
       notes.push('Extracted the visible fabric patch marked in the photo.');
     }
@@ -96,10 +165,10 @@ export async function extractLocally(file: File, { width, height, colors, mode, 
       map.set(key, index);
       palette.push(rgb);
       return index;
-    }, right, bottom);
+    }, right, bottom, columns, rows);
     let changed = 0;
     if (sampled) {
-      const reduced = adaptivePalette(sampled, colors);
+      const reduced = adaptivePalette(sampled, paletteBudget);
       palette = reduced.palette;
       pixels = reduced.pixels;
       changed = reduced.error;
@@ -122,13 +191,13 @@ function luminance([r, g, b]: RGB) {
   return .299 * r + .587 * g + .114 * b;
 }
 
-function sampleGrid(width: number, height: number, sourceWidth: number, sourceHeight: number, corners: number[][], sample: (x: number, y: number, cell: number) => number, right = 1, bottom = 1) {
+function sampleGrid(width: number, height: number, sourceWidth: number, sourceHeight: number, corners: number[][], sample: (x: number, y: number, cell: number) => number, right = 1, bottom = 1, repeatX = false, repeatY = false) {
   const pixels = new Uint8Array(width * height);
   const transform = corners.length ? perspective(corners) : null;
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const [sx, sy] = transform
-        ? transform(right < 1 ? x / width * right : width === 1 ? .5 : x / (width - 1), bottom < 1 ? y / height * bottom : height === 1 ? .5 : y / (height - 1))
+        ? transform(repeatX ? x / width * right : width === 1 ? .5 : x / (width - 1), repeatY ? y / height * bottom : height === 1 ? .5 : y / (height - 1))
         : [(x + .5) * sourceWidth / width - .5, (y + .5) * sourceHeight / height - .5];
       const ix = Math.max(0, Math.min(sourceWidth - 1, Math.round(sx)));
       const iy = Math.max(0, Math.min(sourceHeight - 1, Math.round(sy)));

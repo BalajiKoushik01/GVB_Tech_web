@@ -55,8 +55,13 @@ export function crop(d: Design, r: Region): Design {
   return out;
 }
 export function tile(d: Design, across: number, down: number, mode: RepeatMode = "straight"): Design {
-  if (!Number.isInteger(across) || !Number.isInteger(down) || !sizeOK(d.width * across, d.height * down)) throw Error('Repeat exceeds the four-million-pixel limit');
-  const out = clone(d); out.width *= across; out.height *= down; out.regions = [];
+  if (!Number.isInteger(across) || !Number.isInteger(down)) throw Error('Repeat counts must be whole numbers.');
+  return tileToSize(d, d.width * across, d.height * down, mode);
+}
+
+export function tileToSize(d: Design, width: number, height: number, mode: RepeatMode = 'straight'): Design {
+  if (!sizeOK(width, height)) throw Error('Choose valid panel dimensions, up to four million cells.');
+  const out = { ...clone(d), width, height, regions: [] };
   out.pixels = new Uint8Array(out.width * out.height);
   for (let y = 0; y < out.height; y++) {
     for (let x = 0; x < out.width; x++) {
