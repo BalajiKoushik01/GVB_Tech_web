@@ -227,7 +227,7 @@ export default function Studio() {
           </>}
           {file && <div className="photo-analysis-controls">
             <button type="button" disabled={busy} aria-describedby="weavecore-photo-privacy" onClick={runPhotoAnalysis}>Analyze saree photo</button>
-            <p className="muted" id="weavecore-photo-privacy">This optional AI tool sends a reduced copy of the photo to Google Gemini. Manual editing stays on your device.</p>
+            <p className="muted" id="weavecore-photo-privacy">This optional AI tool sends a reduced copy of the photo to Google Gemini. Google may use free-tier inputs to improve its products. Manual editing stays on your device.</p>
             {photoResult && <>
               <label>Photo outline overlay
                 <select value={overlay} onChange={event => setOverlay(event.target.value as typeof overlay)}>

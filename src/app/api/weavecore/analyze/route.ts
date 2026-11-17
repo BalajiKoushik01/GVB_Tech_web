@@ -25,8 +25,8 @@ const prompt = [
 
 export async function POST(request: Request) {
   const key = process.env.WEAVECORE_VISION_API_KEY;
-  const modelName = process.env.WEAVECORE_VISION_MODEL;
-  if (!key || !modelName || process.env.WEAVECORE_VISION_ENABLED !== 'true') {
+  const modelName = process.env.WEAVECORE_VISION_MODEL || 'gemini-3.8-flash';
+  if (!key || process.env.WEAVECORE_VISION_ENABLED !== 'true') {
     return json({ error: 'Automatic photo analysis is not enabled on this deployment. Use the manual photo tools.' }, 503);
   }
   try {
@@ -48,7 +48,10 @@ export async function POST(request: Request) {
     return json({ ...value, panels: value.panels.map(panel => ({
       ...panel, crop: cropInsidePanel(panel, value.saree) ? panel.crop : null,
     })) });
-  } catch {
+  } catch (cause) {
+    if (typeof cause === 'object' && cause !== null && 'status' in cause && cause.status === 429) {
+      return json({ error: 'Google’s analysis quota is temporarily exhausted. Try later or use manual photo extraction.' }, 429);
+    }
     return json({ error: 'Photo analysis failed. Try again or use the manual photo tools.' }, 502);
   }
 }
