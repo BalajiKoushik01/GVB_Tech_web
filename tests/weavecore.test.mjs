@@ -71,3 +71,15 @@ test('repeat detection ignores masked obstruction colors', async () => {
     : 12 + i % 111);
   assert.deepEqual(detectRepeat(signal, width, height, observed), { columns: 8, rows: 8 });
 });
+
+test('tiling to exact dimensions keeps indexed dots and crops the final copies', async () => {
+  const { tileToSize } = await import('../src/app/tools/weavecore/model.ts');
+  const input = { width: 2, height: 2, pixels: Uint8Array.of(0, 1, 2, 3),
+    palette: [[0, 0, 0], [10, 10, 10], [20, 20, 20], [30, 30, 30]],
+    names: ['A', 'B', 'C', 'D'], regions: [] };
+  const panel = tileToSize(input, 5, 3);
+  assert.deepEqual([panel.width, panel.height], [5, 3]);
+  assert.deepEqual([...panel.pixels], [0, 1, 0, 1, 0, 2, 3, 2, 3, 2, 0, 1, 0, 1, 0]);
+  assert.deepEqual(panel.palette, input.palette);
+  assert.throws(() => tileToSize(input, 5000, 5000));
+});

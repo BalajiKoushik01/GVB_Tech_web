@@ -67,5 +67,18 @@ test('saree photo mode requires a fabric selection and extracts a smaller repeat
   await extract.click();
   await expect(page.getByText(/Recovered [1-9]\d* masked cells/)).toBeVisible();
   await expect(canvas).toHaveAttribute('width', '8');
+  await page.getByRole('button', { name: 'Clear obstruction' }).click();
+  await page.getByLabel('I know how many copies are in the crop').check();
+  await page.getByLabel('Copies across crop').fill('8');
+  await page.getByLabel('Copies down crop').fill('6');
+  await extract.click();
+  await expect(page.getByText('Extracted one unit from the specified 8 × 6 layout.', { exact: false })).toBeVisible();
+  await expect(canvas).toHaveAttribute('width', '8');
+  await page.getByLabel('Target panel columns').fill('19');
+  await page.getByLabel('Target panel rows').fill('11');
+  await page.getByRole('button', { name: 'Tile to panel size' }).click();
+  await expect(canvas).toHaveAttribute('width', '19');
+  await expect(canvas).toHaveAttribute('height', '11');
+
 
 });

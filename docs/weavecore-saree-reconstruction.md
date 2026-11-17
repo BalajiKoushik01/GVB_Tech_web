@@ -37,3 +37,9 @@ Use the existing browser editor for indexed edits and approval. Run heavy model 
 - [DeepFashion2 paper](https://openaccess.thecvf.com/content_CVPR_2019/papers/Ge_DeepFashion2_A_Versatile_Benchmark_for_Detection_Pose_Estimation_Segmentation_and_CVPR_2019_paper.pdf)
 - [Near-regular texture analysis and manipulation](https://publications.ri.cmu.edu/near-regular-texture-analysis-and-manipulation)
 - [LaMa inpainting repository and paper](https://github.com/advimman/lama)
+
+## Repeat-first workflow
+
+Use a single repeat unit as the editable master for each repeating panel. Mark a crop with complete copies, then let the detector estimate the periods or enter the known copy count for each axis. Check the preview before building the panel. Target panel columns and rows repeat the unit at its original dot size and crop partial copies at the edges. Save the single-unit project before building the panel if you want to use it again.
+
+Choose a separate repeat for the body and border when their motifs differ. Extract a unique pallu scene as a panel. Straight repeat detection assumes an approximately planar patch. Staggered and mirrored layouts are explicit output choices in the editor.
