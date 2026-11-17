@@ -4,6 +4,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { bmp, clone, crop, Design, fill, flip, fromJSON, pasteMotif, Region, RepeatMode, repeatSource, replaceIndex, RGB, seams, serialize, sizeOK, stroke, tile, tileToSize, validRegion } from './model';
 import { extractLocally, sampleDesign } from './local-extraction';
+import { PanelAssembly } from './PanelAssembly';
 import './studio.css';
 
 type Tool = 'pencil' | 'fill' | 'pick' | 'select';
@@ -254,6 +255,19 @@ export default function Studio() {
         </> : <div className="studio-empty"><div className="woven-art" /><span className="eyebrow">DESIGNED FOR THE DOT WORK</span><h1>Keep every<br />detail intentional.</h1><p>Extract your saree artwork into a real indexed canvas. Refine zari, meena, borders and repeats at the pixel level, then export an editable bitmap.</p><button className="primary" onClick={() => { install(sampleDesign()); setDirty(false); }}>Try the sample design</button><div className="empty-features"><span>Exact palette preservation</span><span>Pixel editing & undo</span><span>8-bit BMP export</span></div></div>}
       </section>
       <aside className="studio-right">
+        <PanelAssembly design={design} selection={selection} onAssemble={assembled => {
+          if (design) {
+            commit(assembled);
+            setSelection(null);
+            setHooks(assembled.width);
+            setZoom(Math.min(2, 700 / assembled.width));
+            setRepeat(false);
+          } else {
+            install(assembled);
+          }
+          setError('');
+          setNotice('Saree panels assembled. Review the palette before exporting.');
+        }} />
         {design ? <><section><h2>Panels & repeats</h2><p className="muted">Drag with Select panel to isolate a body, border, pallu or motif. Rectangles stay editable in the project.</p><label>Panel name<input value={regionName} maxLength={80} onChange={e => setRegionName(e.target.value)} /></label>
           {selection && <><div className="field-row"><NumberField label="X" min={0} value={selection.x} onChange={v => setSelection({ ...selection, x: v })} /><NumberField label="Y" min={0} value={selection.y} onChange={v => setSelection({ ...selection, y: v })} /></div><div className="field-row"><NumberField label="Width" value={selection.width} onChange={v => setSelection({ ...selection, width: v })} /><NumberField label="Height" value={selection.height} onChange={v => setSelection({ ...selection, height: v })} /></div><div className="button-row"><button onClick={() => { if (!validRegion(selection, design.width, design.height) || design.regions.length >= 100) { setError('Invalid selection or panel limit reached.'); return; } const n = clone(design); n.regions.push({ ...selection, name: regionName }); commit(n); }}>Save panel</button><button onClick={() => operation(() => crop(design, selection))}>Crop to panel</button></div></>}
           {design.regions.map((r, i) => <div className="region-row" key={i}><button onClick={() => { setSelection(r); setRegionName(r.name); }}>{r.name} <small>{r.width} × {r.height}</small></button><button aria-label={`Delete ${r.name}`} onClick={() => { const n = clone(design); n.regions.splice(i, 1); commit(n); }}>×</button></div>)}

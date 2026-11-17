@@ -43,3 +43,7 @@ Use the existing browser editor for indexed edits and approval. Run heavy model 
 Use a single repeat unit as the editable master for each repeating panel. Mark a crop with complete copies, then let the detector estimate the periods or enter the known copy count for each axis. Check the preview before building the panel. Target panel columns and rows repeat the unit at its original dot size and crop partial copies at the edges. Save the single-unit project before building the panel if you want to use it again.
 
 Choose a separate repeat for the body and border when their motifs differ. Extract a unique pallu scene as a panel. Straight repeat detection assumes an approximately planar patch. Staggered and mirrored layouts are explicit output choices in the editor.
+
+## Assemble panels
+
+Keep an editable project for each body, border or pallu artwork. Add the selected panel or import project files in **Assemble saree panels**, set their order and choose the join direction. A vertical join requires matching widths; a horizontal join requires matching heights. Tile or crop artwork before assembly when dimensions differ. The output keeps named region boundaries and indexed artwork. The editor builds the combined palette from used slots and preserves distinct indices within each palette. Identical palette tables with matching slot names share a mapping. Review exported indices against factory assignments.

@@ -82,3 +82,32 @@ test('saree photo mode requires a fabric selection and extracts a smaller repeat
 
 
 });
+
+test('assemble separate border and body projects and export the joined design', async ({ page }) => {
+  await page.goto('/tools/weavecore');
+  const makePanel = (name: string, palette: number[][], names: string[], indices: number[]) => ({
+    name: name + '.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({
+      schema: 'weavecore.indexed.v1', width: 3, height: 1, palette, names,
+      regions: [], indices: Buffer.from(indices).toString('base64'),
+    })),
+  });
+  await page.getByLabel('Import panel projects').setInputFiles([
+    makePanel('Border', [[224, 181, 77], [224, 181, 77]], ['Zari A', 'Zari B'], [0, 1, 0]),
+    makePanel('Body', [[10, 80, 55]], ['Ground'], [0, 0, 0]),
+  ]);
+  await expect(page.getByLabel('Panel 2 name')).toHaveValue('Body');
+  await page.getByRole('button', { name: 'Move panel 2 earlier' }).click();
+  await expect(page.getByLabel('Panel 1 name')).toHaveValue('Body');
+  await page.getByRole('button', { name: 'Build assembled saree' }).click();
+  const canvas = page.getByLabel('Editable indexed design');
+  await expect(canvas).toHaveAttribute('width', '3');
+  await expect(canvas).toHaveAttribute('height', '2');
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export indexed BMP', exact: true }).click();
+  const bmp = await readFile(await (await pending).path());
+  const start = bmp.readUInt32LE(10);
+  expect([...bmp.subarray(start, start + 3)]).toEqual([1, 2, 1]);
+  expect([...bmp.subarray(start + 4, start + 7)]).toEqual([0, 0, 0]);
+});
