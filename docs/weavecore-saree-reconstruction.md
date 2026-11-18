@@ -47,3 +47,19 @@ Choose a separate repeat for the body and border when their motifs differ. Extra
 ## Assemble panels
 
 Keep an editable project for each body, border or pallu artwork. Add the selected panel or import project files in **Assemble saree panels**, set their order and choose the join direction. A vertical join requires matching widths; a horizontal join requires matching heights. Tile or crop artwork before assembly when dimensions differ. The output keeps named region boundaries and indexed artwork. The editor builds the combined palette from used slots and preserves distinct indices within each palette. Identical palette tables with matching slot names share a mapping. Review exported indices against factory assignments.
+
+## Automatic photo analysis trial
+
+The optional **Analyze saree photo** action sends a browser-resized JPEG to Gemini. It proposes visible saree polygons, body/border/pallu polygons, and a separate zari overlay. It also proposes a quadrilateral for each visible fabric patch. The app validates the geometry against the proposed masks, runs the existing repeat extraction locally, and can offer a flat patch when no repeat is detected. These are model proposals. A sampled containment test checks the model's own outlines and cannot prove that they exclude the person or recover the original design.
+
+To enable Gemini analysis, set `WEAVECORE_VISION_ENABLED=true`, configure provider quotas and route rate limits, and use the default `gemini-3.8-flash` or another validated image-capable model. Set `WEAVECORE_VISION_USE_SITE_KEY=true` to reuse the server-side `GOOGLE_GENERATIVE_AI_API_KEY` already used by site chat. A dedicated `WEAVECORE_VISION_API_KEY` takes precedence when supplied. The endpoint only accepts bounded, inline JPEG data and does not cache images or responses. Photos are sent to Google only when the user invokes the optional action. Manual extraction remains local.
+
+The pipeline still needs live model validation on permissioned full photos with annotated parts. Drafts currently reflect visible fabric, not hallucinated or confirmed hidden artwork.
+
+For a no-cost trial, verify in Google AI Studio that the selected key belongs to a Free Tier project with billing disabled. Start with a private Vercel preview. Photo analysis and site chat can draw from the same project quotas when you reuse the site key. A rate-limit response leaves manual extraction available. Google defines quotas and eligibility and may use free-tier image inputs to improve its products. Use non-confidential photos you have permission to share.
+
+### Run photo analysis without an API key
+
+Install [Ollama](https://ollama.com/download) on the computer running WeaveCore. With the project dependencies installed, run `npm run weavecore:local` and open [the local WeaveCore editor](http://127.0.0.1:3000/tools/weavecore). The launcher checks Ollama, downloads Qwen3-VL 4B on the first run if needed, and starts the editor with local photo analysis enabled. The model uses the computer's CPU or GPU and needs a few gigabytes of local storage.
+
+The local site uses no API key or paid inference service. It processes photos on the same computer and binds the site to loopback. The public Vercel site cannot connect to Ollama running on your computer. Use the local site for this configuration.

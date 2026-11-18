@@ -41,3 +41,14 @@
   border-block-end: 1px solid #d7ddd5;
   padding-block: .4rem;
 }
+
+.studio .photo-outline {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #38bdf85c;
+}
+.studio .photo-outline-border { background: #f59e0b70; }
+.studio .photo-outline-pallu { background: #a855f770; }
+.studio .photo-outline-zari { background: #facc1570; }
+.studio .photo-analysis-controls li > button { display: block; margin-top: .35rem; }
