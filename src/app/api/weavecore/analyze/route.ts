@@ -44,7 +44,8 @@ async function analyzeWithOllama(image: string, model: string): Promise<string> 
 }
 
 export async function POST(request: Request) {
-  const key = process.env.WEAVECORE_VISION_API_KEY;
+  const key = process.env.WEAVECORE_VISION_API_KEY ||
+    (process.env.WEAVECORE_VISION_USE_SITE_KEY === 'true' ? process.env.GOOGLE_GENERATIVE_AI_API_KEY : undefined);
   const provider = process.env.WEAVECORE_VISION_PROVIDER ?? 'gemini';
   const localModel = provider === 'ollama';
   if (process.env.WEAVECORE_VISION_ENABLED !== 'true' ||
