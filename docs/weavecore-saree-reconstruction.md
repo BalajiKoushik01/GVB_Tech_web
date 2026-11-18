@@ -57,3 +57,15 @@ To enable the provider path in a controlled environment, configure a dedicated `
 The pipeline still needs live model validation on permissioned full photos with annotated parts. Drafts currently reflect visible fabric, not hallucinated or confirmed hidden artwork.
 
 For a no-cost trial, create a key in a Google AI Studio project without billing linked and store it as the sensitive Vercel preview variable `WEAVECORE_VISION_API_KEY`. Leave billing disabled and start with a private preview. A rate-limit response leaves manual extraction available. Quotas and eligibility are defined by Google, and free-tier image inputs may be used to improve its products. Use non-confidential photos you have permission to share.
+
+### Run photo analysis without an API key
+
+Install Ollama on the computer running WeaveCore and pull the vision model. The server connects to Ollama at `127.0.0.1:11434`. In `.env.local`, use:
+
+```dotenv
+WEAVECORE_VISION_ENABLED=true
+WEAVECORE_VISION_PROVIDER=ollama
+WEAVECORE_VISION_MODEL=qwen3-vl:4b
+```
+
+Run `ollama pull qwen3-vl:4b` before starting WeaveCore. Start the Ollama service if it is not already running. The local path has no API key or per-call service charge. A Vercel deployment's loopback cannot reach Ollama on your computer. Use the local site for this configuration. Validate the proposed saree outlines on reference photos before relying on them for export.
