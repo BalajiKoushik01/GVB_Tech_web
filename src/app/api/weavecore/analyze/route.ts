@@ -34,7 +34,7 @@ async function analyzeWithOllama(image: string, model: string): Promise<string> 
       messages: [{ role: 'user', content: prompt, images: [image] }],
       options: { temperature: 0, num_predict: 5000 },
     }),
-    signal: AbortSignal.timeout(24_000),
+    signal: AbortSignal.timeout(120_000),
     cache: 'no-store',
     redirect: 'error',
   });

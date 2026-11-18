@@ -60,12 +60,6 @@ For a no-cost trial, create a key in a Google AI Studio project without billing 
 
 ### Run photo analysis without an API key
 
-Install Ollama on the computer running WeaveCore and pull the vision model. The server connects to Ollama at `127.0.0.1:11434`. In `.env.local`, use:
+Install [Ollama](https://ollama.com/download) on the computer running WeaveCore. With the project dependencies installed, run `npm run weavecore:local` and open [the local WeaveCore editor](http://127.0.0.1:3000/tools/weavecore). The launcher checks Ollama, downloads Qwen3-VL 4B on the first run if needed, and starts the editor with local photo analysis enabled. The model uses the computer's CPU or GPU and needs a few gigabytes of local storage.
 
-```dotenv
-WEAVECORE_VISION_ENABLED=true
-WEAVECORE_VISION_PROVIDER=ollama
-WEAVECORE_VISION_MODEL=qwen3-vl:4b
-```
-
-Run `ollama pull qwen3-vl:4b` before starting WeaveCore. Start the Ollama service if it is not already running. The local path has no API key or per-call service charge. A Vercel deployment's loopback cannot reach Ollama on your computer. Use the local site for this configuration. Validate the proposed saree outlines on reference photos before relying on them for export.
+The local site uses no API key or paid inference service. It processes photos on the same computer and binds the site to loopback. The public Vercel site cannot connect to Ollama running on your computer. Use the local site for this configuration.
