@@ -6,6 +6,7 @@ import { bmp, clone, crop, Design, fill, flip, fromJSON, pasteMotif, Region, Rep
 import { extractLocally, sampleDesign } from './local-extraction';
 import { analyzePhoto } from './analyze-photo';
 import { PanelAssembly } from './PanelAssembly';
+import { LayerWorkspace } from './LayerWorkspace';
 import './studio.css';
 
 type Tool = 'pencil' | 'fill' | 'pick' | 'select';
@@ -307,6 +308,12 @@ export default function Studio() {
           <div className="editor-options"><label>Zoom<select value={zoom} onChange={e => setZoom(Number(e.target.value))}>{Array.from(new Set([zoom, .25, .5, 1, 2, 4, 8, 16])).sort((a, b) => a - b).map(v => <option value={v} key={v}>{Math.round(v * 100)}%</option>)}</select></label><label>Brush<select value={brush} onChange={e => setBrush(Number(e.target.value))}>{[1, 2, 3, 5, 9].map(v => <option key={v}>{v}</option>)}</select></label><label className="check"><input type="checkbox" checked={grid} onChange={e => setGrid(e.target.checked)} />Pixel grid</label><button onClick={() => setZoom(Math.min(2, 700 / design.width))}>Fit width</button></div>
           <div className="canvas-scroll"><div className="pixel-surface" style={{ width: design.width * zoom, height: design.height * zoom }}><canvas ref={canvas} aria-label="Editable indexed design" style={{ width: '100%', height: '100%' }} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={finish} onPointerCancel={finish} onLostPointerCapture={finish} />{grid && zoom >= 8 && <div className="pixel-grid" style={{ backgroundSize: `${zoom}px ${zoom}px` }} />}{selection && <div className="pixel-selection" style={{ left: selection.x * zoom, top: selection.y * zoom, width: selection.width * zoom, height: selection.height * zoom }} />}</div></div>
           <div className="canvas-status"><span>{design.width} × {design.height} cells · 8-bit indexed</span><span>{cursor || 'Zoom in to inspect individual cells'}</span></div>
+          <LayerWorkspace onArtwork={choose} snapshot={async () => {
+            const surface = document.createElement('canvas');
+            render(design, surface);
+            const png = await new Promise<Blob>((resolve, reject) => surface.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNG encoding failed')), 'image/png'));
+            return png.arrayBuffer();
+          }} />
           <div className="repeat-heading"><h2>Repeat inspection</h2><button onClick={() => setRepeat(v => !v)}>{repeat ? 'Hide' : 'Show 3 × 3 preview'}</button></div>{repeat && <div className="repeat-preview"><canvas ref={preview} /></div>}
           <p className="muted">Edge index differences: horizontal {(seam!.x * 100).toFixed(1)}% · vertical {(seam!.y * 100).toFixed(1)}%. This is a seam diagnostic, not a guarantee of a seamless motif.</p>
         </> : <div className="studio-empty"><div className="woven-art" /><span className="eyebrow">DESIGNED FOR THE DOT WORK</span><h1>Keep every<br />detail intentional.</h1><p>Extract your saree artwork into a real indexed canvas. Refine zari, meena, borders and repeats at the pixel level, then export an editable bitmap.</p><button className="primary" onClick={() => { install(sampleDesign()); setDirty(false); }}>Try the sample design</button><div className="empty-features"><span>Exact palette preservation</span><span>Pixel editing & undo</span><span>8-bit BMP export</span></div></div>}
