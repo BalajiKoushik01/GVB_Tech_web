@@ -83,3 +83,15 @@ test('tiling to exact dimensions keeps indexed dots and crops the final copies',
   assert.deepEqual(panel.palette, input.palette);
   assert.throws(() => tileToSize(input, 5000, 5000));
 });
+
+test('photo analysis rejects a crop outside the saree and crossing a concave panel', async () => {
+  const { analysisSchema, cropInsidePanel } = await import('../src/lib/weavecore/photo-analysis.ts');
+  const outline = [[100, 100], [900, 100], [900, 900], [100, 900]];
+  const panel = { kind: 'pallu', outline, crop: [[200, 200], [700, 200], [700, 700], [200, 700]] };
+  assert.equal(analysisSchema.safeParse({ saree: [outline], panels: [panel], zari: [] }).success, true);
+  assert.equal(cropInsidePanel(panel, [outline]), true);
+  assert.equal(cropInsidePanel(panel, []), false);
+  assert.equal(cropInsidePanel({ ...panel, outline: [[100, 100], [900, 100], [900, 900], [450, 450], [100, 900]] }, [outline]), false);
+  assert.equal(cropInsidePanel({ ...panel, crop: [panel.crop[0], panel.crop[2], panel.crop[1], panel.crop[3]] }, [outline]), false);
+  assert.equal(analysisSchema.safeParse({ saree: [outline], panels: [{ ...panel, kind: 'person' }], zari: [] }).success, false);
+});

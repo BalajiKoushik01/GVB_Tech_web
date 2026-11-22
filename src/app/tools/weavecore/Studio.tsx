@@ -4,7 +4,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { bmp, clone, crop, Design, fill, flip, fromJSON, pasteMotif, Region, RepeatMode, repeatSource, replaceIndex, RGB, seams, serialize, sizeOK, stroke, tile, tileToSize, validRegion } from './model';
 import { extractLocally, sampleDesign } from './local-extraction';
+import { analyzePhoto } from './analyze-photo';
 import { PanelAssembly } from './PanelAssembly';
+import { LayerWorkspace } from './LayerWorkspace';
 import './studio.css';
 
 type Tool = 'pencil' | 'fill' | 'pick' | 'select';
@@ -31,6 +33,8 @@ export default function Studio() {
   const [panelWidth, setPanelWidth] = useState(192);
   const [panelHeight, setPanelHeight] = useState(144);
   const [photoTask, setPhotoTask] = useState<'repeat' | 'motif'>('repeat');
+  const [photoResult, setPhotoResult] = useState<Awaited<ReturnType<typeof analyzePhoto>> | null>(null);
+  const [overlay, setOverlay] = useState<'panels' | 'saree' | 'zari' | 'off'>('panels');
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [notice, setNotice] = useState('');
   const [tool, setTool] = useState<Tool>('pencil'), [paletteIndex, setActive] = useState(0), [brush, setBrush] = useState(1);
   const [zoom, setZoom] = useState(1), [grid, setGrid] = useState(true), [repeat, setRepeat] = useState(false);
@@ -95,6 +99,8 @@ export default function Studio() {
     }
   }, [design, repeat, repeatMode]);
   async function choose(f: File) {
+    if (busy) return;
+    setPhotoResult(null);
     setError(''); setNotice('');
     if (f.size > 20 * 1024 * 1024) { setError('Use a file of at most 20 MB.'); return; }
     if (f.name.endsWith('.json')) {
@@ -120,6 +126,26 @@ export default function Studio() {
       setNotice('Motif opened. Choose destination slots for its colors before pasting.');
     } catch (error) {
       setError((error as Error).message);
+    }
+  }
+  async function runPhotoAnalysis() {
+    if (!file || busy) return;
+    setBusy(true);
+    setError('');
+    setNotice('Analyzing saree and preparing panel drafts…');
+    setPhotoResult(null);
+    try {
+      const result = await analyzePhoto(file, colors);
+      setPhotoResult(result);
+      setOverlay('panels');
+      setNotice(result.drafts.length
+        ? 'Review the proposed panels and open a draft to edit.'
+        : 'No clear saree panels were found. You can mark a patch manually.');
+    } catch (cause) {
+      setNotice('');
+      setError((cause as Error).message);
+    } finally {
+      setBusy(false);
     }
   }
   async function extract() {
@@ -172,7 +198,7 @@ export default function Studio() {
   const counts = useMemo(() => { const values = new Uint32Array(design?.palette.length || 1); design?.pixels.forEach(i => values[i]++); return values; }, [design]);
   return <div className="studio">
     <header className="studio-header"><div className="studio-brand"><span className="weave-mark">▦</span><span>WeaveCore<small>INDEXED DESIGN STUDIO</small></span></div><span className="studio-tag">From reference to editable pixels</span><button onClick={() => fileInput.current?.click()}>Open image / project</button><input ref={fileInput} hidden type="file" accept=".png,.jpg,.jpeg,.webp,.bmp,.tif,.tiff,.json" onChange={e => { if (e.target.files?.[0]) void choose(e.target.files[0]); e.target.value = ''; }} /></header>
-    <div className="studio-banner"><p>Public trial · Artwork stays in this browser</p><button type="button" onClick={() => { if (!dirty || window.confirm("Replace the current design? Save your project first if you need it.")) { install(sampleDesign()); setDirty(false); setError(""); setNotice("Sample loaded. Choose a swatch and try the pencil."); } }}>Load sample design</button></div>
+    <div className="studio-banner"><p>Public trial · Local editing and optional AI photo analysis</p><button type="button" onClick={() => { if (!dirty || window.confirm("Replace the current design? Save your project first if you need it.")) { install(sampleDesign()); setDirty(false); setError(""); setNotice("Sample loaded. Choose a swatch and try the pencil."); } }}>Load sample design</button></div>
     {(error || notice) && <div className={error ? 'studio-message error' : 'studio-message'} role={error ? 'alert' : 'status'}>{error || notice}</div>}
     <div className="studio-layout">
       <aside className="studio-left">
@@ -200,6 +226,32 @@ export default function Studio() {
               </select>
             </label>
           </>}
+          {file && <div className="photo-analysis-controls">
+            <button type="button" disabled={busy} aria-describedby="weavecore-photo-privacy" onClick={runPhotoAnalysis}>Analyze saree photo</button>
+            <p className="muted" id="weavecore-photo-privacy">Photo analysis sends a reduced copy to the configured vision model. If this installation uses Gemini, Google may use free-tier inputs to improve its products. Manual editing stays on your device.</p>
+            {photoResult && <>
+              <label>Photo outline overlay
+                <select value={overlay} onChange={event => setOverlay(event.target.value as typeof overlay)}>
+                  <option value="panels">Body, border and pallu</option><option value="saree">Saree only</option>
+                  <option value="zari">Proposed zari</option><option value="off">Hide outlines</option>
+                </select>
+              </label>
+              <ul className="assembly-list">
+                {photoResult.drafts.map((draft, index) => <li key={index}>
+                  <strong>{draft.kind}</strong>{' · '}
+                  {draft.design ? <>
+                    <span>{draft.repeat ? 'Repeat draft' : 'Visible patch'}</span>
+                    <button type="button" onClick={() => {
+                      if (!draft.design || (dirty && !window.confirm('Replace the current work with this draft?'))) return;
+                      install(draft.design);
+                      if (draft.repeat) setRepeat(true);
+                      setNotice(`Opened the ${draft.kind} draft. Review before export.`);
+                    }}>Open {draft.kind} draft</button>
+                  </> : <span>{draft.error}</span>}
+                </li>)}
+              </ul>
+            </>}
+          </div>}
           {sourceURL && <><div className="source-scroll"><div className={'source-frame ' + (pin ? 'pinning' : '')}><img ref={sourceRef} src={sourceURL} alt="Original design reference" onLoad={e => { const im = e.currentTarget; setSourceSize([im.naturalWidth, im.naturalHeight]); if (im.naturalWidth * im.naturalHeight <= 4_000_000) { setWidth(im.naturalWidth); setHeight(im.naturalHeight); } }} onClick={e => {
             if ((!masking && (!pin || corners.length >= 4)) || sourceSize[0] === 0) return;
             const rect = e.currentTarget.getBoundingClientRect();
@@ -213,7 +265,13 @@ export default function Studio() {
             } else {
               setCorners([...corners, point]);
             }
-          }} />{sourceSize[0] > 0 && corners.map((p, i) => <span key={i} className="pin" style={{ left: `${p[0] / sourceSize[0] * 100}%`, top: `${p[1] / sourceSize[1] * 100}%` }}>{i + 1}</span>)}{occlusion.length === 2 && <span className="occlusion-mark" aria-hidden="true" style={{
+          }} />{photoResult && overlay !== 'off' && (overlay === 'panels'
+            ? photoResult.analysis.panels.map(panel => ({ points: panel.outline, kind: panel.kind }))
+            : photoResult.analysis[overlay].map(points => ({ points, kind: overlay }))
+          ).map(({ points, kind }, index) => <span key={index} aria-hidden="true"
+              className={`photo-outline photo-outline-${kind}`}
+              style={{ clipPath: `polygon(${points.map(([x, y]) => `${x / 10}% ${y / 10}%`).join(',')})` }} />)}
+          {sourceSize[0] > 0 && corners.map((p, i) => <span key={i} className="pin" style={{ left: `${p[0] / sourceSize[0] * 100}%`, top: `${p[1] / sourceSize[1] * 100}%` }}>{i + 1}</span>)}{occlusion.length === 2 && <span className="occlusion-mark" aria-hidden="true" style={{
               left: `${Math.min(occlusion[0][0], occlusion[1][0]) / sourceSize[0] * 100}%`,
               top: `${Math.min(occlusion[0][1], occlusion[1][1]) / sourceSize[1] * 100}%`,
               width: `${(Math.abs(occlusion[1][0] - occlusion[0][0]) + 1) / sourceSize[0] * 100}%`,
@@ -250,6 +308,12 @@ export default function Studio() {
           <div className="editor-options"><label>Zoom<select value={zoom} onChange={e => setZoom(Number(e.target.value))}>{Array.from(new Set([zoom, .25, .5, 1, 2, 4, 8, 16])).sort((a, b) => a - b).map(v => <option value={v} key={v}>{Math.round(v * 100)}%</option>)}</select></label><label>Brush<select value={brush} onChange={e => setBrush(Number(e.target.value))}>{[1, 2, 3, 5, 9].map(v => <option key={v}>{v}</option>)}</select></label><label className="check"><input type="checkbox" checked={grid} onChange={e => setGrid(e.target.checked)} />Pixel grid</label><button onClick={() => setZoom(Math.min(2, 700 / design.width))}>Fit width</button></div>
           <div className="canvas-scroll"><div className="pixel-surface" style={{ width: design.width * zoom, height: design.height * zoom }}><canvas ref={canvas} aria-label="Editable indexed design" style={{ width: '100%', height: '100%' }} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={finish} onPointerCancel={finish} onLostPointerCapture={finish} />{grid && zoom >= 8 && <div className="pixel-grid" style={{ backgroundSize: `${zoom}px ${zoom}px` }} />}{selection && <div className="pixel-selection" style={{ left: selection.x * zoom, top: selection.y * zoom, width: selection.width * zoom, height: selection.height * zoom }} />}</div></div>
           <div className="canvas-status"><span>{design.width} × {design.height} cells · 8-bit indexed</span><span>{cursor || 'Zoom in to inspect individual cells'}</span></div>
+          <LayerWorkspace onArtwork={choose} snapshot={async () => {
+            const surface = document.createElement('canvas');
+            render(design, surface);
+            const png = await new Promise<Blob>((resolve, reject) => surface.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNG encoding failed')), 'image/png'));
+            return png.arrayBuffer();
+          }} />
           <div className="repeat-heading"><h2>Repeat inspection</h2><button onClick={() => setRepeat(v => !v)}>{repeat ? 'Hide' : 'Show 3 × 3 preview'}</button></div>{repeat && <div className="repeat-preview"><canvas ref={preview} /></div>}
           <p className="muted">Edge index differences: horizontal {(seam!.x * 100).toFixed(1)}% · vertical {(seam!.y * 100).toFixed(1)}%. This is a seam diagnostic, not a guarantee of a seamless motif.</p>
         </> : <div className="studio-empty"><div className="woven-art" /><span className="eyebrow">DESIGNED FOR THE DOT WORK</span><h1>Keep every<br />detail intentional.</h1><p>Extract your saree artwork into a real indexed canvas. Refine zari, meena, borders and repeats at the pixel level, then export an editable bitmap.</p><button className="primary" onClick={() => { install(sampleDesign()); setDirty(false); }}>Try the sample design</button><div className="empty-features"><span>Exact palette preservation</span><span>Pixel editing & undo</span><span>8-bit BMP export</span></div></div>}
@@ -356,7 +420,7 @@ export default function Studio() {
           </section>
           <section><h2>Extraction evidence</h2><dl><dt>Sampled RGB preserved</dt><dd>{design.report.exact_sampled_rgb === null ? 'Not measured' : design.report.exact_sampled_rgb ? 'Yes, at extraction' : 'No — colors reduced'}</dd><dt>Mean RGB error at extraction</dt><dd>{design.report.rgb_mae === null ? 'Not measured' : design.report.rgb_mae.toFixed(2) + ' / 255'}</dd></dl><p className="muted">Compared with sampled input, before manual edits. This does not measure recovery of the original loom design.</p>{design.report.notes.map((note, i) => <p className="report-note" key={i}>{note}</p>)}</section>
           <section><h2>Save & export</h2><NumberField label="Required export width (0 = any)" min={0} value={hooks} onChange={setHooks} /><p className="muted">No resizing or palette remapping during export. Assign weave structures and verify controller compatibility in your factory workflow.</p><button className="primary" onClick={() => exportBMP()}>Export indexed BMP</button><button onClick={() => { save(JSON.stringify(serialize(design)), 'weavecore-project.json', 'application/json'); setDirty(false); setNotice('Editable project saved. Keep this file to resume your work.'); }}>Save editable project{dirty ? ' •' : ''}</button><button onClick={() => { const d = document.createElement('canvas'); render(design, d); d.toBlob(b => { if (b) save(b, 'weavecore-preview.png', 'image/png'); }); }}>Export PNG preview</button><button disabled={!selection} onClick={() => { if (selection) { try { const d = crop(design, selection); save(bmp(d) as BlobPart, 'weavecore-panel.bmp', 'image/bmp'); } catch (e) { setError((e as Error).message); } } }}>Export selected panel BMP</button></section>
-        </> : <section><h2>A faithful starting point</h2><ol><li>Choose a source and set the intended grid dimensions.</li><li>Preserve exact colors for CAD screenshots, or explicitly reduce a photo’s colors.</li><li>Correct cells, name palette slots and inspect repeats.</li><li>Save the editable project and export an indexed BMP.</li></ol><p className="muted">Image processing, editing and exports run in your browser. Save an editable project to retain palette indices between sessions.</p></section>}
+        </> : <section><h2>A faithful starting point</h2><ol><li>Choose a source and set the intended grid dimensions.</li><li>Preserve exact colors for CAD screenshots, or explicitly reduce a photo’s colors.</li><li>Correct cells, name palette slots and inspect repeats.</li><li>Save the editable project and export an indexed BMP.</li></ol><p className="muted">Manual image processing, editing and exports run in your browser. Save an editable project to retain palette indices between sessions.</p></section>}
       </aside>
     </div>
     <footer>WeaveCore · Artwork preparation for silk saree designers <span>Save your project before closing this tab.</span></footer>

@@ -111,3 +111,53 @@ test('assemble separate border and body projects and export the joined design', 
   expect([...bmp.subarray(start, start + 3)]).toEqual([1, 2, 1]);
   expect([...bmp.subarray(start + 4, start + 7)]).toEqual([0, 0, 0]);
 });
+
+test('automatic panel proposals prepare an editable draft without crop clicks', async ({ page }) => {
+  const outline = [[100, 100], [900, 100], [900, 900], [100, 900]];
+  await page.route('**/api/weavecore/analyze', route => route.fulfill({ json: {
+    saree: [outline], zari: [outline],
+    panels: [
+      { kind: 'pallu', outline, crop: [[200, 200], [800, 200], [800, 800], [200, 800]] },
+      { kind: 'border', outline, crop: null },
+    ],
+  } }));
+  await page.goto('/tools/weavecore');
+  const png = await page.evaluate(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 96;
+    canvas.height = 96;
+    const ctx = canvas.getContext('2d')!;
+    ctx.fillStyle = '#093f78';
+    ctx.fillRect(0, 0, 96, 96);
+    return canvas.toDataURL().split(',')[1];
+  });
+  await page.locator('.studio-header input[type=file]').setInputFiles({ name: 'saree.png', mimeType: 'image/png', buffer: Buffer.from(png, 'base64') });
+  await page.getByRole('button', { name: 'Analyze saree photo' }).click();
+  await expect(page.getByText('No usable patch was identified.', { exact: false })).toBeVisible();
+  await page.getByLabel('Photo outline overlay').selectOption('zari');
+  await expect(page.locator('.photo-outline-zari')).toHaveCount(1);
+  await page.getByRole('button', { name: 'Open pallu draft' }).click();
+  await expect(page.getByLabel('Editable indexed design')).toHaveAttribute('width', '57');
+});
+
+test('a hosted layer edit returns a PNG source while preserving the indexed design', async ({ page }) => {
+  await page.route('https://www.photopea.com/**', route => route.fulfill({
+    contentType: 'text/html',
+    body: `<script>
+      let artwork;
+      window.onmessage = event => {
+        if (event.data instanceof ArrayBuffer) artwork = event.data;
+        else if (event.data === 'app.activeDocument.saveToOE("png");') parent.postMessage(artwork, event.origin);
+        parent.postMessage('done', event.origin);
+      };
+      parent.postMessage('done', '*');
+    </script>`,
+  }));
+  await page.goto('/tools/weavecore');
+  await page.getByRole('button', { name: 'Try the sample design' }).click();
+  await page.getByRole('button', { name: 'Open Photopea workspace' }).click();
+  await page.getByRole('button', { name: 'Send current design copy' }).click();
+  await page.getByRole('button', { name: 'Return active artwork' }).click();
+  await expect(page.getByText('Composite loaded as source artwork.', { exact: false })).toBeVisible();
+  await expect(page.getByLabel('Editable indexed design')).toBeVisible();
+});
