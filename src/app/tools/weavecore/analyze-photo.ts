@@ -18,14 +18,29 @@ export async function analyzePhoto(file: File, paletteBudget: number): Promise<{
     if (!ctx) throw Error('Image editing is unavailable in this browser.');
     ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
     jpeg = canvas.toDataURL('image/jpeg', .82).split(',')[1] ?? '';
+    if (jpeg.length > 1_000_000) {
+      canvas.width = Math.max(1, Math.round(canvas.width * .75));
+      canvas.height = Math.max(1, Math.round(canvas.height * .75));
+      ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+      jpeg = canvas.toDataURL('image/jpeg', .72).split(',')[1] ?? '';
+    }
+    if (!jpeg || jpeg.length > 1_000_000) throw Error('This photo could not be resized for analysis. Try a smaller copy or mark the fabric manually.');
   } finally {
     bitmap.close();
   }
   const response = await fetch('/api/weavecore/analyze', {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ image: jpeg }),
   });
-  const data = await response.json();
-  if (!response.ok) throw Error(typeof data.error === 'string' ? data.error : 'Photo analysis failed.');
+  const data = await response.json().catch(() => null);
+  if (!response.ok) {
+    if (typeof data?.error === 'string') throw Error(data.error);
+    if (response.status === 401 || response.status === 403) {
+      throw Error('Photo analysis requires access to this deployment. Sign in again or mark the fabric manually.');
+    }
+    if (response.status === 504) throw Error('Photo analysis timed out. Try again or mark the fabric manually.');
+    throw Error('Photo analysis is unavailable. Try again or mark the fabric manually.');
+  }
+  if (!data) throw Error('Photo analysis returned an unreadable response. Mark the fabric manually.');
   const analysis = analysisSchema.parse(data);
   const drafts: PanelDraft[] = [];
   for (const panel of analysis.panels) {
