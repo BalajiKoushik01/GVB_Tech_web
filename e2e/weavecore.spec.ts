@@ -139,3 +139,25 @@ test('automatic panel proposals prepare an editable draft without crop clicks', 
   await page.getByRole('button', { name: 'Open pallu draft' }).click();
   await expect(page.getByLabel('Editable indexed design')).toHaveAttribute('width', '57');
 });
+
+test('a hosted layer edit returns a PNG source while preserving the indexed design', async ({ page }) => {
+  await page.route('https://www.photopea.com/**', route => route.fulfill({
+    contentType: 'text/html',
+    body: `<script>
+      let artwork;
+      window.onmessage = event => {
+        if (event.data instanceof ArrayBuffer) artwork = event.data;
+        else if (event.data === 'app.activeDocument.saveToOE("png");') parent.postMessage(artwork, event.origin);
+        parent.postMessage('done', event.origin);
+      };
+      parent.postMessage('done', '*');
+    </script>`,
+  }));
+  await page.goto('/tools/weavecore');
+  await page.getByRole('button', { name: 'Try the sample design' }).click();
+  await page.getByRole('button', { name: 'Open Photopea workspace' }).click();
+  await page.getByRole('button', { name: 'Send current design copy' }).click();
+  await page.getByRole('button', { name: 'Return active artwork' }).click();
+  await expect(page.getByText('Composite loaded as source artwork.', { exact: false })).toBeVisible();
+  await expect(page.getByLabel('Editable indexed design')).toBeVisible();
+});
