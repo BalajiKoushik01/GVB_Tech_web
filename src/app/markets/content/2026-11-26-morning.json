@@ -1,17 +1,32 @@
 {
-  "slug":"2026-11-26-morning",
-  "date":"2026-11-26",
-  "publishedAt":"2026-11-26T13:30:00+05:30",
-  "category":"Market pulse",
-  "title":"Markets turn lower after a firmer start",
-  "summary":"Indian equities opened with a constructive tone on Thursday before early gains faded. Technology shares were a relative bright spot.",
-  "sections":[
-    {"heading":"Early trade","body":"Kotak Neo's morning report described both benchmark indices turning lower after opening higher. The report was an intraday snapshot, not the closing result."},
-    {"heading":"Sector divergence","body":"HDFC SKY reported that technology stocks were relatively strong in early trading while consumer staples, automobiles and cement lagged."},
-    {"heading":"Global context","body":"Investors were following Asian markets, oil prices and US inflation developments. The session was still in progress when this edition was prepared."}
+  "slug": "2026-11-26-morning",
+  "date": "2026-11-26",
+  "publishedAt": "2026-11-26T13:30:00+05:30",
+  "category": "Market pulse",
+  "title": "Sensex and Nifty give up early gains; IT shares hold up",
+  "summary": "Thursday's opening gains were short-lived. IT stocks bucked the early decline as investors weighed overseas markets and US inflation.",
+  "sections": [
+    {
+      "heading": "A positive start fades",
+      "body": "Indian shares opened higher on Thursday, 26 November, but the gains did not last. By about 9:45 am IST, the Sensex was trading near 83,766 and the Nifty 50 had slipped to 25,736, according to Kotak Neo's morning report."
+    },
+    {
+      "heading": "IT offers some relief",
+      "body": "Technology stocks fared better than the broader market. HDFC SKY's opening report noted that the IT index was higher, even as FMCG, auto and cement shares came under pressure. The morning's performance marked a change from Wednesday, when consumer stocks had led the recovery."
+    },
+    {
+      "heading": "What was moving sentiment",
+      "body": "Markets were weighing a mixed set of overseas cues, including US inflation, Asian equities and oil prices. These were early-session developments; the final picture would only become clear after the close."
+    }
   ],
-  "sources":[
-    {"name":"Kotak Neo — morning market update","url":"https://www.kotakneo.com/news/market-news/stock-market-update-26-november-2026-sensex-nifty/"},
-    {"name":"HDFC SKY — market opening report","url":"https://hdfcsky.com/news/bse-nse-sensex-november-26-2026-open-report-sensex-nifty-diverge-at-open-on-thursday-as-strong-asia-steady-oil-offset-hot-us-inflation"}
+  "sources": [
+    {
+      "name": "Kotak Neo — morning market update",
+      "url": "https://www.kotakneo.com/news/market-news/stock-market-update-26-november-2026-sensex-nifty/"
+    },
+    {
+      "name": "HDFC SKY — market opening report",
+      "url": "https://hdfcsky.com/news/bse-nse-sensex-november-26-2026-open-report-sensex-nifty-diverge-at-open-on-thursday-as-strong-asia-steady-oil-offset-hot-us-inflation"
+    }
   ]
 }

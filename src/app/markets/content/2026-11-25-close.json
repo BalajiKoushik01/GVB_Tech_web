@@ -3,15 +3,30 @@
   "date": "2026-11-25",
   "publishedAt": "2026-11-26T13:30:00+05:30",
   "category": "Closing bell",
-  "title": "Indian equities rebound as consumer and financial shares lead",
-  "summary": "Wednesday's rebound lifted the benchmark indices, but weaker small-cap and metal shares showed that the recovery was uneven.",
+  "title": "Sensex jumps 1,502 points as FMCG stocks lead the rebound",
+  "summary": "The Sensex and Nifty recovered sharply on Wednesday, but the rally was much less convincing outside the large-cap indices.",
   "sections": [
-    {"heading":"The session","body":"Indian equity benchmarks recovered on Wednesday after the previous trading session's decline. Consumer staples and financial shares helped lead the advance, while metals and media lagged."},
-    {"heading":"Beyond the benchmarks","body":"The stronger headline indices did not translate into gains across every segment. Nippon India Mutual Fund's morning note reported weaker breadth on the BSE, with more declining shares than advancing shares."},
-    {"heading":"What to follow","body":"The breadth of participation, crude oil developments and overseas market conditions remain useful context for interpreting the next trading session. These are observations rather than forecasts or trading recommendations."}
+    {
+      "heading": "A sharp recovery",
+      "body": "Indian shares bounced back on Wednesday, 25 November, after Monday's sell-off and Tuesday's market holiday. The Sensex closed at 83,938.28, up 1.82%, while the Nifty 50 gained 1.85% to finish at 25,819.25, according to Moneycontrol's closing report."
+    },
+    {
+      "heading": "Consumer stocks take the lead",
+      "body": "FMCG and financial shares were among the strongest performers. Nippon India Mutual Fund's market note reported that Hindustan Unilever, Britannia and Tata Consumer Products were among the leading Nifty gainers. Metals, by contrast, came under pressure."
+    },
+    {
+      "heading": "The broader market tells a different story",
+      "body": "Despite the jump in the benchmarks, more BSE-listed shares fell than rose, according to the same market note. Small-cap shares also ended lower. That is worth noting: Wednesday's rebound was concentrated in parts of the market rather than shared evenly across stocks."
+    }
   ],
   "sources": [
-    {"name":"Moneycontrol — closing market report","url":"https://www.moneycontrol.com/news/business/markets/taking-stock-markets-bounce-back-sensex-rises-1-502-pts-nifty-closes-above-25-800-14088638.html"},
-    {"name":"Nippon India Mutual Fund — Markets For You","url":"https://mf.nipponindiaim.com/LearnAndInvest/MarketsForYou/markets-for-you-november-26-2026.html"}
+    {
+      "name": "Moneycontrol — closing market report",
+      "url": "https://www.moneycontrol.com/news/business/markets/taking-stock-markets-bounce-back-sensex-rises-1-502-pts-nifty-closes-above-25-800-14088638.html"
+    },
+    {
+      "name": "Nippon India Mutual Fund — Markets For You",
+      "url": "https://mf.nipponindiaim.com/LearnAndInvest/MarketsForYou/markets-for-you-november-26-2026.html"
+    }
   ]
 }

@@ -16,9 +16,9 @@ export default async function ArticlePage({params}:Props){
  return <div className="markets-page"><article className="gvb-shell markets-article">
  <Link className="markets-back" href="/markets"><ArrowLeft size={17}/> GVB Markets</Link>
  <p className="markets-kicker">{a.category} · <time dateTime={a.date}>{formatMarketDate(a.date)}</time></p><h1>{a.title}</h1><p className="markets-deck">{a.summary}</p>
- <p className="markets-byline">GVB Markets editorial desk · Published {formatMarketDate(a.publishedAt)}</p>
+ <p className="markets-byline">GVB Markets · Published {formatMarketDate(a.publishedAt)}</p>
  {a.sections.map((s,i)=><section key={i}><h2>{s.heading}</h2><p>{s.body}</p></section>)}
- <section className="markets-sources"><h2>Sources & further reading</h2><ul>{a.sources.map(s=><li key={s.url}><a href={s.url} target="_blank" rel="noopener noreferrer">{s.name} <ArrowUpRight size={15}/></a></li>)}</ul></section>
- <aside className="markets-disclaimer">General market information only. Not investment advice or a live quote.</aside>
- <Link className="markets-back" href="/markets#market-archive"><ArrowLeft size={17}/> Browse all historical editions</Link></article></div>;
+ <section className="markets-sources"><h2>Sources</h2><ul>{a.sources.map(s=><li key={s.url}><a href={s.url} target="_blank" rel="noopener noreferrer">{s.name} <ArrowUpRight size={15}/></a></li>)}</ul></section>
+ <aside className="markets-disclaimer">For information only. Not investment advice or live market prices.</aside>
+ <Link className="markets-back" href="/markets#market-archive"><ArrowLeft size={17}/> Browse the news archive</Link></article></div>;
 }
